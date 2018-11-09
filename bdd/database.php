@@ -52,6 +52,8 @@
 
 		$query = $pdo->prepare("INSERT INTO vendeurs SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?");
 
+		$password = password_hash($password, PASSWORD_BCRYPT);
+
 		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable]);
 	}
 

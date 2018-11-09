@@ -1,64 +1,56 @@
-<?php
-	
-	session_start();
-
-	require 'include/header.php';
-
-	if(!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password']))
-	{
-	    require_once 'bdd/database.php';
-
-		$user = connexionApplication($_POST['email']);
-
-	    if($user == null)
-	    {
-	        $_SESSION['flash']['danger'] = 'Identifiant ou mot de passe incorrect';
-	    }
-	    elseif($user->mot_de_passe == $_POST['password'])
-	    {
-	        $_SESSION['auth'] = $user;
-	        $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
-	        header('Location: accueil.php');
-	    }
-	    else
-	    {	
-	        $_SESSION['flash']['danger'] = 'Identifiant ou mot de passe incorrect';
-	    }
+<?php require "include/header.php"; ?>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<style>
+	html, body { 
+	  margin:0;
+	  padding:0;
+	  background: url(style/fond.svg) no-repeat center fixed; 
+	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+	  background-size: cover; /* version standardisée */
 	}
-?>
 
+	#p1
+	{
+		color: white;
+		font-size: 5em;
+		font-family: 'Montserrat';
+	}
 
-<div class="container">
-		<?php if(isset($_SESSION['flash'])): ?>
-		  <?php foreach($_SESSION['flash'] as $type => $message): ?>
-			<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
-			  <?= $message; ?>
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	    		<span aria-hidden="true">&times;</span>
-	  		</button>
-			</div>
-		  <?php endforeach; ?>
-		  <?php unset($_SESSION['flash']); ?>
-		<?php endif; ?>
+	#p2
+	{
+		color: white;
+		font-family: 'Montserrat';
+		font-size: 5em;
+	}
 
-	<div class="card" style="width: 50%; height: 50%; margin-left: 280px;">
-		<div class="card-header">
-			<center><h3>Connectez-vous</h3></center>
-	  	</div>
-	  	<div class="card-body">
-			<form action="" method="POST">
-				<div class="form-group">
-					<label for=""><span class="fa fa-envelope"></span>&nbsp;&nbsp;Email : </label>
-					<input type="text" name="email" class="form-control" required>
-				</div>
-				<div class="form-group">
-					<label for=""><span class="fa fa-key"></span>&nbsp;&nbsp;Mot de passe : </label>
-					<input type="password" name="password" class="form-control" required>
-				</div>
-				<button type="submit" class="btn btn-primary">Me connecter</button>
-			</form>
-	  	</div>
-	</div>
+	p
+	{
+		color: white;
+		font-family: 'Montserrat';
+	}
+
+	#fin 
+	{
+  		position : absolute;
+  		bottom : 0px;
+  		padding-left: 1200px;
+  		font-size: 12px;
+  		font-family: 'Montserrat';
+	}
+</style>
+<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
+<div style="padding-top: 200px; padding-left: 20px;">
+	<span id="p1">CHALLENGEZ</span></br>
+	<b id="p2">VOS COLLABORATEURS</b>
 </div>
 
-<?php require "include/footer.php";
+<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
+<button style="margin-left: 20px;" type="button" class="btn btn-outline-light">inscription</button>
+
+
+<div id="fin">
+	<p>Powered by Pepperbay</p>
+</div>
+
+
+<?php require "include/footer.php"; ?>

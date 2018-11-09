@@ -13,6 +13,15 @@
 		
 		return false;
 	}
+
+	function formatTelephone($telephone)
+	{
+		$result = "+ 33";
+		$telephone = str_replace(" ", "", $telephone);
+		$string = substr($telephone, 1);
+		return $result."".$string;
+	}
+
 ?>
 
 

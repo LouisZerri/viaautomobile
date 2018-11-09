@@ -49,8 +49,15 @@
 		 	$errors['password'] = "Le mot de passe n'est pas sécurisé";
 		}
 
+		if($_POST['password'] != $_POST['password_confirm'])
+		{
+			$errors['password_confirm'] = "Les deux mots de passe ne correspondent pas";
+		}
+
 		if(empty($errors))
 		{
+			$_POST['telephone'] = formatTelephone($_POST['telephone']);
+
 			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone']);
 
 			$_SESSION['flash']['success'] = 'Enregistrement réalisé avec succès';
@@ -71,71 +78,54 @@
 			</ul>
 		</div>
 	<?php endif; ?>
-	<h1>Creation de compte</h1>
-	<form action="" method="POST">
-		<div class="form-group">
-			<label for=""><i class="fa fa-id-card-o"></i>&nbsp;&nbsp;Nom : </label>
-			<input type="text" name="nom" class="form-control" placeholder="Exemple : Dupont" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-address-card-o"></i>&nbsp;&nbsp;Prénom : </label>
-			<input type="text" name="prenom" class="form-control" placeholder="Exemple : Jean" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;Date de naissance : </label>
-			<input type="text" name="naissance" class="form-control" placeholder="Format : JJ/MM/AAAA" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-phone"></i>&nbsp;&nbsp;Portable : </label>
-			<input type="text" name="telephone" class="form-control" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-map-marker"></i>&nbsp;&nbsp;Site de ratachement : </label>
-			<input type="text" name="site" class="form-control" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Email : </label>
-			<input type="text" name="email" class="form-control" required>
-		</div>
-		<div class="form-group">
-			<label for=""><i class="fa fa-key"></i>&nbsp;&nbsp;Mot de passe : 
-				<ul style="color: red;">
-					Votre mot de passe doit contenir :
-					<li id="compteur">9 caractère minimum</li>
-					<li id="majuscule">Une majuscule</li>
-					<li id="minuscule">Une minuscule</li>
-					<li id="caractere">Un caractère spéciale</li>
-					<li id="chiffre">Un chiffre</li>
-				</ul>
-			</label>
-			<input id="password" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" required>
-		</div>
-
-		<button type="submit" class="btn btn-primary">Enregistrer</button>
-	</form>
 	
+	<div style="width: 40%; margin-left: auto; margin-right: auto;">
+		<center><h1>Creation de compte</h1></center>
+		</br>
+		<form action="" method="POST">
+			<div class="form-group">
+				<input type="text" name="nom" class="form-control" placeholder="Nom" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="prenom" class="form-control" placeholder="Prénom" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="naissance" class="form-control" placeholder="Date de naissance" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="telephone" class="form-control" placeholder="Portable" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="site" class="form-control" placeholder="Site de ratachement" required>
+			</div>
+			<div class="form-group">
+				<input type="text" name="email" class="form-control" placeholder="Adresse email" required>
+			</div>
+			<div class="form-group">
+				<div class="input-group mb-3">
+  					<input id="password" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
+  					<div class="input-group-append">
+   						 <button class="btn btn-danger" type="button" id="button-addon2">Non valide</button>
+  					</div>
+				</div>
+				<div id="hide" style="border: 1px solid red; border-radius: 5px; outline: none; border-color: #9ecaed; box-shadow: 0 0 10px #9ecaed;">
+					<span style="font-weight: bold; font-size: 15px;" id="c">&nbsp;Votre mot de passe doit comporter au moins 9 caractères</span>
+					<span style="font-weight: bold; font-size: 15px;" id="M">&nbsp;Votre mot de passe doit comporter au moins une majuscule</br></span>
+					<span style="font-weight: bold; font-size: 15px;" id="m">&nbsp;Votre mot de passe doit comporter au moins une minuscule</br></span>
+					<span style="font-weight: bold; font-size: 15px;" id="0">&nbsp;Votre mot de passe doit comporter au moins un chiffre</br></span>
+					<span style="font-weight: bold; font-size: 15px;" id="caractere">&nbsp;Votre mot de passe doit comporter au moins un caractère &nbsp;spécial</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="password" name="password_confirm" class="form-control" placeholder="Confirmez le mot de passe" required>
+			</div>
+			<center>
+				<button type="submit" class="btn btn-primary">Enregistrer</button>
+			</center>
+		</form>
+	</div>
 	</br>
 </div>
 </br>
-
-<script type="text/javascript">
-	
-	$(document).ready(function(){
-		$('#password').on('input',function(e){
-			if($(this).val() == "9")
-			{
-				$('#chiffre').hide();
-			}
-		})
-		
-	});
-
-
-
-
-
-
-</script>
-
 
 <?php require "include/footer.php"; ?>
