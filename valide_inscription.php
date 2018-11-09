@@ -22,11 +22,6 @@
 		font-size: 5em;
 	}
 
-	p
-	{
-		color: white;
-	}
-
 	#fin 
 	{
   		position : absolute;
@@ -34,19 +29,38 @@
   		padding-left: 1200px;
   		font-size: 12px;
 	}
+
+	.card
+	{
+		width: 40%;
+		margin-left: 400px;
+		margin-top: 125px;
+	}
+
 </style>
 <img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
-<div style="padding-top: 200px; padding-left: 20px;">
-	<span id="p1">CHALLENGEZ</span></br>
-	<b id="p2">VOS COLLABORATEURS</b>
+
+<div class="card">
+	<center>
+		</br>
+		<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
+	</center>
+	<div class="card-body">
+		</br>
+		<center>
+    		<b>Merci pour votre inscription</b></br></br>
+    		<p>Un email de confirmation a été envoyé</br>à votre adresse email</p>
+    		<a style="background-color: #9D1458;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
+    	</center>
+  	</div>
 </div>
 
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
+
+
 
 
 <div id="fin">
-	<p>Powered by Pepperbay</p>
+	<p style="color: white;">Powered by Pepperbay</p>
 </div>
 
 

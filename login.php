@@ -32,6 +32,7 @@
 	html, body { 
 	  margin:0;
 	  padding:0;
+	  font-family: 'Montserrat';
 	  background: url(style/fond.svg) no-repeat center fixed; 
 	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
 	  background-size: cover; /* version standardisée */
@@ -41,20 +42,17 @@
 	{
 		color: white;
 		font-size: 5em;
-		font-family: 'Montserrat';
 	}
 
 	#p2
 	{
 		color: white;
-		font-family: 'Montserrat';
 		font-size: 5em;
 	}
 
 	p
 	{
 		color: white;
-		font-family: 'Montserrat';
 	}
 
 	#fin 
@@ -63,11 +61,22 @@
   		bottom : 0px;
   		padding-left: 1200px;
   		font-size: 12px;
-  		font-family: 'Montserrat';
 	}
+
+	a
+	{
+		color: black;
+		text-decoration: underline;
+	}
+
+	a:hover
+	{
+		color: black;
+	}
+
 </style>
 <img style="float: right; padding-bottom: 150px;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
-<div class="container" style="padding-top: 150px;">
+<div class="container" style="padding-top: 130px;">
 		<?php if(isset($_SESSION['flash'])): ?>
 		  <?php foreach($_SESSION['flash'] as $type => $message): ?>
 			<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
@@ -85,16 +94,16 @@
 		<img src="style/logo_couleur.png" alt="logo" width="400" height="100">
 		</br>
 		</br>
-		<h3>CONNECTEZ-VOUS</h3>
 	</center>	
 	  	<div class="card-body">
 			<form action="" method="POST">
 				<div class="form-group">
-					<input type="text" name="email" class="form-control" placeholder="Email" required>
+					<input type="text" name="email" class="form-control" placeholder="Saissisez votre adresse email" required>
 				</div>
 				<div class="form-group">
-					<input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
+					<input type="password" name="password" class="form-control" placeholder="Saissisez votre mot de passe" required>
 				</div>
+				<center><a href="mdp_oublie.php">Mot de passe oublié ?</a></center></br>
 				<center>
 					<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Me connecter</span></button>
 				</center>

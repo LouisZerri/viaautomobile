@@ -12,6 +12,7 @@
 	<script src="include/script.js"></script>
 </head>
 <body>
+</br>
 <div class="container">
 	<?php if(isset($_SESSION['flash'])): ?>
 	  <?php foreach($_SESSION['flash'] as $type => $message): ?>
