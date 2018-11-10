@@ -74,9 +74,14 @@
 		color: black;
 	}
 
+	.form-control
+	{
+		font-size: 10px;
+	}
+
 </style>
 <img style="float: right; padding-bottom: 150px;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
-<div class="container" style="padding-top: 130px;">
+<div class="container" style="padding-top: 90px;">
 		<?php if(isset($_SESSION['flash'])): ?>
 		  <?php foreach($_SESSION['flash'] as $type => $message): ?>
 			<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">

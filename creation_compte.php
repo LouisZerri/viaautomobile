@@ -53,7 +53,7 @@
 		{
 			$_POST['telephone'] = formatTelephone($_POST['telephone']);
 
-			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone']);
+			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],0);
 
 			header('Location: valide_inscription.php');
 		}
@@ -95,6 +95,7 @@
 		margin-top: 75px;
 	}
 </style>
+<img style="float: right; padding-bottom: 150px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
 	<?php if(!empty($errors)): ?>
 		<div class="alert alert-danger">
@@ -117,7 +118,49 @@
 		<div class="card-body">
 			<center><h5><b>CRÉATION DE COMPTE</b></h5></center>
 			</br>
-			<form action="" method="POST">
+			<?php if(!empty($_POST)): ?>
+				<form action="" method="POST">
+					<div class="form-group">
+						<input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
+					</div>
+					<div class="form-group">
+						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
+					</div>
+					<div class="form-group">
+						<input type="text" name="naissance" class="form-control" placeholder="Date de naissance" value="<?php echo $_POST['naissance']; ?>" required>
+					</div>
+					<div class="form-group">
+						<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" value="<?php echo $_POST['telephone']; ?>" required>
+					</div>
+					<div class="form-group">
+	 					<select class="form-control" name="site" placeholder="Site de ratachement">
+	 						<option selected="selected"><?php echo $_POST['site']; ?></option>
+				        	<option>Paris</option>
+				        	<option>Lyon</option>
+				        	<option>Marseille</option>
+				       		<option>Lille</option>
+				      		<option>Bordeaux</option>
+				      		<option>Toulouse</option>
+				      		<option>Strasbourg</option>
+	    				</select>
+	  				</div>
+					<div class="form-group">
+						<input type="text" name="email" class="form-control" placeholder="Adresse email" value="<?php echo $_POST['email']; ?>" required>
+					</div>
+					<div class="form-group">
+						<div class="input-group mb-3">
+		  					<input id="password" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
+		  				</div>
+					</div>
+					<div class="form-group">
+						<input type="password" name="password_confirm" class="form-control" placeholder="Confirmez votre mot de passe" required>
+					</div>
+					<center>
+						<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Inscription</span></button>
+					</center>
+				</form>
+			<?php else: ?>
+				<form action="" method="POST">
 				<div class="form-group">
 					<input type="text" name="nom" class="form-control" placeholder="Nom" required>
 				</div>
@@ -157,6 +200,7 @@
 					<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Inscription</span></button>
 				</center>
 			</form>
+		<?php endif; ?>
 		</div>
 	</div>
 </div>

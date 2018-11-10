@@ -1,4 +1,3 @@
-premiere page -> page de connexion (entree nom, prenom, email (@viaautomobile), mdp (9 caractere avec majuscule, chiffre, caractere speciaux))
-nombre de commande (il faut immatriculation de la voiture, 4 cases a cocher, vendu une garenti ou un financement)
-page de renseignement
-page de creation de compte
+reste a faire :
+-> envoie d'email a gérer
+-> mot de passe oublié

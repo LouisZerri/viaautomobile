@@ -46,15 +46,24 @@
 		return false;
 	}
 
-	function insertVendeur($nom, $prenom, $date, $site, $email, $password, $portable)
+	function insertVendeur($nom, $prenom, $date, $site, $email, $password, $portable, $confirmation)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare("INSERT INTO vendeurs SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?");
+		$longueur = 12;
+
+		$confirmation = "";
+
+		for($i = 1; $i < $longueur; $i++)
+		{
+			$confirmation .= mt_rand(0,9);
+		}
+
+		$query = $pdo->prepare("INSERT INTO vendeurs SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?, confirmation = ?");
 
 		$password = password_hash($password, PASSWORD_BCRYPT);
 
-		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable]);
+		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable, $confirmation, 0]);
 	}
 
 ?>
