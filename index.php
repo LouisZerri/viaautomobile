@@ -35,6 +35,17 @@
   		font-size: 12px;
 	}
 </style>
+<?php if(isset($_SESSION['flash'])): ?>
+	<?php foreach($_SESSION['flash'] as $type => $message): ?>
+		<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+	  		<?= $message; ?>
+	  		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+  	<?php endforeach; ?>
+  	<?php unset($_SESSION['flash']); ?>
+<?php endif; ?>
 <img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
 <div style="padding-top: 200px; padding-left: 20px;">
 	<span id="p1">CHALLENGEZ</span></br>

@@ -59,7 +59,7 @@
 	}
 
 </style>
-<img style="float: right; padding-bottom: 150px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+<img style="float: right; padding-bottom: 170px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 
 <div style="margin-left: 20px; width: 40%; position: fixed; bottom: 20px;"class="card">
 	<div class="card-body">
@@ -75,10 +75,11 @@
 	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-outline-light" href="mandats.php" role="button"><span>Mandats</span></a>
 	    </div>
 	    <div style="padding-left: 20px;" class="col-sm">
-	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-outline-light" href="ventes.php" role="button"><span>Ventes</span></a>
+	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-light" href="ventes.php" role="button"><span>Ventes</span></a>
 	    </div>
+		</br>
   	</div>
-  	</br>
+  	</br></br>
 </div>
 
 

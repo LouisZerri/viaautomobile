@@ -1,67 +1,110 @@
-$(document).ready(function(){
-		
-	$("#hide").hide();
+$(document).ready(function() {
 
-	$("#password").focus(function() {
-		$('#hide').show("slow");
-	})
+	//Popup 1
+	$('a#poplight[href^=#]').click(function() {
+		var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
+		var popURL = $(this).attr('href'); //Retrouver la largeur dans le href
 
-	$('#password').on('input',function(e){
-		var caractere = $(this).val();
+		//Récupérer les variables depuis le lien
+		var query= popURL.split('?');
+		var dim= query[1].split('&amp;');
+		var popWidth = dim[0].split('=')[1]; //La première valeur du lien
 
-		if(caractere.length >= 9)
-		{
-			$('#c').hide();	
-		}
-		else
-		{
-			$('#c').show();
-		}
-		if(/[0-99999999]/.test(caractere))
-		{
-			$('#0').hide();				
-		}
-		else
-		{
-			$('#0').show();				
-		}
-		if(/[A-Z]/.test(caractere))
-		{
-			$('#M').hide();
-		}
-		else
-		{
-			$('#M').show();				
-		}
-		if(/[a-z]/.test(caractere))
-		{
-			$('#m').hide();
-		}
-		else
-		{
-			$('#m').show();				
-		}
-		if(/\W/.test(caractere))
-		{
-			$('#caractere').hide();			
-		}
-		else
-		{
-			$('#caractere').show();
-		}
+		//Faire apparaitre la pop-up
+		$('#' + popID).fadeIn().css({
+			'width': Number(popWidth)
+		})
 
+		//Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
 
-		if($('#c').attr("style") == "font-weight: bold; font-size: 15px; display: none;" && $('#0').attr("style") == "font-weight: bold; font-size: 15px; display: none;" && $('#M').attr("style") == "font-weight: bold; font-size: 15px; display: none;" && $('#m').attr("style") == "font-weight: bold; font-size: 15px; display: none;" && $('#caractere').attr("style") == "font-weight: bold; font-size: 15px; display: none;")
-		{
-			$('#button-addon2').text("Valide");
-			$('#button-addon2').attr("class","btn btn-success");
-			$('#hide').attr("style","");
-		}
-		else
-		{
-			$('#button-addon2').text("Non valide");
-			$('#button-addon2').attr("class","btn btn-danger");
-			$('#hide').attr("style","border: 1px solid red; border-radius: 5px; outline: none; border-color: #9ecaed; box-shadow: 0 0 10px #9ecaed;");
-		}
-	})
+		//On affecte le margin
+		$('#' + popID).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+
+		//Effet fade-in du fond opaque
+		$('body').append('<div id="fade"></div>'); //Ajout du fond opaque noir
+		//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues de IE
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+
+		return false;
+	});
+
+	//Popup 2
+	$('a#poplight2[href^=#]').click(function() {
+		var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
+		var popURL = $(this).attr('href'); //Retrouver la largeur dans le href
+
+		//Récupérer les variables depuis le lien
+		var query= popURL.split('?');
+		var dim= query[1].split('&amp;');
+		var popWidth = dim[0].split('=')[1]; //La première valeur du lien
+
+		//Faire apparaitre la pop-up
+		$('#' + popID).fadeIn().css({
+			'width': Number(popWidth)
+		})
+
+		//Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
+
+		//On affecte le margin
+		$('#' + popID).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+
+		//Effet fade-in du fond opaque
+		$('body').append('<div id="fade"></div>'); //Ajout du fond opaque noir
+		//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues de IE
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+
+		return false;
+	});
+
+	//Popup3
+	$('#poplight3').click(function() {
+		var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
+		var popURL = 500; //Retrouver la largeur dans le href
+
+		//Récupérer les variables depuis le lien
+		var query= popURL.split('?');
+		var dim= query[1].split('&amp;');
+		var popWidth = dim[0].split('=')[1]; //La première valeur du lien
+
+		//Faire apparaitre la pop-up
+		$('#' + popID).fadeIn().css({
+			'width': Number(popWidth)
+		})
+
+		//Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+		var popMargTop = ($('#' + popID).height() + 80) / 2;
+		var popMargLeft = ($('#' + popID).width() + 80) / 2;
+
+		//On affecte le margin
+		$('#' + popID).css({
+			'margin-top' : -popMargTop,
+			'margin-left' : -popMargLeft
+		});
+
+		//Effet fade-in du fond opaque
+		$('body').append('<div id="fade"></div>'); //Ajout du fond opaque noir
+		//Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues de IE
+		$('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+
+		return false;
+	});
+
+	//Fermeture de la pop-up et du fond
+	$('a.close, #fade').live('click', function() { //Au clic sur le bouton ou sur le calque...
+		$('#fade , .popup_block').fadeOut(function() {
+			$('#fade, a.close').remove();  //...ils disparaissent ensemble
+		});
+
+		return false;
+	});
 });

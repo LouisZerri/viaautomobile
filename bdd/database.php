@@ -20,7 +20,7 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$req = $pdo->prepare('SELECT * FROM vendeurs WHERE email = ?');
+		$req = $pdo->prepare('SELECT * FROM vendeur WHERE email = ?');
 
 	    $req->execute([$email]);
 	    $user = $req->fetch();
@@ -32,7 +32,7 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare('SELECT id_vendeurs FROM vendeurs WHERE email = ?');
+		$query = $pdo->prepare('SELECT id_vendeur FROM vendeur WHERE email = ?');
 		
 		$query->execute([$email]);
 		
@@ -59,11 +59,170 @@
 			$confirmation .= mt_rand(0,9);
 		}
 
-		$query = $pdo->prepare("INSERT INTO vendeurs SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?, confirmation = ?");
+		$query = $pdo->prepare("INSERT INTO vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?, confirmation = ?");
 
 		$password = password_hash($password, PASSWORD_BCRYPT);
 
 		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable, $confirmation, 0]);
+
+		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
+
+		$marequete->execute([$nom]);
+
+		$res = $marequete->fetch();
+
+		$query2 = $pdo->prepare("INSERT INTO mandat SET id_vendeur = ?, nombre = 0");
+
+		$query2->execute([$res->id_vendeur]);
+	}
+
+	function recupereMandat($nom_vendeur)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare("SELECT nombre FROM mandat INNER JOIN vendeur on vendeur.id_vendeur = mandat.id_vendeur WHERE nom = ?");
+		
+		$query->execute([$nom_vendeur]);
+
+		$res = $query->fetch();
+
+		return $res;
+	}
+
+	function updateMandat($nombre, $nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
+
+		$marequete->execute([$nom]);
+
+		$res = $marequete->fetch();
+
+		$query = $pdo->prepare("UPDATE mandat SET nombre = ? WHERE id_vendeur = ?");
+		
+		$query->execute([$nombre, $res->id_vendeur]);
+	}
+
+	function insertVente($nom, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
+
+		$marequete->execute([$nom]);
+
+		$res = $marequete->fetch();
+
+		if($livree == 'Oui')
+		{
+			$livree = 1;
+		}
+		if($livree == 'Non')
+		{
+			$livree = 0;
+		}
+
+		if($frais_mer == 'Oui')
+		{
+			$frais_mer = 1;
+		}
+		if($frais_mer == 'Non')
+		{
+			$frais_mer = 0;
+		}
+
+		if($garentie == 'Oui')
+		{
+			$garentie = 1;
+		}
+		if($garentie == 'Non')
+		{
+			$garentie = 0;
+		}
+
+		if($financement == 'Oui')
+		{
+			$financement = 1;
+		}
+		if($financement == 'Non')
+		{
+			$financement = 0;
+		}
+
+		$query = $pdo->prepare("INSERT INTO vente SET id_vendeur = ?, date_vente = ?, immatriculation = ?, livree = ?, frais_mer = ?, garentie = ?, financement = ?");
+
+		$query->execute([$res->id_vendeur, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement]);
+	}
+
+	function countVente($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT count(id_vente) as vente FROM vente WHERE id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?)');
+		
+		$query->execute([$nom]);
+		
+		$vente = $query->fetch();
+
+		if($vente == null)
+		{
+			return 0;
+		}
+
+		return $vente->vente;
+	}
+
+	function countLivree($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT count(id_vente) as livree from vente where id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND livree = 1');
+		
+		$query->execute([$nom]);
+		
+		$livree = $query->fetch();
+
+		return $livree->livree;
+	}
+
+	function countFraisMER($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT count(id_vente) as frais_mer from vente where id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND frais_mer = 1');
+		
+		$query->execute([$nom]);
+		
+		$frais_mer = $query->fetch();
+
+		return $frais_mer->frais_mer;
+	}
+
+	function countGarentie($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT count(id_vente) as garentie from vente where id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND garentie = 1');
+		
+		$query->execute([$nom]);
+		
+		$garentie = $query->fetch();
+
+		return $garentie->garentie;
+	}
+
+	function countFinancement($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT count(id_vente) as financement from vente where id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND financement = 1');
+		
+		$query->execute([$nom]);
+		
+		$financement = $query->fetch();
+
+		return $financement->financement;
 	}
 
 ?>
