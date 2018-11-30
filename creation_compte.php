@@ -128,7 +128,7 @@
 						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
 					</div>
 					<div class="form-group">
-						<input type="text" name="naissance" class="form-control" placeholder="Date de naissance" value="<?php echo $_POST['naissance']; ?>" required>
+						<input type="text" name="naissance" class="form-control" placeholder="Date de naissance (JJ/MM/AAAA)" value="<?php echo $_POST['naissance']; ?>" required>
 					</div>
 					<div class="form-group">
 						<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" value="<?php echo $_POST['telephone']; ?>" required>
@@ -169,7 +169,7 @@
 					<input type="text" name="prenom" class="form-control" placeholder="Prénom" required>
 				</div>
 				<div class="form-group">
-					<input type="text" name="naissance" class="form-control" placeholder="Date de naissance" required>
+					<input type="text" name="naissance" class="form-control" placeholder="Date de naissance (JJ/MM/AAAA)" required>
 				</div>
 				<div class="form-group">
 					<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" required>

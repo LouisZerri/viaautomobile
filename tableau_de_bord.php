@@ -15,6 +15,10 @@
 	$frais_mer = countFraisMER($nom);
 	$garentie = countGarentie($nom);
 	$financement = countFinancement($nom);
+
+	//Partie reservée au back-office
+
+	$semaine = recupereSemaine();
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
@@ -157,13 +161,13 @@ position: absolute;
 <div class="menu">
 	</br>
 	</br>
-	<img style="padding-left: 35px;" src="style/logo.svg" alt="logo" width="200"></br></br></br>
+	<img style="padding-left: 35px;" src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
 	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="#"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
-		<li><a id="change" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
+		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
 		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
@@ -172,7 +176,7 @@ position: absolute;
 
 <center>
 	<div class="container mt-1">
-		<p>Semaine du 5 au 10 Novembre</p>
+		<p>Semaine du <?= $semaine->debut_semaine ?> au <?= $semaine->fin_semaine ?> <?= $semaine->mois ?></p>
 		<div class="row ml-4">
 			<div class="col">
 				<h3><b>NOMBRE DE MANDATS</b></h3>
@@ -200,7 +204,7 @@ position: absolute;
 						</div>
 						<div class="col pl-2">
 							<button class="bouton1"><?= $garentie ?></button>
-							<span style="color: black;">Garenties</span>
+							<span style="color: black;">Garanties</span>
 						</div>
 						<div class="col pl-2">
 							<button class="bouton1"><?= $financement ?></button>
@@ -267,7 +271,7 @@ position: absolute;
 					</div>
 				</div>
 				<div class="col-sm">
-					<label>Garentie : </label>
+					<label>Garantie : </label>
 					<div class="form-check">
   						<input class="form-check-input" name="garentie[]" type="checkbox" value="Oui" id="defaultCheck1">
   						<label class="form-check-label" for="defaultCheck1">Oui</label>

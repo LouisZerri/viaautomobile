@@ -2,6 +2,8 @@
 
 	session_start();
 
+	date_default_timezone_set('Europe/Paris');
+
 	$nom = $_SESSION['auth']->nom;
 
 	require "bdd/database.php";
@@ -31,7 +33,7 @@
    		$is_financement = $financement;
 	}
 
-	insertVente($nom, $_POST['date_vente'], $_POST['immatriculation'], $is_livree, $is_frais_mer, $is_garentie, $is_financement);
+	insertVente($nom, $_POST['date_vente'], $_POST['immatriculation'], $is_livree, $is_frais_mer, $is_garentie, $is_financement, date('d/m/Y'));
     header('Location: tableau_de_bord.php');
-
+?>
 

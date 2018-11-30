@@ -11,7 +11,12 @@
 	}
 	else
 	{
-		updateMandat($_POST['nombre'], $nom);
+		$current_mandat = recupereMandat($nom);
+
+		$current_mandat->nombre += $_POST['nombre'];
+
+		updateMandat($current_mandat->nombre, $nom);
+
 	    header('Location: tableau_de_bord.php');
 	}
 

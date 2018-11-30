@@ -63,7 +63,7 @@
 
 <div style="margin-left: 20px; width: 40%; position: fixed; bottom: 20px;"class="card">
 	<div class="card-body">
-		<img src="style/logo.svg" alt="logo" width="200"></br></br>
+		<img src="style/new_logo.svg" alt="logo" width="200"></br></br>
     	<span class="card-text"><b>Bonjour <?= $prenom; ?> <?= $nom ?> !</b></span></br>
     	<span>Que souhaitez-vous faire ?</span>
   	</div>

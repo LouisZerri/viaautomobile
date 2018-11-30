@@ -87,6 +87,7 @@
 		$res = $query->fetch();
 
 		return $res;
+
 	}
 
 	function updateMandat($nombre, $nom)
@@ -104,7 +105,7 @@
 		$query->execute([$nombre, $res->id_vendeur]);
 	}
 
-	function insertVente($nom, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement)
+	function insertVente($nom, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement, $datetime)
 	{
 		$pdo = connexionBaseDeDonnee();
 
@@ -150,9 +151,9 @@
 			$financement = 0;
 		}
 
-		$query = $pdo->prepare("INSERT INTO vente SET id_vendeur = ?, date_vente = ?, immatriculation = ?, livree = ?, frais_mer = ?, garentie = ?, financement = ?");
+		$query = $pdo->prepare("INSERT INTO vente SET id_vendeur = ?, date_vente = ?, immatriculation = ?, livree = ?, frais_mer = ?, garentie = ?, financement = ?, date_time = ?");
 
-		$query->execute([$res->id_vendeur, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement]);
+		$query->execute([$res->id_vendeur, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement, $datetime]);
 	}
 
 	function countVente($nom)
@@ -223,6 +224,62 @@
 		$financement = $query->fetch();
 
 		return $financement->financement;
+	}
+
+	function getAllVente($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT * FROM vente WHERE id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?)');
+
+		$query->execute([$nom]);
+
+		$donnees = $query->fetchAll();
+
+		return $donnees;
+	}
+
+	function deleteHistorique($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('DELETE FROM vente WHERE id_vente = ?');
+
+		$query->execute([$id]);
+	}
+
+
+	//Fonctions qui correspond au back-office
+
+	function recupereSemaine()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->query('SELECT * FROM semaine');
+
+		$query->execute();
+
+		$res = $query->fetch();
+
+		return $res;
+	}
+
+	function updateSemaine($date_debut, $date_fin, $mois)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('UPDATE semaine SET debut_semaine = ?, fin_semaine = ?, mois = ?');
+
+		$query->execute([$date_debut, $date_fin, $mois]);
+	}
+
+	function updateCompteur($compteur)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('UPDATE mandat SET nombre = ?');
+
+		$query->execute([$compteur]);
 	}
 
 ?>
