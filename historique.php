@@ -93,13 +93,13 @@ li:hover
 <div class="menu">
 	</br>
 	</br>
-	<img style="padding-left: 35px;" src="style/logo.svg" alt="logo" width="200"></br></br></br>
+	<img style="padding-left: 35px;" src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
 	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
-		<li><a id="change" href="#"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
+		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
-		<li><a id="change" href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
+		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
 		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
@@ -113,7 +113,7 @@ li:hover
 				<div class="form-group">
 					<select style="width: 50%; background-color: #531B51; color: white;" class="form-control" name="monselect">
 						<option selected="selected"><span>Type d'action</span></option>
-  						<option><span>Ventes</span></option>
+						<option>Ventes</option>
 					</select>
   				</div>
 			</form>
@@ -121,9 +121,20 @@ li:hover
 		<div class="col mt-5">
 			<form action="" method="POST">
 				<div class="form-group">
-					<select style="width: 50%; background-color: #531B51; color: white;" class="form-control">
+					<select name="mois" style="width: 50%; background-color: #531B51; color: white;" class="form-control">
 						<option selected="selected"><span>Période</span></option>
-  						<option value="1"><span>Ventes</span></option>
+						<option>Janvier</option>
+						<option>Février</option>
+						<option>Mars</option>
+						<option>Avril</option>
+						<option>Mai</option>
+						<option>Juin</option>
+						<option>Juillet</option>
+						<option>Août</option>
+						<option>Septembre</option>
+						<option>Octobre</option>
+						<option>Novembre</option>
+						<option>Décembre</option>
 					</select>
   				</div>
 			</form>
@@ -142,8 +153,8 @@ li:hover
 		</thead>
 		<tbody>
 			<?php foreach($donnees as $res): ?>
-				<tr>
-					<td><?= $res->date_vente; ?></td>
+				<tr id="<?= $res->id_vente; ?>">
+					<td id="date_vente"><?= $res->date_vente; ?></td>
 					<td><?= $res->immatriculation; ?></td>
 					<?php if($res->livree == 1): ?>
 						<td style="font-weight: bold; color: ##531B51;">Oui</td>
@@ -183,6 +194,54 @@ li:hover
 		    // Et j'affiche seulement le Div que je souhaite
 		    $('#'+id).show(1000);
 		});
+
+		$('select[name="mois"]').change(function(){
+
+			
+			var mois = $('select[name="mois"]').val();
+			var td = document.getElementsByTagName('tr')
+			if(mois == 'Période')
+			{
+				window.location.reload()
+			}
+			switch(mois)
+			{
+				case 'Janvier': mois = '01'; break;
+				case 'Février': mois = '02'; break;
+				case 'Mars': mois = '03'; break;
+				case 'Avril': mois = '04'; break;
+				case 'Mai': mois = '05'; break;
+				case 'Juin': mois = '06'; break;
+				case 'Juillet': mois = '07'; break;
+				case 'Août': mois = '08'; break;
+				case 'Septembre': mois = '09'; break;
+				case 'Octobre': mois = '10'; break;
+				case 'Novembre': mois = '11'; break;
+				case 'Décembre': mois = '12'; break;
+			}
+			for(var i = 1; i < td.length + 2; i++)
+			{
+				date_vente = $('#'+i).find("td").html();
+				console.log(date_vente)
+				if(date_vente === undefined)
+				{
+				}
+				else
+				{
+					date = date_vente.substring(3,5);
+					if(mois != date)
+					{
+						$('#'+i).hide(1000)
+					}
+				}
+			}
+
+			
+			
+
+		});
+
+		
 	});
 
 
