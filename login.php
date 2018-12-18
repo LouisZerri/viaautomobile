@@ -1,14 +1,14 @@
 <?php
-	
-	session_start();
 
 	require 'include/header.php';
 
+	session_start();
+	
 	if(!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password']))
 	{
 	    require_once 'bdd/database.php';
 
-		$user = connexionApplication($_POST['email']);
+		$user = vendeurExiste($_POST['email']);
 
 	    if($user == null)
 	    {

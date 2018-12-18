@@ -1,8 +1,10 @@
 <?php 
 
-	session_start();
 	require "include/header.php";
+	require "include/functions.php";
 
+	session_start();
+	
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
 ?>

@@ -1,6 +1,9 @@
 <?php
 	
 	require "include/header.php";
+	require "include/functions.php";
+
+	logged_only();
 
 	if(!empty($_POST) && !empty($_POST['semaine_deb']) && !empty($_POST['semaine_fin']) && !empty($_POST['mois']))
 	{

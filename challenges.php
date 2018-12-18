@@ -1,8 +1,10 @@
 <?php 
 
-	session_start();
 	require "include/header.php";
 	require "bdd/database.php";
+	require "include/functions.php";
+
+	logged_only();
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;

@@ -1,6 +1,8 @@
 <?php
 
-	session_start();
+	require "include/functions.php";
+
+	logged_only();
 
 	date_default_timezone_set('Europe/Paris');
 

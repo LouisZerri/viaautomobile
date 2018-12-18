@@ -54,7 +54,13 @@
 		{
 			$_POST['telephone'] = formatTelephone($_POST['telephone']);
 
-			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],0);
+			$token = str_random(60);
+
+			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],$token);
+
+			$user_id = recupererDernierID();
+
+			sendEmailForConfirmation($_POST['email'],$user_id->last_id, $token);
 
 			header('Location: valide_inscription.php');
 		}

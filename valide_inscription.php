@@ -50,7 +50,6 @@
 		<center>
     		<b>Merci pour votre inscription</b></br></br>
     		<p>Un email de confirmation a été envoyé</br>à votre adresse email</p>
-    		<a style="background-color: #9D1458;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
     	</center>
   	</div>
 </div>
