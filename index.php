@@ -46,7 +46,7 @@
   	<?php endforeach; ?>
   	<?php unset($_SESSION['flash']); ?>
 <?php endif; ?>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
+<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div style="padding-top: 200px; padding-left: 20px;">
 	<span id="p1">CHALLENGEZ</span></br>
 	<b id="p2">VOS COLLABORATEURS</b>

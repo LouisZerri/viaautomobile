@@ -71,32 +71,7 @@ span
 	color: white;
 }
 
-#change
-{
-	color: #531B51;
-}
 
-#change:hover
-{
-	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
-}
-
-li:hover
-{
-	background-color: #531B51;
-	border:1px solid #531B51;
-	-moz-border-radius: 10px 0;
-	-webkit-border-radius: 10px 0;
-	border-radius: 10px 0;
-	width: 80%;
-	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
-}
 	/*-----------------------------------------------*/
 
 #fade { /*--Masque opaque noir de fond--*/
@@ -144,19 +119,25 @@ position: absolute;
 	border:none;
 	color:#fff;
 }
+
+#change
+{
+	color: #531B51;
+	text-decoration: none;
+	list-style-type: none;
+}
+
+#change:hover
+{
+	color: white;
+	transition:all 0.10s;
+	border:none;
+	padding: 10px 10px 10px 10px;
+	border-radius: 20px;
+	background: #754974;
+}
+
 </style>
-<div class="container">
-	<?php if(!empty($errors)): ?>
-		<div class="alert alert-danger">
-			<p>Vous n'avez pas rempli le formulaire correctement : </p>
-			<ul>
-				<?php foreach ($errors as $error): ?>
-					<li><?= $error; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	<?php endif; ?>
-</div>
 <div>
 	<hr class="separation" />
 </div>
@@ -303,7 +284,7 @@ position: absolute;
 
 </div>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 $(document).ready(function() {

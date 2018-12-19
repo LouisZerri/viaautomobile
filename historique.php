@@ -66,28 +66,18 @@ span
 #change
 {
 	color: #531B51;
+	text-decoration: none;
+	list-style-type: none;
 }
 
 #change:hover
 {
 	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
-}
-
-li:hover
-{
-	background-color: #531B51;
-	border:1px solid #531B51;
-	-moz-border-radius: 10px 0;
-	-webkit-border-radius: 10px 0;
-	border-radius: 10px 0;
-	width: 80%;
-	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
+	transition:all 0.10s;
+	border:none;
+	padding: 10px 10px 10px 10px;
+	border-radius: 20px;
+	background: #754974;
 }
 </style>
 <div>

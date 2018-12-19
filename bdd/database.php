@@ -8,7 +8,8 @@
 	function connexionBaseDeDonnee()
 	{
 		$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', '');
-
+		//$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', 'iE7ZOy5dsql');
+		
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
