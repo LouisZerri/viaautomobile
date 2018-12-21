@@ -96,8 +96,7 @@
 	<div class="card" style="width: 50%; height: 50%; margin-left: 280px;">
 	<center>
 		</br>
-		<img src="style/logo_couleur.png" alt="logo" width="400" height="100">
-		</br>
+		<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 		</br>
 	</center>	
 	  	<div class="card-body">
@@ -110,7 +109,7 @@
 				</div>
 				<center><a href="mdp_oublie.php">Mot de passe oublié ?</a></center></br>
 				<center>
-					<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Me connecter</span></button>
+					<button style="background-color: #9D1458;" type="submit" class="btn btn-outline-light"><span style="color: white;">connexion</span></button>
 				</center>
 			</form>
 	  	</div>

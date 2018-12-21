@@ -154,11 +154,22 @@ position: absolute;
 		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="padding-left: 35px; height: 160px;" src="style/logo_gris.svg" alt="logo" width="200">
+	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 
 <center>
 	<div class="container mt-1">
+	<?php if(isset($_SESSION['flash'])): ?>
+		<?php foreach($_SESSION['flash'] as $type => $message): ?>
+			<div style="margin-left: 150px;" class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+				<?= $message; ?>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php endforeach; ?>
+		<?php unset($_SESSION['flash']); ?>
+	<?php endif; ?>
 		<p>Semaine du <?= $semaine->debut_semaine ?> au <?= $semaine->fin_semaine ?> <?= $semaine->mois ?></p>
 		<div class="row ml-4">
 			<div class="col">
@@ -218,6 +229,17 @@ position: absolute;
 
 <div id="popupdeux" class="popup_block">
 	<div class="container">
+		<?php if(isset($_SESSION['flash'])): ?>
+			<?php foreach($_SESSION['flash'] as $type => $message): ?>
+				<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+					<?= $message; ?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<?php endforeach; ?>
+			<?php unset($_SESSION['flash']); ?>
+		<?php endif; ?>
 		<center>
 			<h2>AJOUT D'UNE VENTE</h2></br> 
 		</center>

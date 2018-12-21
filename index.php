@@ -29,10 +29,11 @@
 
 	#fin 
 	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
+		position: absolute;
+  		right: 0;
+  		bottom:0;
+		font-size: 12px;
+		padding-right: 20px;
 	}
 </style>
 <?php if(isset($_SESSION['flash'])): ?>

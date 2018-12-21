@@ -71,13 +71,13 @@
   	</div>
   	<div style="padding-left: 20px;" class="row">
 	    <div class="col-sm">
-	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-outline-light" href="tableau_de_bord.php" role="button"><span>Tableau de bord</span></a>
+	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="tableau_de_bord.php" role="button"><span>Tableau de bord</span></a>
 	    </div>
 	    <div style="padding-left: 60px;" class="col-sm">
-	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-outline-light" href="mandats.php" role="button"><span>Mandats</span></a>
+	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="mandats.php" role="button"><span>Mandats</span></a>
 	    </div>
 	    <div style="padding-left: 20px;" class="col-sm">
-	      <a style="text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-light" href="ventes.php" role="button"><span>Ventes</span></a>
+	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="ventes.php" role="button"><span>Ventes</span></a>
 	    </div>
 		</br>
   	</div>

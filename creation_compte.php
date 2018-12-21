@@ -101,8 +101,17 @@
 		margin-left: 325px;
 		margin-top: 75px;
 	}
+	#fin 
+	{
+		position: fixed;
+  		right: 0;
+  		bottom:0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
+	}
 </style>
-<img style="float: right; padding-bottom: 150px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+<img style="right: 0; padding-bottom: 140px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
 	<?php if(!empty($errors)): ?>
 		<div class="alert alert-danger">
@@ -118,8 +127,7 @@
 	<div class="card">
 		<center>
 			</br>
-			<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
-			</br>
+			<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 			</br>
 		</center>	
 		<div class="card-body">
@@ -212,4 +220,8 @@
 	</div>
 </div>
 </br>
+<div id="fin">
+	<p>Powered by Pepperbay</p>
+</div>
+
 <?php require "include/footer.php"; ?>

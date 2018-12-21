@@ -310,6 +310,23 @@
 		$req->execute([$password]);
 	}
 
+	function immatriculationExist($immatriculation)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM vente WHERE immatriculation = ?');
+
+		$req->execute([$immatriculation]);
+
+		$immatriculation = $req->fetch();
+
+		if($immatriculation != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	//Fonctions qui correspond au back-office
 
