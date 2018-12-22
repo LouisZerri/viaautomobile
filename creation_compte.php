@@ -97,21 +97,28 @@
 
 	.card
 	{
-		width: 40%;
-		margin-left: 325px;
-		margin-top: 75px;
+		/*width: 40%;
+		margin: 0 auto;*/
+		position: absolute; 
+		width: 30%; 
+		top:10; 
+		bottom:10; 
+		left:0; 
+		right: 0; 
+		margin: auto;
 	}
+	
 	#fin 
 	{
 		position: fixed;
   		right: 0;
-  		bottom:0;
+  		bottom: 0;
 		font-size: 12px;
 		padding-right: 20px;
 		color: white;
 	}
 </style>
-<img style="right: 0; padding-bottom: 140px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+<img style="right: 0; padding-bottom: 170px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
 	<?php if(!empty($errors)): ?>
 		<div class="alert alert-danger">

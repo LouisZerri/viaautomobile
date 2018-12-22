@@ -59,9 +59,14 @@
 
 	.card
 	{
-		width: 40%;
-		margin-left: 400px;
-		margin-top: 125px;
+		position: absolute; 
+		width: 40%; 
+		height: 50%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
 	}
 
 	.form-control
@@ -88,16 +93,15 @@
 <div class="card">
 	<center>
 		</br>
-		<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
+		<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 	</center>
 	<div class="card-body">
-		</br>
 		<center>
     		<b>Vous avez oublié votre de mot de passe ?</b></br></br>
     		<form action="" method="POST">
 				<div class="form-group">
 					<input type="text" name="email" class="form-control" placeholder="Saissisez votre adresse email" required>
-				</div>
+				</div></br>
 				<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">M'envoyer un nouveau mot de passe</span></button>
 			</form>
     	</center>

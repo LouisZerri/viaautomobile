@@ -32,9 +32,14 @@
 
 	.card
 	{
-		width: 40%;
-		margin-left: 400px;
-		margin-top: 125px;
+		position: absolute; 
+		width: 40%; 
+		height: 45%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
 	}
 
 </style>
@@ -43,7 +48,7 @@
 <div class="card">
 	<center>
 		</br>
-		<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
+		<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 	</center>
 	<div class="card-body">
 		</br>

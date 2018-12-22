@@ -29,13 +29,15 @@
 
 	#fin 
 	{
-		position: absolute;
+		position: fixed;
   		right: 0;
-  		bottom:0;
+  		bottom: 0;
 		font-size: 12px;
 		padding-right: 20px;
+		color: white;
 	}
 </style>
+<img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <?php if(isset($_SESSION['flash'])): ?>
 	<?php foreach($_SESSION['flash'] as $type => $message): ?>
 		<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
@@ -47,15 +49,17 @@
   	<?php endforeach; ?>
   	<?php unset($_SESSION['flash']); ?>
 <?php endif; ?>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
-<div style="padding-top: 200px; padding-left: 20px;">
-	<span id="p1">CHALLENGEZ</span></br>
-	<b id="p2">VOS COLLABORATEURS</b>
+<div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
+	<div style="position: absolute; margin-top: 50vh; transform: translateY(70%); margin: 0 auto;">
+		<div style="padding-left: 20px;">
+			<span id="p1">CHALLENGEZ</span></br>
+			<b id="p2">VOS COLLABORATEURS</b>
+		</div>
+
+		<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
+		<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
+	</div>
 </div>
-
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
-
 
 <div id="fin">
 	<p>Powered by Pepperbay</p>
