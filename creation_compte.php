@@ -101,8 +101,9 @@
 		margin: 0 auto;*/
 		position: absolute; 
 		width: 30%; 
-		top:10; 
-		bottom:10; 
+		height: 90%; 
+		top:0; 
+		bottom:0; 
 		left:0; 
 		right: 0; 
 		margin: auto;
@@ -117,6 +118,20 @@
 		padding-right: 20px;
 		color: white;
 	}
+
+	@media screen and (min-width: 1390px) and (max-width: 5000px) {
+  		.card {
+    		position: absolute; 
+			width: 20%; 
+			height: 50%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+  		}
+	}
+}
 </style>
 <img style="right: 0; padding-bottom: 170px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
@@ -143,7 +158,7 @@
 			<?php if(!empty($_POST)): ?>
 				<form action="" method="POST">
 					<div class="form-group">
-						<input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
+						<input id="nom" type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
 					</div>
 					<div class="form-group">
 						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
@@ -230,5 +245,20 @@
 <div id="fin">
 	<p>Powered by Pepperbay</p>
 </div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script type="text/javascript">
 
+$(document).ready(function() {
+
+	$('#nom').change(function(){
+		var nom = $("#nom").val();
+		console.log("coucou");
+	})
+
+
+
+
+
+})
+</script>
 <?php require "include/footer.php"; ?>

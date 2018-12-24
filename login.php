@@ -84,18 +84,31 @@
 	.card
 	{
 		position: absolute; 
-		width: 45%; 
+		width: 40%; 
 		height: 50%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
+		top: 0; 
+		bottom: 0; 
+		left: 0; 
+		right: 0;
 		margin: auto;
+	}
+
+	@media screen and (min-width: 1390px) and (max-width: 5000px) {
+  		.card {
+    		position: absolute; 
+			width: 25%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+  		}
 	}
 
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
-<div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0;" class="container">
+<div class="container">
 		<?php if(isset($_SESSION['flash'])): ?>
 		  <?php foreach($_SESSION['flash'] as $type => $message): ?>
 			<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
