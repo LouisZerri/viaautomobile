@@ -69,6 +69,7 @@
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
+
 	html, body { 
 	  margin:0;
 	  padding:0;
@@ -158,7 +159,7 @@
 			<?php if(!empty($_POST)): ?>
 				<form action="" method="POST">
 					<div class="form-group">
-						<input id="nom" type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
+						<input type="text" name="nom" class="form-control is-invalid" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
 					</div>
 					<div class="form-group">
 						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
@@ -227,7 +228,7 @@
 				</div>
 				<div class="form-group">
 					<div class="input-group mb-3">
-	  					<input id="password" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
+	  					<input id="password" data-toggle="popover" title="Caractéristiques du mot de passe" data-content="<ul><li>Une majuscule</li><li>Une minuscule</li><li>Un chiffre</li><li>Un caractère spécial</li><li>Minimum 9 caractères</li></ul>" data-html="true" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
 	  				</div>
 				</div>
 				<div class="form-group">
@@ -245,14 +246,143 @@
 <div id="fin">
 	<p>Powered by Pepperbay</p>
 </div>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+
 <script type="text/javascript">
+
+function formatDate(date)
+{
+	var string = date.split("/");
+
+	var newdate = string.join("");
+
+	if(newdate.length == 8)
+	{
+		return true;
+	}
+	
+	return false;
+}
 
 $(document).ready(function() {
 
-	$('#nom').change(function(){
-		var nom = $("#nom").val();
-		console.log("coucou");
+	$('input[name="nom"]').change(function(){
+		var nom = $(this).val();
+		
+		if(nom != undefined && nom != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="prenom"]').change(function(){
+		var prenom = $(this).val();
+		
+		if(prenom != undefined && prenom != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+	
+	$('input[name="naissance"]').change(function(){
+		var naissance = $(this).val();
+		
+		if(naissance != undefined && naissance != "" && formatDate(naissance))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="telephone"]').change(function(){
+		var telephone = $(this).val();
+
+		tel = telephone.replace(/[\.,\s]/g, '');
+
+		if(telephone != undefined && telephone != "" && tel.match(/^(\+33|0033|0)(6|7)[0-9]{8}$/g))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('select[name="site"]').change(function(){
+		var site = $(this).val();
+
+		if(site != undefined && site != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="email"]').change(function(){
+		var email = $(this).val();
+
+		if(email != undefined && email != "" && email.match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('[data-toggle="popover"]').popover()
+
+	$('input[name="password"]').change(function(){
+		var data = $(this).attr("data-content")
+
+		var content = $(this).val();
+
+		var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{9,}$/;
+
+		if(reg.test(content))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+	})
+
+	$('input[name="password_confirm"]').change(function(){
+		var mdp_confirm = $(this).val();
+		var mdp = $('input[name="password"]').val();
+
+		if(mdp_confirm != undefined && mdp_confirm != "" && mdp_confirm == mdp)
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
 	})
 
 
