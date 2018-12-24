@@ -78,6 +78,46 @@ span
 	border-radius: 20px;
 	background: #754974;
 }
+
+@media screen and (min-width: 1390px) and (max-width: 5000px) {
+
+	#screen
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		padding-top: 20px;
+		zoom: 200%;
+
+	}
+
+	.menu
+	{
+		zoom: 150%;
+	}
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 400px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+
+
+
+
+
+}
 </style>
 <div class="container">
 	<?php if(!empty($errors)): ?>
@@ -107,7 +147,7 @@ span
 	</ul>
 	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
-<div class="container mt-2" style="padding-left: 200px;">
+<div id="screen" class="container mt-2" style="padding-left: 200px;">
 	<h3><b>LES CHALLENGES EN COURS</b></h3>
 	<div class="row mt-3">
 		<div class="col">

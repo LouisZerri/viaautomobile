@@ -82,6 +82,83 @@ span
 	border-radius: 20px;
 	background: #754974;
 }
+
+#ma_table_Ventes
+{
+	width: 70%;
+}
+
+@media screen and (min-width: 1390px) and (max-width: 5000px) {
+
+	.menu
+	{
+		zoom: 150%;
+	}
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 400px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+
+	h3
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 250px;
+		padding-top: 50px;
+		zoom: 200%;
+	}
+
+	select
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 170px;
+		margin-top: 150px;
+	}
+
+	table
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%;   
+		right: 0; 
+		margin: auto;
+		zoom: 250%;
+		padding-top: 75px;
+		margin-right: 50px;
+		display: none;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 <div class="separation"></div>
 <div class="menu">
@@ -134,7 +211,9 @@ span
 			</form>
 		</div>
 	</div>
-	<table id="ma_table_Ventes" style="width: 70%; display: none;" class="table table-striped ml-5 mt-5">
+	</div>
+
+	<table id="ma_table_Ventes" class="table table-striped ml-5 mt-5">
 		<thead>
 			<tr>
   				<th scope="col">Date de vente</th>
@@ -175,7 +254,6 @@ span
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
 <script type="text/javascript">
 	
 	$(document).ready(function() {

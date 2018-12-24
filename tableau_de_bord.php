@@ -201,6 +201,24 @@ position: absolute;
 		color: #A73C97; 
 		font-size: 45px;
 	}
+
+	.menu
+	{
+		zoom: 150%;
+	}
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 400px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
 }
 
 </style>
