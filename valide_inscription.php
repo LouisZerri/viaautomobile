@@ -24,10 +24,12 @@
 
 	#fin 
 	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
+		position: fixed;
+  		right: 0;
+  		bottom: 0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
 	}
 
 	.card
@@ -42,8 +44,21 @@
 		margin: auto;
 	}
 
+	@media screen and (min-width: 1390px) and (max-width: 5000px) {
+  		.card {
+    		position: absolute; 
+			width: 25%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+  		}
+	}
+
 </style>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
+<img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 
 <div class="card">
 	<center>
