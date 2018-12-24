@@ -30,12 +30,15 @@ body
 
 .separation
 {
-	clear: both;
+	
 	position: absolute;
 	margin-left: 270px;
-	height: 570px;
+	height: 100%;
 	width: 1px;
 	background: grey;
+	top: 0;
+	bottom: 0;
+	opacity: 0.2;
 }
 
 .separation2
@@ -75,7 +78,6 @@ span
 	border-radius: 20px;
 	background: #754974;
 }
-
 </style>
 <div class="container">
 	<?php if(!empty($errors)): ?>
@@ -89,10 +91,8 @@ span
 		</div>
 	<?php endif; ?>
 </div>
-<div>
-	<hr class="separation" style="position: fixed;"/>
-</div>
-<div class="menu" style="position: fixed;">
+<div class="separation"></div>
+<div class="menu">
 	</br>
 	</br>
 	<img style="padding-left: 35px;" src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
@@ -105,7 +105,7 @@ span
 		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="padding-left: 35px; height: 160px;" src="style/logo_gris.svg" alt="logo" width="200">
+	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 <div class="container mt-2" style="padding-left: 200px;">
 	<h3><b>LES CHALLENGES EN COURS</b></h3>

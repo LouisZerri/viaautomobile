@@ -42,12 +42,15 @@ body
 
 .separation
 {
-	clear: both;
+	
 	position: absolute;
 	margin-left: 270px;
-	height: 570px;
+	height: 100%;
 	width: 1px;
 	background: grey;
+	top: 0;
+	bottom: 0;
+	opacity: 0.2;
 }
 
 .separation2
@@ -137,10 +140,71 @@ position: absolute;
 	background: #754974;
 }
 
+#dont
+{
+	color: #A73C97; 
+	font-size: 20px;
+}
+
+@media screen and (min-width: 1390px) and (max-width: 5000px) {
+	#colonne1 {
+		position: absolute; 
+		width: 60%; 
+		height: 60%;
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 350px;
+		font-size: 2em;
+
+	}
+
+	#colonne2{
+		position: absolute; 
+		width: 38%; 
+		height: 60%;
+		bottom:0;
+		top: 0;  
+		margin: auto;
+		margin-left: 600px;
+		margin-bottom: 350px;
+		font-size: 2em;
+	}
+
+	.separation2
+	{
+		clear: both;
+		position: absolute;
+		height: 800px;
+		width: 3px;
+		margin-left: 500px;
+		margin-top: 200px;
+		background:  #531B51;
+	}
+
+	.bouton1
+	{
+		width: 150px;
+		height: 150px;
+		background:#A73C97;
+		font:bold 100px Montserrat;
+		border-radius:50%;
+		border:none;
+		color:#fff;
+	}
+
+	#dont
+	{
+		color: #A73C97; 
+		font-size: 45px;
+	}
+}
+
 </style>
-<div>
-	<hr class="separation" />
-</div>
+<div class="separation"></div>
 <div class="menu">
 	</br>
 	</br>
@@ -172,7 +236,7 @@ position: absolute;
 	<?php endif; ?>
 		<p>Semaine du <?= $semaine->debut_semaine ?> au <?= $semaine->fin_semaine ?> <?= $semaine->mois ?></p>
 		<div class="row ml-4">
-			<div class="col">
+			<div id="colonne1" class="col">
 				<h3><b>NOMBRE DE MANDATS</b></h3>
 				<p style="font-size: 7em;"><?= $donnee->nombre ?></p>
 				<p style="font-size: 2em;">Mandats</p></br>
@@ -181,19 +245,19 @@ position: absolute;
 			<div>
 				<hr class="separation2" />
 			</div>
-			<div class="col">
+			<div id="colonne2" class="col">
 				<center>
 					<h3><b>NOMBRE DE VENTES</b></h3>
 					<p style="font-size: 7em;"><?= $nb_vente; ?></p>
 					<p style="font-size: 2em;">Ventes</p>
-					<p style="color: #A73C97; font-size: 20px;">dont</p></br>
+					<p id="dont">dont</p></br>
 					<div class="row pl-4">
 						<div class="col pl-2">
 							<button class="bouton1"><?= $livree ?></button>
 							<span style="color: black;">Livraisons</span>
 						</div>
 						<div class="col">
-							<button class="bouton1"><?= $frais_mer ?></button>
+							<button class="bouton1"><?= $frais_mer ?></button></br>
 							<span style="color: black;">Frais de mise en service</span>
 						</div>
 						<div class="col pl-2">

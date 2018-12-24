@@ -36,14 +36,6 @@
 		color: #531B51;
 	}
 
-	#fin 
-	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
-	}
-
 	a
 	{
 		color: black;
@@ -60,23 +52,51 @@
 		font-size: 10px;
 	}
 
-</style>
-<img style="float: right; padding-bottom: 170px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+	.card {
+		position: absolute; 
+		width: 40%; 
+		height: 50%;
+		bottom:0; 
+		left:0; 
+		margin: auto;
+		margin-left: 40px;
+		margin-bottom: 40px;
+		border-radius: 20px;
 
-<div style="margin-left: 20px; width: 40%; position: fixed; bottom: 20px;"class="card">
+
+	}
+
+	@media screen and (min-width: 1390px) and (max-width: 5000px) {
+  		.card {
+    		position: absolute; 
+			width: 20%; 
+			height: 25%;
+			bottom:0; 
+			left:0;  
+			margin: auto;
+			margin-left: 50px;
+			margin-bottom: 50px;
+			border-radius: 20px;
+  		}
+	}
+
+</style>
+<img style="float: right; padding-bottom: 170px; opacity: 0.5;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+
+<div class="card">
 	<div class="card-body">
-		<img src="style/new_logo.svg" alt="logo" width="200"></br></br>
+		<img src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
     	<span class="card-text"><b>Bonjour <?= $prenom; ?> <?= $nom ?> !</b></span></br>
     	<span>Que souhaitez-vous faire ?</span>
   	</div>
   	<div style="padding-left: 20px;" class="row">
-	    <div class="col-sm">
+	    <div class="col">
 	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="tableau_de_bord.php" role="button"><span>Tableau de bord</span></a>
 	    </div>
-	    <div style="padding-left: 60px;" class="col-sm">
+	    <div style="padding-left: 40px;" class="col">
 	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="mandats.php" role="button"><span>Mandats</span></a>
 	    </div>
-	    <div style="padding-left: 20px;" class="col-sm">
+	    <div style="padding-left: 20px;" class="col">
 	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="ventes.php" role="button"><span>Ventes</span></a>
 	    </div>
 		</br>
