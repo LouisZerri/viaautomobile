@@ -35,7 +35,7 @@
 	.card
 	{
 		position: absolute; 
-		width: 40%; 
+		width: 35%; 
 		height: 45%; 
 		top:0; 
 		bottom:0; 
@@ -48,7 +48,7 @@
 	@media screen and (min-width: 1390px) and (max-width: 5000px) {
   		.card {
     		position: absolute; 
-			width: 25%; 
+			width: 20%; 
 			height: 25%; 
 			top:0; 
 			bottom:0; 

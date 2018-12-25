@@ -48,6 +48,7 @@
 		right: 0; 
 		margin: auto;
 	}
+	
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <?php if(isset($_SESSION['flash'])): ?>

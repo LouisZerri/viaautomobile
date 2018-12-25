@@ -52,39 +52,55 @@
 	  background-size: cover; /* version standardisée */
 	}
 
-	#p1
+    .form-control
 	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#p2
-	{
-		color: white;
-		font-size: 5em;
+		font-size: 10px;
 	}
 
 	#fin 
 	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
+		position: fixed;
+  		right: 0;
+  		bottom: 0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
 	}
 
 	.card
 	{
-		width: 40%;
-		margin-left: 400px;
-		margin-top: 125px;
+		position: absolute; 
+		width: 35%; 
+		height: 50%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		border-radius: 15px;
+	}
+
+    @media screen and (min-width: 1390px) and (max-width: 5000px) {
+  		.card {
+    		position: absolute; 
+			width: 20%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
 	}
 
 </style>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
+<img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="card">
 	<center>
 		</br>
-		<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
+		<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
+        </br>
 	</center>
     <div class="card-body">
         <form action="" method="POST">
@@ -94,7 +110,7 @@
             <div class="form-group">
                 <input type="password" name="password_confirm" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
             </div>
-            <center>
+            <center></br>
                 <button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Valider</span></button>
             </center>
         </form>

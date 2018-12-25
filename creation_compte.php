@@ -122,8 +122,8 @@
 	@media screen and (min-width: 1390px) and (max-width: 5000px) {
   		.card {
     		position: absolute; 
-			width: 20%; 
-			height: 50%; 
+			width: 15%; 
+			height: 47%; 
 			top:0; 
 			bottom:0; 
 			left:0; 
@@ -131,6 +131,7 @@
 			margin: auto;
 			border-radius: 15px;
   		}
+		  
 	}
 }
 </style>
