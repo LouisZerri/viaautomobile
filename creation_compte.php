@@ -98,8 +98,7 @@
 
 	.card
 	{
-		/*width: 40%;
-		margin: 0 auto;*/
+		border-radius: 15px;
 		position: absolute; 
 		width: 30%; 
 		height: 90%; 
@@ -130,6 +129,7 @@
 			left:0; 
 			right: 0; 
 			margin: auto;
+			border-radius: 15px;
   		}
 	}
 }

@@ -69,6 +69,7 @@
 		left:0; 
 		right: 0; 
 		margin: auto;
+		border-radius: 15px;
 	}
 
 	.form-control
@@ -86,6 +87,7 @@
 			left:0; 
 			right: 0; 
 			margin: auto;
+			border-radius: 15px;
   		}
 	}
 

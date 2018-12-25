@@ -148,17 +148,6 @@ span
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
 </style>
 <div class="separation"></div>
 <div class="menu">

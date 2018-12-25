@@ -91,6 +91,7 @@
 		left: 0; 
 		right: 0;
 		margin: auto;
+		border-radius: 15px;
 	}
 
 	@media screen and (min-width: 1390px) and (max-width: 5000px) {
@@ -103,6 +104,7 @@
 			left:0; 
 			right: 0; 
 			margin: auto;
+			border-radius: 15px;
   		}
 	}
 
