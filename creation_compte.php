@@ -54,7 +54,13 @@
 		{
 			$_POST['telephone'] = formatTelephone($_POST['telephone']);
 
-			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],0);
+			$token = str_random(60);
+
+			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],$token);
+
+			$user_id = recupererDernierID();
+
+			sendEmailForConfirmation($_POST['email'],$user_id->last_id, $token);
 
 			header('Location: valide_inscription.php');
 		}
@@ -63,6 +69,7 @@
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
+
 	html, body { 
 	  margin:0;
 	  padding:0;
@@ -91,12 +98,57 @@
 
 	.card
 	{
-		width: 40%;
-		margin-left: 325px;
-		margin-top: 75px;
+		border-radius: 15px;
+		position: absolute; 
+		width: 30%; 
+		height: 90%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
 	}
+	
+	#fin 
+	{
+		position: fixed;
+  		right: 0;
+  		bottom: 0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
+	}
+
+	@media screen and (min-width: 1080px) and (max-width: 1360px) {
+  		.card {
+    		position: absolute; 
+			width: 20%; 
+			height: 65%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+	@media screen and (min-height: 770px) and (max-height: 1920px) {
+  		.card {
+    		position: absolute; 
+			width: 20%; 
+			height: 65%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+}
 </style>
-<img style="float: right; padding-bottom: 150px; opacity: 50%;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+<img style="right: 0; padding-bottom: 170px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
 	<?php if(!empty($errors)): ?>
 		<div class="alert alert-danger">
@@ -112,8 +164,7 @@
 	<div class="card">
 		<center>
 			</br>
-			<img src="style/logo_couleur.png" alt="logo" width="200" height="50">
-			</br>
+			<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 			</br>
 		</center>	
 		<div class="card-body">
@@ -122,7 +173,7 @@
 			<?php if(!empty($_POST)): ?>
 				<form action="" method="POST">
 					<div class="form-group">
-						<input type="text" name="nom" class="form-control" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
+						<input type="text" name="nom" class="form-control is-invalid" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
 					</div>
 					<div class="form-group">
 						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
@@ -191,7 +242,7 @@
 				</div>
 				<div class="form-group">
 					<div class="input-group mb-3">
-	  					<input id="password" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
+	  					<input id="password" data-toggle="popover" title="Caractéristiques du mot de passe" data-content="<ul><li>Une majuscule</li><li>Une minuscule</li><li>Un chiffre</li><li>Un caractère spécial</li><li>Minimum 9 caractères</li></ul>" data-html="true" type="password" name="password" class="form-control" pattern=".{9,}" required title="9 caracteres minimum" placeholder="Choissisez un mot de passe" required>
 	  				</div>
 				</div>
 				<div class="form-group">
@@ -206,4 +257,152 @@
 	</div>
 </div>
 </br>
+<div id="fin">
+	<p>Powered by Pepperbay</p>
+</div>
+
+<script type="text/javascript">
+
+function formatDate(date)
+{
+	var string = date.split("/");
+
+	var newdate = string.join("");
+
+	if(newdate.length == 8)
+	{
+		return true;
+	}
+	
+	return false;
+}
+
+$(document).ready(function() {
+
+	$('input[name="nom"]').change(function(){
+		var nom = $(this).val();
+		
+		if(nom != undefined && nom != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="prenom"]').change(function(){
+		var prenom = $(this).val();
+		
+		if(prenom != undefined && prenom != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+	
+	$('input[name="naissance"]').change(function(){
+		var naissance = $(this).val();
+		
+		if(naissance != undefined && naissance != "" && formatDate(naissance))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="telephone"]').change(function(){
+		var telephone = $(this).val();
+
+		tel = telephone.replace(/[\.,\s]/g, '');
+
+		if(telephone != undefined && telephone != "" && tel.match(/^(\+33|0033|0)(6|7)[0-9]{8}$/g))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('select[name="site"]').change(function(){
+		var site = $(this).val();
+
+		if(site != undefined && site != "")
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="email"]').change(function(){
+		var email = $(this).val();
+
+		if(email != undefined && email != "" && email.match(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('[data-toggle="popover"]').popover()
+
+	$('input[name="password"]').change(function(){
+		var data = $(this).attr("data-content")
+
+		var content = $(this).val();
+
+		var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{9,}$/;
+
+		if(reg.test(content))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+	})
+
+	$('input[name="password_confirm"]').change(function(){
+		var mdp_confirm = $(this).val();
+		var mdp = $('input[name="password"]').val();
+
+		if(mdp_confirm != undefined && mdp_confirm != "" && mdp_confirm == mdp)
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+
+
+
+
+})
+</script>
 <?php require "include/footer.php"; ?>

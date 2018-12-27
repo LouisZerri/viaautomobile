@@ -1,14 +1,14 @@
 <?php
-	
-	session_start();
 
 	require 'include/header.php';
 
+	session_start();
+	
 	if(!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password']))
 	{
 	    require_once 'bdd/database.php';
 
-		$user = connexionApplication($_POST['email']);
+		$user = vendeurExiste($_POST['email']);
 
 	    if($user == null)
 	    {
@@ -57,10 +57,12 @@
 
 	#fin 
 	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
+		position: fixed;
+  		right: 0;
+  		bottom: 0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
 	}
 
 	a
@@ -79,9 +81,50 @@
 		font-size: 10px;
 	}
 
+	.card
+	{
+		position: absolute; 
+		width: 35%; 
+		height: 50%; 
+		top: 0; 
+		bottom: 0; 
+		left: 0; 
+		right: 0;
+		margin: auto;
+		border-radius: 15px;
+	}
+
+	@media screen and (min-width: 1080px) and (max-width: 1360px) {
+  		.card {
+    		position: absolute; 
+			width: 25%; 
+			height: 35%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+	@media screen and (min-height: 770px) and (max-height: 1920px) {
+  		.card {
+    		position: absolute; 
+			width: 25%; 
+			height: 35%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
 </style>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
-<div class="container" style="padding-top: 90px;">
+<img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
+<div class="container">
 		<?php if(isset($_SESSION['flash'])): ?>
 		  <?php foreach($_SESSION['flash'] as $type => $message): ?>
 			<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
@@ -93,11 +136,10 @@
 		  <?php endforeach; ?>
 		  <?php unset($_SESSION['flash']); ?>
 		<?php endif; ?>
-	<div class="card" style="width: 50%; height: 50%; margin-left: 280px;">
+	<div class="card">
 	<center>
 		</br>
-		<img src="style/logo_couleur.png" alt="logo" width="400" height="100">
-		</br>
+		<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
 		</br>
 	</center>	
 	  	<div class="card-body">
@@ -110,7 +152,7 @@
 				</div>
 				<center><a href="mdp_oublie.php">Mot de passe oublié ?</a></center></br>
 				<center>
-					<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Me connecter</span></button>
+					<button style="background-color: #9D1458;" type="submit" class="btn btn-outline-light"><span style="color: white;">connexion</span></button>
 				</center>
 			</form>
 	  	</div>

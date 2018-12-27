@@ -1,8 +1,10 @@
 <?php 
-
-	session_start();
+	
 	require "include/header.php";
 	require "bdd/database.php";
+	require "include/functions.php";
+
+	logged_only();
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
@@ -40,12 +42,15 @@ body
 
 .separation
 {
-	clear: both;
+	
 	position: absolute;
 	margin-left: 270px;
-	height: 570px;
+	height: 100%;
 	width: 1px;
 	background: grey;
+	top: 0;
+	bottom: 0;
+	opacity: 0.2;
 }
 
 .separation2
@@ -69,32 +74,7 @@ span
 	color: white;
 }
 
-#change
-{
-	color: #531B51;
-}
 
-#change:hover
-{
-	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
-}
-
-li:hover
-{
-	background-color: #531B51;
-	border:1px solid #531B51;
-	-moz-border-radius: 10px 0;
-	-webkit-border-radius: 10px 0;
-	border-radius: 10px 0;
-	width: 80%;
-	color: white;
-	text-decoration: none;
-	list-style-type: none;
-	transition:all 1s;
-}
 	/*-----------------------------------------------*/
 
 #fade { /*--Masque opaque noir de fond--*/
@@ -142,22 +122,225 @@ position: absolute;
 	border:none;
 	color:#fff;
 }
+
+#change
+{
+	color: #531B51;
+	text-decoration: none;
+	list-style-type: none;
+}
+
+#change:hover
+{
+	color: white;
+	transition:all 0.10s;
+	border:none;
+	padding: 10px 10px 10px 10px;
+	border-radius: 20px;
+	background: #754974;
+}
+
+#dont
+{
+	color: #A73C97; 
+	font-size: 20px;
+}
+
+@media screen and (min-width: 1080px) and (max-width: 1360px) {
+  	
+  	#change
+	{
+		color: #531B51;
+		text-decoration: none;
+		list-style-type: none;
+	}
+
+	#change:hover
+	{
+		color: white;
+		transition:all 0.10s;
+		border:none;
+		padding: 10px 10px 10px 10px;
+		border-radius: 20px;
+		background: #754974;
+	}
+
+  	#semaine
+  	{
+  		font-size: 30px;
+  		padding-left: 150px;
+
+  	}
+
+  	#colonne1 {
+		position: absolute; 
+		width: 60%; 
+		height: 60%;
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 175px;
+		zoom:125%;
+
+	}
+
+	#colonne2
+	{
+		position: absolute; 
+		width: 38%; 
+		height: 60%;
+		bottom:0;
+		top: 0;  
+		margin: auto;
+		margin-left: 525px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	.separation2
+	{
+		clear: both;
+		position: absolute;
+		height: 800px;
+		width: 3px;
+		margin-left: 600px;
+		margin-top: 50px;
+		background:  #531B51;
+	}
+
+	.bouton1
+	{
+		width: 75px;
+		height: 75px;
+		background:#A73C97;
+		font:bold 55px Montserrat;
+		border-radius:50%;
+		border:none;
+		color:#fff;
+	}
+
+	#dont
+	{
+		color: #A73C97; 
+		font-size: 30px;
+	}
+
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 300px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+}
+
+@media screen and (min-height: 770px) and (max-height: 1920px) {
+  	
+  	#change
+	{
+		color: #531B51;
+		text-decoration: none;
+		list-style-type: none;
+	}
+
+	#change:hover
+	{
+		color: white;
+		transition:all 0.10s;
+		border:none;
+		padding: 10px 10px 10px 10px;
+		border-radius: 20px;
+		background: #754974;
+	}
+
+  	#semaine
+  	{
+  		font-size: 30px;
+  		padding-left: 150px;
+  	}
+
+	#colonne1 
+	{
+		position: absolute; 
+		width: 60%; 
+		height: 60%;
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	#colonne2
+	{
+		position: absolute; 
+		width: 38%; 
+		height: 60%;
+		bottom:0;
+		top: 0;  
+		margin: auto;
+		margin-left: 525px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	.separation2
+	{
+		clear: both;
+		position: absolute;
+		height: 800px;
+		width: 3px;
+		margin-left: 600px;
+		margin-top: 50px;
+		background:  #531B51;
+	}
+
+	.bouton1
+	{
+		width: 75px;
+		height: 75px;
+		background:#A73C97;
+		font:bold 55px Montserrat;
+		border-radius:50%;
+		border:none;
+		color:#fff;
+	}
+
+	#dont
+	{
+		color: #A73C97; 
+		font-size: 30px;
+	}
+
+	.separation
+	{
+		position: absolute;
+		margin-left: 300px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+}
+
+
+
 </style>
-<div class="container">
-	<?php if(!empty($errors)): ?>
-		<div class="alert alert-danger">
-			<p>Vous n'avez pas rempli le formulaire correctement : </p>
-			<ul>
-				<?php foreach ($errors as $error): ?>
-					<li><?= $error; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	<?php endif; ?>
-</div>
-<div>
-	<hr class="separation" />
-</div>
+<div class="separation"></div>
 <div class="menu">
 	</br>
 	</br>
@@ -165,20 +348,31 @@ position: absolute;
 	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
-		<li><a id="change" href="#"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
+		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
 		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
 		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="padding-left: 35px; height: 160px;" src="style/logo_gris.svg" alt="logo" width="200">
+	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 
 <center>
 	<div class="container mt-1">
-		<p>Semaine du <?= $semaine->debut_semaine ?> au <?= $semaine->fin_semaine ?> <?= $semaine->mois ?></p>
+	<?php if(isset($_SESSION['flash'])): ?>
+		<?php foreach($_SESSION['flash'] as $type => $message): ?>
+			<div style="margin-left: 150px;" class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+				<?= $message; ?>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		<?php endforeach; ?>
+		<?php unset($_SESSION['flash']); ?>
+	<?php endif; ?>
+		<p id="semaine">Semaine du <?= $semaine->debut_semaine ?> au <?= $semaine->fin_semaine ?> <?= $semaine->mois ?></p>
 		<div class="row ml-4">
-			<div class="col">
+			<div id="colonne1" class="col">
 				<h3><b>NOMBRE DE MANDATS</b></h3>
 				<p style="font-size: 7em;"><?= $donnee->nombre ?></p>
 				<p style="font-size: 2em;">Mandats</p></br>
@@ -187,19 +381,19 @@ position: absolute;
 			<div>
 				<hr class="separation2" />
 			</div>
-			<div class="col">
+			<div id="colonne2" class="col">
 				<center>
 					<h3><b>NOMBRE DE VENTES</b></h3>
 					<p style="font-size: 7em;"><?= $nb_vente; ?></p>
 					<p style="font-size: 2em;">Ventes</p>
-					<p style="color: #A73C97; font-size: 20px;">dont</p></br>
+					<p id="dont">dont</p></br>
 					<div class="row pl-4">
 						<div class="col pl-2">
 							<button class="bouton1"><?= $livree ?></button>
 							<span style="color: black;">Livraisons</span>
 						</div>
 						<div class="col">
-							<button class="bouton1"><?= $frais_mer ?></button>
+							<button class="bouton1"><?= $frais_mer ?></button></br>
 							<span style="color: black;">Frais de mise en service</span>
 						</div>
 						<div class="col pl-2">
@@ -235,6 +429,17 @@ position: absolute;
 
 <div id="popupdeux" class="popup_block">
 	<div class="container">
+		<?php if(isset($_SESSION['flash'])): ?>
+			<?php foreach($_SESSION['flash'] as $type => $message): ?>
+				<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+					<?= $message; ?>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<?php endforeach; ?>
+			<?php unset($_SESSION['flash']); ?>
+		<?php endif; ?>
 		<center>
 			<h2>AJOUT D'UNE VENTE</h2></br> 
 		</center>
@@ -301,7 +506,7 @@ position: absolute;
 
 </div>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 $(document).ready(function() {

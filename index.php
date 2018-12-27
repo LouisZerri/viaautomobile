@@ -29,12 +29,60 @@
 
 	#fin 
 	{
-  		position : absolute;
-  		bottom : 0px;
-  		padding-left: 1200px;
-  		font-size: 12px;
+		position: fixed;
+  		right: 0;
+  		bottom: 0;
+		font-size: 12px;
+		padding-right: 20px;
+		color: white;
 	}
+
+	.index
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+	}
+
+	@media screen and (min-width: 1080px) and (max-width: 1360px) {
+
+		.index
+		{
+			position: absolute; 
+			width: 100%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			zoom:125%;
+		}
+	}
+
+	@media screen and (min-height: 770px) and (max-height: 1920px)
+	{
+		.index
+		{
+			position: absolute; 
+			width: 100%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			zoom:125%;
+		}
+	}
+	
 </style>
+<img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <?php if(isset($_SESSION['flash'])): ?>
 	<?php foreach($_SESSION['flash'] as $type => $message): ?>
 		<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
@@ -46,14 +94,16 @@
   	<?php endforeach; ?>
   	<?php unset($_SESSION['flash']); ?>
 <?php endif; ?>
-<img style="float: right; padding-bottom: 150px;" src="style/logo_blanc" alt="logo" width="250" height="250">
-<div style="padding-top: 200px; padding-left: 20px;">
-	<span id="p1">CHALLENGEZ</span></br>
-	<b id="p2">VOS COLLABORATEURS</b>
-</div>
 
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
-<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
+<div class="index">
+	<div style="padding-left: 20px;">
+		<span id="p1">CHALLENGEZ</span></br>
+		<b id="p2">VOS COLLABORATEURS</b>
+	</div>
+
+	<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
+	<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
+</div>
 
 
 <div id="fin">

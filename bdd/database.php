@@ -8,7 +8,8 @@
 	function connexionBaseDeDonnee()
 	{
 		$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', '');
-
+		//$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', 'iE7ZOy5dsql');
+		
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
@@ -16,16 +17,26 @@
 		return $pdo;
 	}
 
-	function connexionApplication($email)
+	function vendeurExiste($email)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$req = $pdo->prepare('SELECT * FROM vendeur WHERE email = ?');
+		$req = $pdo->prepare('SELECT * FROM vendeur WHERE email = ? AND confirmed_at IS NOT NULL');
 
-	    $req->execute([$email]);
-	    $user = $req->fetch();
+		$req->execute([$email]);
 
-	    return $user;
+		$vendeur = $req->fetch();
+
+		return $vendeur;
+	}
+
+	function resetToken($token, $id)
+	{	
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('UPDATE vendeur SET reset_token = ?, reset_at = NOW() WHERE id_vendeur = ?');
+
+		$req->execute([$token, $id]);
 	}
 
 	function checkEmail($email)
@@ -50,20 +61,11 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$longueur = 12;
-
-		$confirmation = "";
-
-		for($i = 1; $i < $longueur; $i++)
-		{
-			$confirmation .= mt_rand(0,9);
-		}
-
-		$query = $pdo->prepare("INSERT INTO vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?, confirmation = ?");
+		$query = $pdo->prepare("INSERT INTO vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?");
 
 		$password = password_hash($password, PASSWORD_BCRYPT);
 
-		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable, $confirmation, 0]);
+		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable, $confirmation]);
 
 		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
 
@@ -248,6 +250,83 @@
 		$query->execute([$id]);
 	}
 
+	function recupererDernierID()
+	{
+		$pdo = connexionBaseDeDonnee();
+		
+		$query = $pdo->query('SELECT MAX(id_vendeur) as last_id FROM vendeur');
+
+		$query->execute();
+
+		$res = $query->fetch();
+
+		return $res;
+	}
+
+	function recupereUtilisateur($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM vendeur WHERE id_vendeur = ?'); 
+		
+		$req->execute([$id]);
+		
+		$user = $req->fetch();
+		
+		return $user;
+	}
+
+	function updateUtilisateur($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('UPDATE vendeur SET confirmation_cle = NULL, confirmed_at = NOW() WHERE id_vendeur = ?');
+		
+		$req->execute([$id]);
+	}
+
+	function selectInfoVendeur($id, $token)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+        $req = $pdo->prepare('SELECT * FROM vendeur WHERE id_vendeur = ? 
+							 AND reset_token IS NOT NULL
+							 AND reset_token = ?
+							 AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+		
+		$req->execute([$id, $token]);
+
+		$vendeur = $req->fetch();
+
+		return $vendeur;
+	}
+
+	function updatePassword($password)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('UPDATE vendeur SET mot_de_passe = ?, reset_at = NULL, reset_token = NULL');
+
+		$req->execute([$password]);
+	}
+
+	function immatriculationExist($immatriculation)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM vente WHERE immatriculation = ?');
+
+		$req->execute([$immatriculation]);
+
+		$immatriculation = $req->fetch();
+
+		if($immatriculation != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	//Fonctions qui correspond au back-office
 
