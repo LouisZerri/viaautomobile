@@ -67,6 +67,8 @@ body
 li
 {
 	list-style-type: none;
+	position:relative;
+	z-index:10;
 }
 
 span
@@ -138,6 +140,8 @@ position: absolute;
 	padding: 10px 10px 10px 10px;
 	border-radius: 20px;
 	background: #754974;
+	position:relative;
+	z-index:10;
 }
 
 #dont
@@ -147,23 +151,6 @@ position: absolute;
 }
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
-  	
-  	#change
-	{
-		color: #531B51;
-		text-decoration: none;
-		list-style-type: none;
-	}
-
-	#change:hover
-	{
-		color: white;
-		transition:all 0.10s;
-		border:none;
-		padding: 10px 10px 10px 10px;
-		border-radius: 20px;
-		background: #754974;
-	}
 
   	#semaine
   	{
@@ -184,7 +171,6 @@ position: absolute;
 		margin-left: 50px;
 		margin-bottom: 175px;
 		zoom:125%;
-
 	}
 
 	#colonne2
@@ -245,23 +231,6 @@ position: absolute;
 
 @media screen and (min-height: 770px) and (max-height: 1920px) {
   	
-  	#change
-	{
-		color: #531B51;
-		text-decoration: none;
-		list-style-type: none;
-	}
-
-	#change:hover
-	{
-		color: white;
-		transition:all 0.10s;
-		border:none;
-		padding: 10px 10px 10px 10px;
-		border-radius: 20px;
-		background: #754974;
-	}
-
   	#semaine
   	{
   		font-size: 30px;

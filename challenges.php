@@ -22,10 +22,9 @@ body
 }
 .menu
 {
-	width: 350px;
+	width: 300px;
 	height: 400px;
 	float: left;
-
 }
 
 .separation
@@ -44,6 +43,8 @@ body
 li
 {
 	list-style-type: none;
+	position:relative;
+	z-index:10;
 }
 
 span
@@ -68,6 +69,15 @@ span
 	background: #754974;
 }
 
+#screen
+{
+	bottom:0; 
+	left:0;
+	top: 0;
+	right:0;  
+	margin: auto;
+}
+
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
 
 	body
@@ -78,39 +88,12 @@ span
 		color: #531B51;
 	}
 
-	li
-	{
-		list-style-type: none;
-	}
-
-	span
-	{
-		color: white;
-	}
-
-	#change
-	{
-		color: #531B51;
-		text-decoration: none;
-		list-style-type: none;
-	}
-
 	.menu
 	{
-		width: 350px;
+		width: 500px;
 		height: 400px;
 		float: left;
 
-	}
-
-	#change:hover
-	{
-		color: white;
-		transition:all 0.10s;
-		border:none;
-		padding: 10px 10px 10px 10px;
-		border-radius: 20px;
-		background: #754974;
 	}
 
 	#screen
@@ -152,29 +135,11 @@ span
 		color: #531B51;
 	}
 
-	#change
-	{
-		color: #531B51;
-		text-decoration: none;
-		list-style-type: none;
-	}
-
 	.menu
 	{
-		width: 350px;
+		width: 500px;
 		height: 400px;
 		float: left;
-
-	}
-
-	#change:hover
-	{
-		color: white;
-		transition:all 0.10s;
-		border:none;
-		padding: 10px 10px 10px 10px;
-		border-radius: 20px;
-		background: #754974;
 	}
 
 	#screen
@@ -208,18 +173,6 @@ span
 
 
 </style>
-<div class="container">
-	<?php if(!empty($errors)): ?>
-		<div class="alert alert-danger">
-			<p>Vous n'avez pas rempli le formulaire correctement : </p>
-			<ul>
-				<?php foreach ($errors as $error): ?>
-					<li><?= $error; ?></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-	<?php endif; ?>
-</div>
 <div class="separation"></div>
 <div class="menu">
 	</br>
@@ -242,7 +195,7 @@ span
 		<div class="col">
 			<img style="border-radius: 10px;" src="style/challenge_ski.jpg" width="225" height="150">
 		</div>
-		<div class="col mt-3" style="width: 100px;">
+		<div class="col mt-3">
 			<h5><b>1 WEEK-END A AVORIAZ A GAGNER</b></h5>
 			<span style="color: #808080; font-size: 12px;">Période : Mois de décembre</span></br>
 			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial vendant le plus de voiture au mois de décembre (calcul basé sur le nombre de commande)</span>
@@ -252,7 +205,7 @@ span
 		<div class="col">
 			<img style="border-radius: 10px;" src="style/cinema.jpg" width="225" height="150">
 		</div>
-		<div class="col mt-3" style="width: 100px;">
+		<div class="col mt-3">
 			<h5><b>2 PLACES DE CINEMA</b></h5>
 			<span style="color: #808080; font-size: 12px;">Période : Du 12 au 17 novembre</span></br>
 			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial rentrant le plus de mandat durant la semaine du 12 au 17 novembre</span>
@@ -264,7 +217,7 @@ span
 		<div class="col">
 			<img style="border-radius: 10px;" src="style/cinema.jpg" width="225" height="150">
 		</div>
-		<div class="col mt-3" style="width: 100px;">
+		<div class="col mt-3">
 			<h5><b>2 PLACES DE CINEMA</b></h5>
 			<span style="color: #808080; font-size: 12px;">Période : Du 12 au 17 novembre</span></br>
 			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial rentrant le plus de mandat durant la semaine du 12 au 17 novembre</span>
