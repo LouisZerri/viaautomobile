@@ -3,7 +3,7 @@
 	require "include/header.php";
 	require "include/functions.php";
 
-	session_start();
+	logged_only();
 	
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
@@ -99,7 +99,7 @@
 
 <div class="card">
 	<div class="card-body">
-		<img src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
+		<img src="style/logo_final.png" alt="logo" width="200"></br></br>
     	<span class="card-text"><b>Bonjour <?= $prenom; ?> <?= $nom ?> !</b></span></br>
     	<span>Que souhaitez-vous faire ?</span>
   	</div>
@@ -108,10 +108,10 @@
 	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="tableau_de_bord.php" role="button"><span>Tableau de bord</span></a>
 	    </div>
 	    <div style="padding-left: 40px;" class="col">
-	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="mandats.php" role="button"><span>Mandats</span></a>
+	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="https://viaautomobile.pepperbay.fr/tableau_de_bord.php#?w=500" role="button"><span>Mandats</span></a>
 	    </div>
 	    <div style="padding-left: 20px;" class="col">
-	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="ventes.php" role="button"><span>Ventes</span></a>
+	      <a style="text-decoration: none; border: 1px solid #531B51; border-radius: 12px;" class="btn btn-light" href="https://viaautomobile.pepperbay.fr/tableau_de_bord.php#?w=750" role="button"><span>Ventes</span></a>
 	    </div>
 		</br>
   	</div>

@@ -24,7 +24,7 @@
 
 	function sendEmailForConfirmation($mail, $last_id, $token)
 	{
-		if (!preg_match("#^[a-z0-9._-]+@(gmail|hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
+		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
 		{
 			$passage_ligne = "\r\n";
 		}
@@ -33,8 +33,8 @@
 			$passage_ligne = "\n";
 		}
 		//=====Déclaration des messages au format texte et au format HTML.
-		$message_txt = "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://localhost/VIAAUTOMOBILE/confirmation.php?id=".$last_id."&token=".$token;
-		$message_html = "<p>Afin de valider votre compte, merci de cliquer sur ce lien : </br> http://localhost/VIAAUTOMOBILE/confirmation.php?id=".$last_id."&token=".$token."</p>";
+		$message_txt = "Afin de valider votre compte, merci de cliquer sur ce lien\n\nhttp://viaautomobile.pepperbay.fr/confirmation.php?id=".$last_id."&token=".$token;
+		$message_html = "<p>Afin de valider votre compte, merci de cliquer sur ce lien : </br> http://viaautomobile.pepperbay.fr/confirmation.php?id=".$last_id."&token=".$token."</p>";
 		
 		//==========
 		
@@ -78,7 +78,7 @@
 
 	function sendEmailForReset($mail, $user_id, $reset_token)
 	{
-		if (!preg_match("#^[a-z0-9._-]+@(gmail|hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
+		if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) // On filtre les serveurs qui rencontrent des bogues.
 		{
 			$passage_ligne = "\r\n";
 		}
@@ -87,8 +87,8 @@
 			$passage_ligne = "\n";
 		}
 		//=====Déclaration des messages au format texte et au format HTML.
-		$message_txt = "Afin de réinitialiser votre mot de passe, merci de cliquer sur ce lien\n\nhttp://localhost/VIAAUTOMOBILE/reset.php?id=".$user_id."&token=".$reset_token;
-		$message_html = "<p>Afin de réinitialiser votre mot de passe, merci de cliquer sur ce lien : </br> http://localhost/VIAAUTOMOBILE/reset.php?id=".$user_id."&token=".$reset_token."</p>";
+		$message_txt = "Afin de réinitialiser votre mot de passe, merci de cliquer sur ce lien\n\nhttp://viaautomobile.pepperbay.fr/reset.php?id=".$user_id."&token=".$reset_token;
+		$message_html = "<p>Afin de réinitialiser votre mot de passe, merci de cliquer sur ce lien : </br> http://viaautomobile.pepperbay.fr/reset.php?id=".$user_id."&token=".$reset_token."</p>";
 		
 		//==========
 		
@@ -148,6 +148,33 @@
 			header('Location: login.php');
 			exit();
 		}
+	}
+
+	function week2str($annee, $no_semaine)
+	{
+    	// Récup jour début et fin de la semaine
+	    $timeStart = strtotime("First Monday January {$annee} + ".($no_semaine - 1)." Week");
+	    $timeEnd   = strtotime("First Monday January {$annee} + {$no_semaine} Week -1 day");
+	     
+	    // Récup année et mois début
+	    $anneeStart = date("Y", $timeStart);
+	    $anneeEnd   = date("Y", $timeEnd);
+	    $moisStart  = date("m", $timeStart);
+	    $moisEnd    = date("m", $timeEnd);
+	     
+	    // Gestion des différents cas de figure
+	    if( $anneeStart != $anneeEnd ){
+	        // à cheval entre 2 années
+	        $retour = "Semaine du ".strftime("%d %B %Y", $timeStart)." au ".strftime("%d %B %Y", $timeEnd);
+	    } elseif( $moisStart != $moisEnd ){
+	        // à cheval entre 2 mois
+	        $retour = "Semaine du ".strftime("%d %B", $timeStart)." au ".strftime("%d %B %Y", $timeEnd);
+	    } else {
+	        // même mois
+	        $retour = "Semaine du ".strftime("%d", $timeStart)." au ".strftime("%d %B %Y", $timeEnd);
+	    }
+
+	    return $retour;
 	}
 
 ?>

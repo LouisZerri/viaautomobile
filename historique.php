@@ -12,6 +12,8 @@
 
 	$donnees = getAllVente($nom);
 
+	$result = recupHistorique($nom);
+
 	$delete = "delete_historique.php?id=";
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -29,6 +31,7 @@ body
 	width: 300px;
 	height: 400px;
 	float: left;
+	z-index:10;
 
 }
 
@@ -48,11 +51,13 @@ body
 li
 {
 	list-style-type: none;
+	z-index:10;
 }
 
 span
 {
 	color: white;
+	z-index: 10;
 }
 
 #change
@@ -76,6 +81,13 @@ span
 {
 	width: 70%;
 }
+
+#ma_table_Mandats
+{
+	width: 55%;
+}
+
+
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
 
@@ -129,7 +141,6 @@ span
 		margin-right: 50px;
 		display: none;
 	}
-
 }
 
 @media screen and (min-height: 770px) and (max-height: 1920px) {
@@ -192,14 +203,14 @@ span
 <div class="menu">
 	</br>
 	</br>
-	<img style="padding-left: 35px;" src="style/new_logo.svg" alt="logo" width="200"></br></br></br>
+	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
 	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
 		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
-		<li><a id="change" href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
+		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
 	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
@@ -213,6 +224,7 @@ span
 					<select style="width: 50%; background-color: #531B51; color: white;" class="form-control" name="monselect">
 						<option selected="selected"><span>Type d'action</span></option>
 						<option>Ventes</option>
+						<option>Mandats</option>
 					</select>
   				</div>
 			</form>
@@ -255,29 +267,47 @@ span
 		<tbody>
 			<?php foreach($donnees as $res): ?>
 				<tr id="<?= $res->id_vente; ?>">
-					<td id="date_vente"><?= $res->date_vente; ?></td>
-					<td><?= $res->immatriculation; ?></td>
+					<td align="center" id="date_vente"><?= $res->date_vente; ?></td>
+					<td align="center"><?= $res->immatriculation; ?></td>
 					<?php if($res->livree == 1): ?>
-						<td style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
 					<?php else: ?>
-						<td>Non</td>
+						<td align="center">Non</td>
 					<?php endif; ?>
 					<?php if($res->frais_mer == 1): ?>
-						<td style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
 					<?php else: ?>
-						<td>Non</td>
+						<td align="center">Non</td>
 					<?php endif; ?>
 					<?php if($res->garentie == 1): ?>
-						<td style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
 					<?php else: ?>
-						<td>Non</td>
+						<td align="center" >Non</td>
 					<?php endif; ?>
 					<?php if($res->financement == 1): ?>
-						<td style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
 					<?php else: ?>
-						<td>Non</td>
+						<td align="center">Non</td>
 					<?php endif; ?>
-					<td><a style="color: black;" href="<?= $delete."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
+					<td align="center"><a style="color: black;" href="<?= $delete."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	<table id="ma_table_Mandats" class="table table-striped ml-5 mt-5">
+		<thead>
+			<tr>
+  				<th align="center" scope="col">Date</th>
+		      	<th align="center" scope="col">Nombre de mandats</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($result as $res): ?>
+				<tr align="center" id="<?= $res->id_historique; ?>">
+					<td align="center" id="date_mandat"><?= $res->date_mandat; ?></td>
+					<td align="center"><?= $res->nombre; ?></td>
+					<td align="center"><a style="color: black;" href="<?= $delete."".$res->id_historique ?>"><i class="fa fa-trash"></i></a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
@@ -322,7 +352,11 @@ span
 			for(var i = 1; i < td.length + 2; i++)
 			{
 				date_vente = $('#'+i).find("td").html();
+				date_mandat = $('#'+i).find("td").html();
+
 				console.log(date_vente)
+				console.log(date_mandat)
+
 				if(date_vente === undefined)
 				{
 				}
@@ -334,6 +368,20 @@ span
 						$('#'+i).hide(1000)
 					}
 				}
+
+				if(date_mandat === undefined)
+				{
+				}
+				else
+				{
+					date = date_mandat.substring(3,5);
+					if(mois != date)
+					{
+						$('#'+i).hide(1000)
+					}
+				}
+
+
 			}
 
 			

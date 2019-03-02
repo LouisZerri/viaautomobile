@@ -57,15 +57,15 @@
 		return false;
 	}
 
-	function insertVendeur($nom, $prenom, $date, $site, $email, $password, $portable, $confirmation)
+	function insertVendeur($nom, $prenom, $date, $site, $enseigne, $email, $password, $portable, $confirmation)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare("INSERT INTO vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?");
+		$query = $pdo->prepare("INSERT INTO vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, enseigne = ? , email = ?, mot_de_passe = ?, portable = ?, confirmation_cle = ?");
 
 		$password = password_hash($password, PASSWORD_BCRYPT);
 
-		$query->execute([$nom, $prenom, $date, $site, $email, $password, $portable, $confirmation]);
+		$query->execute([$nom, $prenom, $date, $site, $enseigne, $email, $password, $portable, $confirmation]);
 
 		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
 
@@ -105,6 +105,41 @@
 		$query = $pdo->prepare("UPDATE mandat SET nombre = ? WHERE id_vendeur = ?");
 		
 		$query->execute([$nombre, $res->id_vendeur]);
+
+	}
+
+	function insertHistorique($nombre, $nom, $date)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
+
+		$marequete->execute([$nom]);
+
+		$res = $marequete->fetch();
+
+		$query2 = $pdo->prepare("INSERT INTO historique SET id_vendeur = ?, nombre = ?, date_mandat = ?");
+
+		$query2->execute([$res->id_vendeur, $nombre, $date]);
+	}
+
+	function recupHistorique($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$marequete = $pdo->prepare("SELECT id_vendeur FROM vendeur WHERE nom = ?");
+
+		$marequete->execute([$nom]);
+
+		$res = $marequete->fetch();
+
+		$query2 = $pdo->prepare("SELECT * FROM historique WHERE id_vendeur = ?");
+
+		$query2->execute([$res->id_vendeur]);
+
+		$res = $query2->fetchAll();
+
+		return $res;
 	}
 
 	function insertVente($nom, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement, $datetime)
@@ -250,6 +285,28 @@
 		$query->execute([$id]);
 	}
 
+	function deleteHistoriqueMandat($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('DELETE FROM historique WHERE id_historique = ?');
+
+		$query->execute([$id]);
+	}
+
+	function recupNombre($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT nombre FROM historique WHERE id_historique = ?');
+
+		$query->execute([$id]);
+
+		$res = $query->fetch();
+
+		return $res;
+	}
+
 	function recupererDernierID()
 	{
 		$pdo = connexionBaseDeDonnee();
@@ -328,29 +385,47 @@
 		return false;
 	}
 
+	function recupInfoVendeur($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM vendeur WHERE nom = ?');
+
+		$req->execute([$nom]);
+
+		$info = $req->fetch();
+
+		return $info;
+	}
+
+	function updateVendeur($nom, $prenom, $naissance, $site, $enseigne, $email, $password, $telephone)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT id_vendeur FROM vendeur WHERE nom = ?');
+
+		$req->execute([$nom]);
+
+		$info = $req->fetch();
+
+		if($password != '')
+		{
+			$update = $pdo->prepare('UPDATE vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, enseigne = ?, email = ?, mot_de_passe = ?, portable = ? WHERE id_vendeur = ?');
+			$password = password_hash($password, PASSWORD_BCRYPT);
+			$update->execute([$nom, $prenom, $naissance, $site, $enseigne, $email, $password, $telephone, $info->id_vendeur]);
+
+		}
+		else
+		{
+			$update = $pdo->prepare('UPDATE vendeur SET nom = ?, prenom = ?, date_naissance = ?, site_ratachement = ?, enseigne = ?, email = ?, portable = ? WHERE id_vendeur = ?');
+			$update->execute([$nom, $prenom, $naissance, $site, $enseigne, $email, $telephone, $info->id_vendeur]);
+			
+		}
+
+	}
+
 	//Fonctions qui correspond au back-office
 
-	function recupereSemaine()
-	{
-		$pdo = connexionBaseDeDonnee();
-
-		$query = $pdo->query('SELECT * FROM semaine');
-
-		$query->execute();
-
-		$res = $query->fetch();
-
-		return $res;
-	}
-
-	function updateSemaine($date_debut, $date_fin, $mois)
-	{
-		$pdo = connexionBaseDeDonnee();
-
-		$query = $pdo->prepare('UPDATE semaine SET debut_semaine = ?, fin_semaine = ?, mois = ?');
-
-		$query->execute([$date_debut, $date_fin, $mois]);
-	}
 
 	function updateCompteur($compteur)
 	{
@@ -359,6 +434,71 @@
 		$query = $pdo->prepare('UPDATE mandat SET nombre = ?');
 
 		$query->execute([$compteur]);
+	}
+
+	function recupererTout()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT * FROM vendeur');
+
+		$query->execute();
+
+		$res = $query->fetchAll();
+
+		return $res;
+	}
+
+	function RecuperationParCollaborateur()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$collaborateur = $pdo->query('SELECT nom, prenom, site_ratachement, nombre, count(vente.id_vendeur) as vente FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN vente ON mandat.id_vendeur = vente.id_vendeur GROUP BY vente.id_vendeur');
+
+		$collaborateur->execute();
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+	}
+
+	function RecuperationParSiteMandat()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$mandat = $pdo->query("SELECT site_ratachement, sum(mandat.nombre) AS mandat FROM mandat INNER JOIN vendeur ON vendeur.id_vendeur = mandat.id_vendeur GROUP BY vendeur.site_ratachement");
+
+		$mandat->execute();
+
+		$res = $mandat->fetchAll();
+
+		return $res;
+	}
+
+	function RecuperationParSiteVente()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$vente = $pdo->query("SELECT site_ratachement, count(vente.id_vendeur) as vente FROM mandat INNER JOIN vendeur ON mandat.id_vendeur = vendeur.id_vendeur INNER JOIN vente ON vente.id_vendeur = mandat.id_vendeur GROUP BY vendeur.site_ratachement");
+
+		$vente->execute();
+
+		$res = $vente->fetchAll();
+
+		return $res;
+	}
+
+	function RecuperationParConsolidation()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare("SELECT nom, prenom, email, nombre as mandat, count(vente.id_vendeur) as vente FROM vendeur LEFT JOIN mandat ON vendeur.id_vendeur = mandat.id_vendeur INNER JOIN vente ON vendeur.id_vendeur = vente.id_vendeur WHERE (SUBSTRING_INDEX(SUBSTR(email, INSTR(email, '@') + 1),'.',1)) = 'viaautomobile' GROUP BY vente.id_vendeur");
+
+		$query->execute();
+
+		$res = $query->fetchAll();
+
+		return $res;
 	}
 
 ?>

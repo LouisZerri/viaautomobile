@@ -15,6 +15,8 @@
 	{
 		$current_mandat = recupereMandat($nom);
 
+		insertHistorique($_POST['nombre'], $nom, date('d/m/Y'));
+
 		$current_mandat->nombre += $_POST['nombre'];
 
 		updateMandat($current_mandat->nombre, $nom);

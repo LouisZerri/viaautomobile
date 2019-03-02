@@ -27,6 +27,11 @@
 			$errors['naissance'] = "Votre date de naissance doit être au format JJ/MM/AAAA";
 		}
 
+		if(is_numeric($_POST['enseigne']))
+		{
+			$errors['enseigne'] = "L'enseigne ne peut pas être une valeur numérique";
+		}
+
 		if(empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		{
 			$errors['email'] = "Votre email n'est pas valide";
@@ -56,7 +61,7 @@
 
 			$token = str_random(60);
 
-			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['email'],$_POST['password'],$_POST['telephone'],$token);
+			insertVendeur($_POST['nom'],$_POST['prenom'],$_POST['naissance'],$_POST['site'],$_POST['enseigne'],$_POST['email'],$_POST['password'],$_POST['telephone'],$token);
 
 			$user_id = recupererDernierID();
 
@@ -123,7 +128,7 @@
   		.card {
     		position: absolute; 
 			width: 20%; 
-			height: 65%; 
+			height: 67%; 
 			top:0; 
 			bottom:0; 
 			left:0; 
@@ -137,7 +142,7 @@
   		.card {
     		position: absolute; 
 			width: 20%; 
-			height: 65%; 
+			height: 67%; 
 			top:0; 
 			bottom:0; 
 			left:0; 
@@ -185,6 +190,9 @@
 						<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" value="<?php echo $_POST['telephone']; ?>" required>
 					</div>
 					<div class="form-group">
+						<input type="text" name="enseigne" class="form-control" placeholder="Enseigne" value="<?php echo $_POST['enseigne']; ?>" required>
+					</div>
+					<div class="form-group">
 	 					<select class="form-control" name="site" placeholder="Site de ratachement">
 	 						<option selected="selected"><?php echo $_POST['site']; ?></option>
 				        	<option>Paris</option>
@@ -224,6 +232,9 @@
 				</div>
 				<div class="form-group">
 					<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" required>
+				</div>
+				<div class="form-group">
+					<input type="text" name="enseigne" class="form-control" placeholder="Enseigne" value="<?php echo $_POST['enseigne']; ?>" required>
 				</div>
 				<div class="form-group">
  					<select class="form-control" name="site" placeholder="Site de ratachement">
@@ -327,6 +338,20 @@ $(document).ready(function() {
 		tel = telephone.replace(/[\.,\s]/g, '');
 
 		if(telephone != undefined && telephone != "" && tel.match(/^(\+33|0033|0)(6|7)[0-9]{8}$/g))
+		{
+			$(this).css({"border-color":"#00E500","border-width":"thin"})
+		}
+		else
+		{
+			$(this).css({"border-color":"#FF0000","border-width":"thin"})
+		}
+
+	})
+
+	$('input[name="enseigne"]').change(function(){
+		var enseigne = $(this).val();
+		
+		if(enseigne != undefined && enseigne != "")
 		{
 			$(this).css({"border-color":"#00E500","border-width":"thin"})
 		}
