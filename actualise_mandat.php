@@ -2,26 +2,35 @@
 
 	require "bdd/database.php";
 	require "include/functions.php";
-
 	logged_only();
+
+	function isAjax()
+	{
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
+	}
 
 	$nom = $_SESSION['auth']->nom;
 
-	if(empty($_POST['nombre']) || !is_numeric($_POST['nombre']))
-	{
-		header('Location: tableau_de_bord.php');
-	}
-	else
+	if(isAjax())
 	{
 		$current_mandat = recupereMandat($nom);
 
-		insertHistorique($_POST['nombre'], $nom, date('d/m/Y'));
+		insertHistorique($_GET['nombre'], $nom, date('d/m/Y'));
 
-		$current_mandat->nombre += $_POST['nombre'];
+		$current_mandat->nombre += $_GET['nombre'];
 
 		updateMandat($current_mandat->nombre, $nom);
 
-	    header('Location: tableau_de_bord.php');
+		$donnee = recupereDernierMandat($nom);
+		?>
+		<p><?= $donnee->nombre ?></p>
+		<?php
 	}
+	else
+	{
+		header('Location: tableau_de_bord.php');
+	}
+
+
 
 ?>

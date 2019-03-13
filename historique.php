@@ -14,7 +14,9 @@
 
 	$result = recupHistorique($nom);
 
-	$delete = "delete_historique.php?id=";
+	$delete_mandat = "delete_mandat.php?id=";
+	$delete_vente = "delete_vente.php?id=";
+
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
@@ -32,13 +34,14 @@ body
 	height: 400px;
 	float: left;
 	z-index:10;
+	position: fixed;
 
 }
 
 .separation
 {
 	
-	position: absolute;
+	position: fixed;
 	margin-left: 270px;
 	height: 100%;
 	width: 1px;
@@ -75,6 +78,19 @@ span
 	padding: 10px 10px 10px 10px;
 	border-radius: 20px;
 	background: #754974;
+}
+
+table
+{
+	position: absolute; 
+	width: 100%; 
+	height: 25%;   
+	right: 0; 
+	margin: auto;
+	zoom: 125%;
+	padding-top: 50px;
+	margin-right: 50px;
+	display: none;
 }
 
 #ma_table_Ventes
@@ -213,7 +229,7 @@ span
 		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
+	<img style="position: fixed; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 <div class="container">
 	<h3><b>AFFICHER L'HISTORIQUE</b></h3>
@@ -260,37 +276,40 @@ span
 		      	<th scope="col">Immatriculation</th>
 		      	<th scope="col">Livraisons</th>
 		      	<th scope="col">FMS</th>
-		      	<th scope="col">Garenties</th>
+		      	<th scope="col">Garanties</th>
 		      	<th scope="col">Financements</th>
+		      	<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
+			<?php $i = 1 ?>
 			<?php foreach($donnees as $res): ?>
-				<tr id="<?= $res->id_vente; ?>">
+				<tr id="<?= $i; ?>">
 					<td align="center" id="date_vente"><?= $res->date_vente; ?></td>
 					<td align="center"><?= $res->immatriculation; ?></td>
 					<?php if($res->livree == 1): ?>
-						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: #531B51;">Oui</td>
 					<?php else: ?>
 						<td align="center">Non</td>
 					<?php endif; ?>
 					<?php if($res->frais_mer == 1): ?>
-						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: #531B51;">Oui</td>
 					<?php else: ?>
 						<td align="center">Non</td>
 					<?php endif; ?>
 					<?php if($res->garentie == 1): ?>
-						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: #531B51;">Oui</td>
 					<?php else: ?>
 						<td align="center" >Non</td>
 					<?php endif; ?>
 					<?php if($res->financement == 1): ?>
-						<td align="center" style="font-weight: bold; color: ##531B51;">Oui</td>
+						<td align="center" style="font-weight: bold; color: #531B51;">Oui</td>
 					<?php else: ?>
 						<td align="center">Non</td>
 					<?php endif; ?>
-					<td align="center"><a style="color: black;" href="<?= $delete."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
+					<td align="center"><a id="vente" style="color: black;" href="<?= $delete_vente."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
 				</tr>
+				<?php $i++; ?>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
@@ -300,29 +319,78 @@ span
 			<tr>
   				<th align="center" scope="col">Date</th>
 		      	<th align="center" scope="col">Nombre de mandats</th>
+		      	<th align="center" scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
+			<?php $i = 1 ?>
 			<?php foreach($result as $res): ?>
-				<tr align="center" id="<?= $res->id_historique; ?>">
+				<tr align="center" id="<?= $i; ?>">
 					<td align="center" id="date_mandat"><?= $res->date_mandat; ?></td>
 					<td align="center"><?= $res->nombre; ?></td>
-					<td align="center"><a style="color: black;" href="<?= $delete."".$res->id_historique ?>"><i class="fa fa-trash"></i></a></td>
+					<td align="center"><a id="mandat" style="color: black;" href="<?= $delete_mandat."".$res->id_historique ?>"><i class="fa fa-trash"></i></a></td>
 				</tr>
+			<?php $i++; ?>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function() {
+
+		$('a[id="mandat"]').click(function(e){
+
+			e.preventDefault();
+
+			var $a = $(this)
+
+			var url = $a.attr('href')
+
+			jQuery.ajax({
+				url : url,
+				type : 'GET',
+				success: function()
+				{
+					$a.parents('tr').fadeOut(500);
+				},
+				error: function(jqxhr)
+				{
+					alert(jqxhr.responseText);
+				}
+			});
+		});
+
+		$('a[id="vente"]').click(function(e){
+
+			e.preventDefault();
+
+			var $a = $(this)
+
+			var url = $a.attr('href')
+
+			jQuery.ajax({
+				url : url,
+				type : 'GET',
+				success: function()
+				{
+					$a.parents('tr').fadeOut(500);
+				},
+				error: function(jqxhr)
+				{
+					alert(jqxhr.responseText);
+				}
+			});
+		});
+
 		// Je sélectionne le select et quand la valeur change on fait une action
 		$('select[name="monselect"]').change(function(){
 		    // Je créer l'id du div qui va être affiché
 		    var id = "ma_table_" + $(this).val();
 		    // Je cache toutes les divs grâce à une classe qui va sélectionner le tout
-		    $('table').hide(1000);
+		    $('table').hide();
 		    // Et j'affiche seulement le Div que je souhaite
-		    $('#'+id).show(1000);
+		    $('#'+id).show();
 		});
 
 		$('select[name="mois"]').change(function(){
@@ -365,7 +433,7 @@ span
 					date = date_vente.substring(3,5);
 					if(mois != date)
 					{
-						$('#'+i).hide(1000)
+						$('#'+i).fadeOut()
 					}
 				}
 
@@ -377,19 +445,11 @@ span
 					date = date_mandat.substring(3,5);
 					if(mois != date)
 					{
-						$('#'+i).hide(1000)
+						$('#'+i).fadeOut()
 					}
 				}
-
-
 			}
-
-			
-			
-
-		});
-
-		
+		});	
 	});
 
 
@@ -399,5 +459,7 @@ span
 
 
 </script>
+
+
 
 <?php require "include/footer.php"; ?>

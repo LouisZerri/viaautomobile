@@ -1,5 +1,12 @@
 <?php
-
+	
+	function erreurs()
+	{
+		error_reporting(E_ALL);
+		ini_set('display_errors', 'On');
+		ini_set('log_errors', 'On');
+	}
+	
 	function formatDate($date)
 	{
 		$string = explode("/",$date);

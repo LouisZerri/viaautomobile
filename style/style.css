@@ -1,0 +1,734 @@
+html, body 
+{ 
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat';
+	background: url(fond.svg) no-repeat center fixed; 
+	-webkit-background-size: cover; 
+	background-size: cover; 
+}
+
+#p1
+{
+	color: white;
+	font-size: 5em;
+}
+
+#p2
+{
+	color: white;
+	font-size: 5em;
+}
+
+#fin 
+{
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	font-size: 12px;
+	padding-right: 20px;
+	color: white;
+}
+
+.index
+{
+	position: absolute; 
+	width: 100%; 
+	height: 25%; 
+	top:0; 
+	bottom:0; 
+	left:0; 
+	right: 0; 
+	margin: auto;
+}
+
+#logo
+{
+	right: 0; 
+	padding-bottom: 170px; 
+	position: fixed;"
+}
+
+#logo_o
+{
+	right: 0; 
+	padding-bottom: 170px; 
+	position: fixed;
+	opacity: 0.5;
+}
+
+#padding-left
+{
+	padding-left: 20px;
+}
+
+#padding-left_40
+{
+	padding-left: 40px;
+}
+
+#connexion, #inscription
+{
+	margin-left: 20px;
+	text-decoration: none;
+}
+
+a
+{
+	color: black;
+	text-decoration: underline;
+}
+
+a:hover
+{
+	color: black;
+}
+
+/*.form-control
+{
+	font-size: 10px;
+}*/
+
+.card
+{
+	position: absolute; 
+	width: 35%; 
+	height: 50%; 
+	top: 0; 
+	bottom: 0; 
+	left: 0; 
+	right: 0;
+	margin: auto;
+	border-radius: 15px;
+}
+
+#card-accueil 
+{
+	position: absolute; 
+	width: 40%; 
+	height: 50%;
+	bottom:0; 
+	left:0;  
+	margin: auto;
+	margin-left: 40px;
+	margin-bottom: 40px;
+	border-radius: 20px;
+}
+
+#boutons
+{
+	background-color: #9D1458;
+}
+
+span
+{
+	color: white;
+}
+
+#span-accueil
+{
+	color: #531B51;
+}
+
+#accueil
+{
+	text-decoration: none; 
+	border: 1px solid #531B51; 
+	border-radius: 12px;
+}
+
+.menu
+{
+	width: 300px;
+	height: 400px;
+	float: left;
+	position: fixed;
+	z-index: 10;
+
+}
+
+.separation
+{
+	
+	position: fixed;
+	margin-left: 270px;
+	height: 100%;
+	width: 1px;
+	background: grey;
+	top: 0;
+	bottom: 0;
+	opacity: 0.2;
+}
+
+.separation2
+{
+	clear: both;
+	position: absolute;
+	margin-left: 5px;
+	height: 450px;
+	width: 3px;
+	margin-top: 50px;
+	background:  #531B51;
+}
+
+li
+{
+	list-style-type: none;
+	position:relative;
+	z-index:10;
+}
+
+#fade { /*--Masque opaque noir de fond--*/
+	display: none; /*--masqué par défaut--*/
+	background: #000;
+	position: fixed; left: 0; top: 0;
+	width: 100%; height: 100%;
+	opacity: .80;
+	z-index: 9999;
+}
+.popup_block{
+	display: none; /*--masqué par défaut--*/
+	background: #fff;
+	padding: 20px;
+	float: left;
+	font-size: 12px;
+	position: fixed;
+	top: 50%; left: 50%;
+	z-index: 99999;
+	/*--Les différentes définitions de Box Shadow en CSS3--*/
+	-webkit-box-shadow: 0px 0px 20px #000;
+	-moz-box-shadow: 0px 0px 20px #000;
+	box-shadow: 0px 0px 20px #000;
+	/*--Coins arrondis en CSS3--*/
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+/*--Gérer la position fixed pour IE6--*/
+*html #fade {
+position: absolute;
+}
+*html .popup_block {
+position: absolute;
+}
+
+.bouton1
+{
+	width: 65px;
+	height: 65px;
+	background:#A73C97;
+	font:bold 50px Montserrat;
+	border-radius:50%;
+	border:none;
+	color:#fff;
+}
+
+#change
+{
+	color: #531B51;
+	text-decoration: none;
+	list-style-type: none;
+}
+
+#change:hover
+{
+	color: white;
+	transition:all 0.10s;
+	border:none;
+	padding: 10px 10px 10px 10px;
+	border-radius: 20px;
+	background: #754974;
+	position:relative;
+	z-index:10;
+}
+
+#dont
+{
+	color: #A73C97; 
+	font-size: 20px;
+}
+
+#padding_image
+{
+	padding-left: 35px;
+}
+
+#padding_p
+{
+	padding-left: 45px;
+}
+
+#image_menu
+{
+	position: fixed; 
+	left: 0; 
+	bottom: 0; 
+	padding-left: 15px;
+}
+
+#p_petit
+{
+	font-size: 2em;
+}
+
+#p_grand
+{
+	font-size: 7em;
+}
+
+.options
+{
+	color: black;
+}
+
+#poplight, #poplight2
+{
+	background-color: #531B51; 
+	text-decoration: none; 
+	border: 2px solid #531B51; 
+	border-radius: 12px;
+}
+
+#poplight3
+{
+	background-color: #9D1458;
+}
+
+#font_size
+{
+	font-size: 15px;
+}
+
+#ajout_vente
+{
+	background-color: #9D1458;
+}
+
+
+#img_challenge
+{
+	border-radius: 10px;
+}
+
+#first_span_challenge
+{
+	color: #808080; 
+	font-size: 12px;
+}
+
+#second_span_challenge
+{
+	color: black; 
+	font-size: 15px;
+}
+
+table
+{
+	position: absolute; 
+	width: 100%; 
+	height: 25%;   
+	right: 0; 
+	margin: auto;
+	zoom: 125%;
+	padding-top: 50px;
+	margin-right: 50px;
+	display: none;
+}
+
+#ma_table_Ventes
+{
+	width: 70%;
+}
+
+#ma_table_Mandats
+{
+	width: 55%;
+}
+
+
+#selection
+{
+	width: 50%; 
+	background-color: #531B51; 
+	color: white;
+}
+
+#tableau
+{
+	font-weight: bold; 
+	color: #531B51;
+}
+
+#poubelle, #vente
+{
+	color: black;
+}
+
+
+#parametre
+{
+	bottom:0; 
+	left:0;
+	top: 0;
+	right:0;  
+	margin: auto;
+	padding-top: 50px;
+	zoom: 125%;
+}
+
+#form_parametre
+{
+	width: 30%; 
+	padding-top: 30px;
+}
+
+#cache
+{
+	background-color: #754974;
+}
+
+
+
+@media screen and (min-width: 1080px) and (max-width: 1360px) 
+{
+
+	.index
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		zoom:125%;
+	}
+
+	#logo
+	{
+		right: 0; 
+		padding-bottom: 170px; 
+		position: fixed;"
+	}
+
+	.card 
+	{
+		position: absolute; 
+		width: 35%; 
+		height: 50%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		border-radius: 15px;
+  	}
+
+  	#card-accueil 
+  	{
+		position: absolute; 
+		width: 27%; 
+		height: 30%;
+		bottom:0; 
+		left:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 50px;
+		border-radius: 20px;
+  	}
+
+  	#semaine
+  	{
+  		font-size: 30px;
+  		padding-left: 150px;
+
+  	}
+
+  	#colonne1 {
+		position: absolute; 
+		width: 60%; 
+		height: 60%;
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	#colonne2
+	{
+		position: absolute; 
+		width: 38%; 
+		height: 59.9%;
+		bottom:0;
+		top: 0;  
+		margin: auto;
+		margin-left: 525px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	.separation2
+	{
+		clear: both;
+		position: absolute;
+		height: 800px;
+		width: 3px;
+		margin-left: 600px;
+		margin-top: 50px;
+		background:  #531B51;
+	}
+
+	.bouton1
+	{
+		width: 75px;
+		height: 75px;
+		background:#A73C97;
+		font:bold 55px Montserrat;
+		border-radius:50%;
+		border:none;
+		color:#fff;
+	}
+
+	#dont
+	{
+		color: #A73C97; 
+		font-size: 30px;
+	}
+
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 300px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+
+	#screen
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 100px;
+		padding-top: 20px;
+		zoom: 125%;
+		padding-left: 200px;
+	}
+
+	#selection
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 170px;
+		margin-top: 50px;
+	}
+
+	table
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%;   
+		right: 0; 
+		margin: auto;
+		zoom: 125%;
+		padding-top: 150px;
+		margin-right: 50px;
+		display: none;
+	}
+
+}
+
+@media screen and (min-height: 770px) and (max-height: 1920px)
+{
+	.index
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		zoom:125%;
+	}
+
+	#logo
+	{
+		right: 0; 
+		padding-bottom: 170px; 
+		position: fixed;"
+	}
+
+	.card 
+	{
+		position: absolute; 
+		width: 25%; 
+		height: 35%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		border-radius: 15px;
+	}
+
+	#card-inscription
+  	{
+  		position: absolute; 
+		width: 20%; 
+		height: 75%; 
+		top:0; 
+		bottom:0; 
+		left:0; 
+		right: 0; 
+		margin: auto;
+		border-radius: 15px;
+  	}
+
+  	#card-accueil 
+  	{
+		position: absolute; 
+		width: 27%; 
+		height: 30%;
+		bottom:0; 
+		left:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 50px;
+		border-radius: 20px;
+  	}
+
+  	#semaine
+  	{
+  		font-size: 30px;
+  		padding-left: 150px;
+
+  	}
+
+  	#colonne1 {
+		position: absolute; 
+		width: 60%; 
+		height: 60%;
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 50px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	#colonne2
+	{
+		position: absolute; 
+		width: 38%; 
+		height: 59.9%;
+		bottom:0;
+		top: 0;  
+		margin: auto;
+		margin-left: 525px;
+		margin-bottom: 175px;
+		zoom:125%;
+	}
+
+	.separation2
+	{
+		clear: both;
+		position: absolute;
+		height: 800px;
+		width: 3px;
+		margin-left: 600px;
+		margin-top: 50px;
+		background:  #531B51;
+	}
+
+	.bouton1
+	{
+		width: 75px;
+		height: 75px;
+		background:#A73C97;
+		font:bold 55px Montserrat;
+		border-radius:50%;
+		border:none;
+		color:#fff;
+	}
+
+	#dont
+	{
+		color: #A73C97; 
+		font-size: 30px;
+	}
+
+
+	.separation
+	{
+		
+		position: absolute;
+		margin-left: 300px;
+		height: 100%;
+		width: 1px;
+		background: grey;
+		top: 0;
+		bottom: 0;
+		opacity: 0.2;
+	}
+
+	#screen
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 100px;
+		padding-top: 20px;
+		padding-left: 200px;
+		zoom: 125%;
+	}
+
+	#selection
+	{
+		position: absolute; 
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		margin-left: 170px;
+		margin-top: 50px;
+	}
+
+	table
+	{
+		position: absolute; 
+		width: 100%; 
+		height: 25%;   
+		right: 0; 
+		margin: auto;
+		zoom: 125%;
+		padding-top: 150px;
+		margin-right: 50px;
+		display: none;
+	}
+}

@@ -276,7 +276,7 @@
 		return $donnees;
 	}
 
-	function deleteHistorique($id)
+	function deleteVente($id)
 	{
 		$pdo = connexionBaseDeDonnee();
 
@@ -358,13 +358,13 @@
 		return $vendeur;
 	}
 
-	function updatePassword($password)
+	function updatePassword($password, $id_vendeur)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$req = $pdo->prepare('UPDATE vendeur SET mot_de_passe = ?, reset_at = NULL, reset_token = NULL');
+		$req = $pdo->prepare('UPDATE vendeur SET mot_de_passe = ?, reset_at = NULL, reset_token = NULL WHERE id_vendeur = ?');
 
-		$req->execute([$password]);
+		$req->execute([$password, $id_vendeur]);
 	}
 
 	function immatriculationExist($immatriculation)
@@ -423,6 +423,46 @@
 		}
 
 	}
+
+	function recuperationChallenge($encours, $limite)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM challenge WHERE en_cours = ? LIMIT '.$limite);
+
+		$req->execute([$encours]);
+
+		$challenge = $req->fetchAll();
+
+		return $challenge;
+	}
+
+	function recuperationToutLesChallenges()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->query('SELECT * FROM challenge');
+
+		$req->execute();
+
+		$challenge = $req->fetchAll();
+
+		return $challenge;
+	}
+
+	function recupereDernierMandat($nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM mandat WHERE id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?)');
+
+		$req->execute([$nom]);
+
+		$mandat = $req->fetch();
+
+		return $mandat;
+	}
+
 
 	//Fonctions qui correspond au back-office
 
@@ -500,5 +540,60 @@
 
 		return $res;
 	}
+
+	function recuperationChallengeById($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT * FROM challenge WHERE id_challenge = ?');
+
+		$req->execute([$id]);
+
+		$challenge = $req->fetch();
+
+		return $challenge;
+	}
+
+	function insertChallenge($titre, $periode, $description, $image)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('INSERT INTO challenge SET titre = ?, periode = ?, description = ?, image = ?');
+
+		$query->execute([$titre, $periode, $description, $image]);
+	}
+
+	function updateChallenge($id, $titre, $periode, $description, $image, $encours, $vainqueur)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('UPDATE challenge SET titre = ?, periode = ?, description = ?, image = ?, en_cours = ?, vainqueur = ? WHERE id_challenge = ?');
+
+		$query->execute([$titre, $periode, $description, $image, $encours, $vainqueur, $id]);
+	}
+
+	function deleteChallenge($id)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('DELETE FROM challenge WHERE id_challenge = ?');
+
+		$query->execute([$id]);
+	}
+
+	function is_vainqueur()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->query('SELECT nom, prenom, nombre, count(vente.id_vendeur) as vente FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN vente ON mandat.id_vendeur = vente.id_vendeur GROUP BY vente.id_vendeur');
+
+		$req->execute();
+
+		$vainqueur = $req->fetchAll();
+
+		return $vainqueur;
+	}
+
+
 
 ?>

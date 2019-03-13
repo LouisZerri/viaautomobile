@@ -18,7 +18,7 @@
                 if(!empty($_POST['password']) && $_POST['password'] == $_POST['password_confirm'])
                 {
                     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-                    updatePassword($password);
+                    updatePassword($password, $vendeur->id_vendeur);
                     session_start();
                     $_SESSION['flash']['success'] = 'Votre mot de passe a bien été modifié';
                     $_SESSION['auth'] = $user;

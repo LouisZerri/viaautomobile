@@ -5,9 +5,17 @@
 	require "include/functions.php";
 
 	logged_only();
+	erreurs();
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+
+	/*$lesChallengesEnCours = recuperationChallenge(1,1);
+	$lesChallengesPasses = recuperationChallenge(0,2);*/
+
+	$lesChallengesEnCours = recuperationChallenge(1,5);
+	$lesChallengesPasses = recuperationChallenge(0,5);
+
 
 ?>
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -44,7 +52,7 @@ li
 {
 	list-style-type: none;
 	position:relative;
-	z-index:10;
+	z-index:100;
 }
 
 span
@@ -93,6 +101,7 @@ span
 		width: 500px;
 		height: 400px;
 		float: left;
+		position: fixed;
 
 	}
 
@@ -112,7 +121,7 @@ span
 	.separation
 	{
 		
-		position: absolute;
+		position: fixed;
 		margin-left: 300px;
 		height: 100%;
 		width: 1px;
@@ -140,6 +149,8 @@ span
 		width: 500px;
 		height: 400px;
 		float: left;
+		position: fixed;
+		z-index: 10;
 	}
 
 	#screen
@@ -159,7 +170,7 @@ span
 	.separation
 	{
 		
-		position: absolute;
+		position: fixed;
 		margin-left: 300px;
 		height: 100%;
 		width: 1px;
@@ -187,45 +198,58 @@ span
 		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
+	<img style="position: fixed; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 <div id="screen" class="container mt-2" style="padding-left: 200px;">
-	<h3><b>LES CHALLENGES EN COURS</b></h3>
-	<div class="row mt-3">
-		<div class="col">
-			<img style="border-radius: 10px;" src="style/challenge_ski.jpg" width="225" height="150">
-		</div>
-		<div class="col mt-3">
-			<h5><b>1 WEEK-END A AVORIAZ A GAGNER</b></h5>
-			<span style="color: #808080; font-size: 12px;">Période : Mois de décembre</span></br>
-			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial vendant le plus de voiture au mois de décembre (calcul basé sur le nombre de commande)</span>
-		</div>
-	</div>
-	<div class="row mt-3">
-		<div class="col">
-			<img style="border-radius: 10px;" src="style/cinema.jpg" width="225" height="150">
-		</div>
-		<div class="col mt-3">
-			<h5><b>2 PLACES DE CINEMA</b></h5>
-			<span style="color: #808080; font-size: 12px;">Période : Du 12 au 17 novembre</span></br>
-			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial rentrant le plus de mandat durant la semaine du 12 au 17 novembre</span>
-		</div>
-	</div>
-	</br></br>
-	<h3><b>CHALLENGES PASSÉS</b></h3>
-	<div class="row mt-3">
-		<div class="col">
-			<img style="border-radius: 10px;" src="style/cinema.jpg" width="225" height="150">
-		</div>
-		<div class="col mt-3">
-			<h5><b>2 PLACES DE CINEMA</b></h5>
-			<span style="color: #808080; font-size: 12px;">Période : Du 12 au 17 novembre</span></br>
-			<span style="color: black; font-size: 15px;">Le vainqueur sera le commercial rentrant le plus de mandat durant la semaine du 12 au 17 novembre</span>
-			<span style="color: black; font-size: 15px;">Vainqueur : Michel Durand, Agence Tourcoing avec 58 mandats</span>
 
-		</div>
-	</div>
-	
+		<?php if(isset($_SESSION['flash'])): ?>
+			<?php foreach($_SESSION['flash'] as $type => $message): ?>
+				<div class="alert alert-<?= $type;?> alert-dismissible fade show" role="alert">
+				  	<?= $message; ?>
+				  	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		    			<span aria-hidden="true">&times;</span>
+		  			</button>
+				</div>
+		  	<?php endforeach; ?>
+		  	<?php unset($_SESSION['flash']); ?>
+		<?php endif; ?>
+
+		<h3><b>LES CHALLENGES EN COURS</b></h3>
+		</br>
+		<?php if($lesChallengesEnCours): ?>
+			<?php foreach($lesChallengesEnCours as $challenge): ?>
+				<div class="row mt-3">
+					<div class="col">
+						<img style="border-radius: 10px;" src="style/<?= $challenge->image; ?>" width="225" height="150">
+					</div>
+					<div class="col mt-3">
+						<h5><b><?= $challenge->titre; ?></b></h5>
+						<span style="color: #808080; font-size: 12px;">Période : <?= $challenge->periode; ?></span></br>
+						<span style="color: black; font-size: 15px;"><?= $challenge->description; ?></span>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<div class="alert alert-info mt-3" role="alert">
+	 			<i class="fa fa-info"></i>&nbsp;&nbsp;Aucun challenge en cours pour le moment
+			</div>
+		<?php endif; ?>
+		</br></br>
+		<h3><b>LES CHALLENGES PASSÉS</b></h3>
+		</br>
+		<?php foreach($lesChallengesPasses as $challenge): ?>
+			<div class="row mt-3">
+				<div class="col">
+					<img style="border-radius: 10px;" src="style/<?= $challenge->image; ?>" width="225" height="150">
+				</div>
+				<div class="col mt-3">
+					<h5><b><?= $challenge->titre; ?></b></h5>
+					<span style="color: #808080; font-size: 12px;">Période : <?= $challenge->periode; ?></span></br>
+					<span style="color: black; font-size: 15px;"><?= $challenge->description; ?></br></span>
+					<span style="color: black; font-size: 15px;"><b>Vainqueur :</b> <?= $challenge->vainqueur ?></span>
+				</div>
+			</div>
+		<?php endforeach; ?>
 </div>
 
 <?php require "include/footer.php"; ?>

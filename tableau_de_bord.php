@@ -342,7 +342,7 @@ position: absolute;
 		<div class="row ml-4">
 			<div id="colonne1" class="col">
 				<h3><b>NOMBRE DE MANDATS</b></h3>
-				<p style="font-size: 7em;"><?= $donnee->nombre ?></p>
+				<p class="nombre_mandat" style="font-size: 7em;"><?= $donnee->nombre ?></p>
 				<p style="font-size: 2em;">Mandats</p></br>
 				<a href="#?w=500" rel="popupun" id="poplight" style="background-color: #531B51; text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-light" role="button"><span>Ajouter Mandats</span></a>
 			</div>
@@ -387,7 +387,7 @@ position: absolute;
 			<p style="font-size: 15px;">Combien de mandats</br>souhaitez-vous comptabiliser ?</p></br>
 			<form action="actualise_mandat.php" method="POST">
 				<div class="form-group">
-					<input class="form-control" type="text" name="nombre" placeholder="Nombre">	
+					<input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre">	
 				</div></br>
 		        <button rel="popuptrois" id="poplight3" style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Ajouter</span></button>
 			</form>
@@ -546,7 +546,33 @@ $(document).ready(function() {
 	});
 
 	//Popup3
-	$('#poplight3').click(function() {
+	$('#poplight3').click(function(e) {
+
+		e.preventDefault();
+
+	 	var nombre = $("#nombre").val();
+
+	 	jQuery.ajax({
+	 		url : 'actualise_mandat.php',
+	 		method: 'POST',
+	 		data : {
+	 			nombre: nombre
+	 		},
+	 		success: function(data, text, jqxhr)
+	 		{
+	 			$('.nombre_mandat').html(jqxhr.responseText);
+
+				$('#fade , .popup_block').fadeOut(function() {
+					$('#fade, a.close').remove();  //...ils disparaissent ensemble
+				});
+				$('form').find('input').val("");
+	 		},
+	 		error: function(jqxhr)
+	 		{
+	 			alert(jqxhr.responseText);
+	 		}
+	 	});
+
 		var popID = $(this).attr('rel'); //Trouver la pop-up correspondante
 		var popURL = 500; //Retrouver la largeur dans le href
 

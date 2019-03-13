@@ -14,7 +14,7 @@
 	  margin:0;
 	  padding:0;
 	  font-family: 'Montserrat';
-	  background: url(style/ski.png) no-repeat center fixed; 
+	  background: url(style/parcasterix.png) no-repeat center fixed; 
 	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
 	  background-size: cover; /* version standardisée */
 	}
