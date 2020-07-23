@@ -8,6 +8,7 @@
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+	$email = $_SESSION['auth']->email;
 
 	$vendeur = recupInfoVendeur($nom);
 
@@ -62,55 +63,17 @@
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
 
-body
+html, body
 {
 	font-family: 'Montserrat';
 	text-decoration: none;
 	list-style-type: none;
-	color: #531B51;
-}
-.menu
-{
-	width: 300px;
-	height: 400px;
-	float: left;
-
+	background: white;
 }
 
-.separation
+.form-control
 {
-	
-	position: absolute;
-	margin-left: 270px;
-	height: 100%;
-	width: 1px;
-	background: grey;
-	top: 0;
-	bottom: 0;
-	opacity: 0.2;
-}
-
-.separation2
-{
-	clear: both;
-	position: absolute;
-	margin-left: 5px;
-	height: 450px;
-	width: 3px;
-	margin-top: 50px;
-	background:  #531B51;
-}
-
-li
-{
-	list-style-type: none;
-	position:relative;
-	z-index:10;
-}
-
-span
-{
-	color: white;
+	font-size: 15px;
 }
 
 label
@@ -118,23 +81,17 @@ label
 	color: #808080;
 }
 
-#change
+
+
+form, #cache
 {
-	color: #531B51;
-	text-decoration: none;
-	list-style-type: none;
+	margin-left: 300px;
+	margin-bottom: 20px;
 }
 
-#change:hover
+h3
 {
-	color: white;
-	transition:all 0.10s;
-	border:none;
-	padding: 10px 10px 10px 10px;
-	border-radius: 20px;
-	background: #754974;
-	position:relative;
-	z-index:10;
+	margin-left: 200px;
 }
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
@@ -199,23 +156,139 @@ label
 	{
 		font-size: 12px;
 	}
+
+
 }
+
+/* 
+	##Device = Tablets, Ipads (portrait)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+
+		h3 > b
+		{
+			margin-left: 150px;
+		}
+
+		form, #cache
+		{
+			margin-left: 200px;
+		}
+
+	}
+
+	/* 
+	##Device = Tablets, Ipads (landscape)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		h3 > b
+		{
+			margin-left: 100px;
+		}
+
+		form, #cache
+		{
+			margin-left: 300px;
+			margin-bottom: 20px;
+		}
+
+		.separation
+		{
+			
+			position: fixed;
+			margin-left: 300px;
+			height: 100%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+
+		.menu
+		{
+			width: 300px;
+			height: 400px;
+			float: left;
+			position: fixed;
+
+		}
+	}
+
+	/* Ipad Pro */
+	@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+	{
+		h3 > b
+		{
+			margin-left: 220px;
+		}
+
+		form, #cache
+		{
+			margin-left: 280px;
+		}
+	}
+
+	@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+	{
+		h3 > b
+		{
+			margin-left: 200px;
+		}
+
+		form, #cache
+		{
+			margin-left: 250px;
+			margin-bottom: 20px;
+		}
+
+		.separation
+		{
+			
+			position: fixed;
+			margin-left: 300px;
+			height: 100%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+
+		.menu
+		{
+			width: 300px;
+			height: 400px;
+			float: left;
+			position: fixed;
+
+		}
+	}
 </style>
 <div class="separation"></div>
 <div class="menu">
 	</br>
 	</br>
 	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
-	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
+	<p style="padding-left: 45px; color: #531B51;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
 		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
+		<?php if(in_array($email, $droit)) :?>
+			<li><a id="change" href="backoffice.php"><i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Administration</a></li></br>
+		<?php endif; ?>
 		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
+	<img style="position: fixed; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 <div class="container">
 	<?php if(!empty($errors)): ?>
@@ -228,7 +301,7 @@ label
 			</ul>
 		</div>
 	<?php endif; ?>
-	<h3><b>PARAMÈTRES DU COMPTE</b></h3>
+	<h3 style="color: #531B51;"><b>PARAMÈTRES DU COMPTE</b></h3>
 	<form style="width: 30%; padding-top: 30px;" action="" method="POST">
 		<div class="form-group">
 			<label>Mon nom</label>
@@ -272,7 +345,7 @@ label
 			<input id="8" type="password" name="password" class="form-control" placeholder="Mot de passe" value="<?php echo substr($vendeur->mot_de_passe, 0,10); ?>" readonly>
 		</div>
 	</form>
-	<button id="cache" style="background-color: #754974;" type="submit" class="btn btn-light"><span style="color: white;">Modifier</span></button>
+	<button id="cache" style="background-color: #754974;" type="submit" class="btn btn-light mb-2"><span style="color: white;">Modifier</span></button>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -288,7 +361,7 @@ label
 			$('#8').attr('value','');
 			$('form').append('<div class="form-group"><label>Nouveau mot de passe</label><input type="password" name="new_password" class="form-control" placeholder="Nouveau mot de passe">')
 			$('form').append('<div class="form-group"><label>Confirmation du nouveau mot de passe</label><input type="password" name="confirm_password" class="form-control" placeholder="Confirmation du nouveau mot de passe">')
-			$('form').append('<button style="background-color: #754974;" type="submit" class="btn btn-light"><span style="color: white;">Valider</span></button');
+			$('form').append('<button style="background-color: #754974;" type="submit" class="btn btn-light mb-2"><span style="color: white;">Valider</span></button');
 			$('#cache').hide();
 		})
 

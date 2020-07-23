@@ -30,7 +30,7 @@
         else
         {
             session_start();
-            $_SESSION['flash']['error'] = "Ce token n'est pas valide";
+            $_SESSION['flash']['danger'] = "Ce token n'est pas valide";
             header('Location: login.php');
             exit();
         }
@@ -41,44 +41,7 @@
         exit();
     }
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-	html, body { 
-	  margin:0;
-	  padding:0;
-	  font-family: 'Montserrat';
-	  background: url(style/fond.svg) no-repeat center fixed; 
-	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	  background-size: cover; /* version standardisée */
-	}
-
-    .form-control
-	{
-		font-size: 10px;
-	}
-
-	#fin 
-	{
-		position: fixed;
-  		right: 0;
-  		bottom: 0;
-		font-size: 12px;
-		padding-right: 20px;
-		color: white;
-	}
-
-	.card
-	{
-		position: absolute; 
-		width: 35%; 
-		height: 50%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
-		margin: auto;
-		border-radius: 15px;
-	}
 
     @media screen and (min-width: 1080px) and (max-width: 1360px) {
   		.card {
@@ -108,6 +71,37 @@
   		}
 	}
 
+    /* Tablette */
+    @media (min-width: 768px) and (max-width: 1024px) 
+    {
+        .card {
+            position: absolute; 
+            width: 40%; 
+            height: 30%; 
+            top:0; 
+            bottom:0; 
+            left:0; 
+            right: 0; 
+            margin: auto;
+            border-radius: 15px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+    {
+        .card
+        {
+            position: absolute; 
+            width: 35%; 
+            height: 55%; 
+            top: 0; 
+            bottom: 0; 
+            left: 0; 
+            right: 0;
+            margin: auto;
+            border-radius: 15px;
+        }
+    }
+
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="card">
@@ -120,12 +114,12 @@
         <form action="" method="POST">
             <div class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Saissisez votre nouveau mot de passe" required>
-            </div>
+            </div></br>
             <div class="form-group">
                 <input type="password" name="password_confirm" class="form-control" placeholder="Confirmez votre nouveau mot de passe" required>
             </div>
             <center></br>
-                <button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Valider</span></button>
+                <button id="boutons" style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Valider</span></button>
             </center>
         </form>
     </div>

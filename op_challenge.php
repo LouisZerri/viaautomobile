@@ -10,128 +10,49 @@
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+	$email = $_SESSION['auth']->email;
+
 
 	$donnees = recuperationToutLesChallenges();
 
 	$delete_challenge = "delete_challenge.php?id=";
 	$modif_challenge = "modif_challenge.php?id=";
 
-	if(!empty($_POST))
-	{
-		$errors = array();
-
-		if(is_numeric($_POST['titre']))
-		{
-			$errors['titre'] = "Le titre du challenge ne peut pas être une valeur numérique";
-		}
-
-		if(is_numeric($_POST['periode']))
-		{
-			$errors['periode'] = "La période du challenge ne peut pas être une valeur numérique";
-		}
-
-		if(isset($_FILES['file']) && $_FILES['file']['error'] == 0)
-		{
-			$infosfichier = pathinfo($_FILES['file']['name']);
-			$name = $infosfichier['filename'];
-			$extension_upload = strtolower($infosfichier['extension']);
-			$extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
-
-			if(!in_array($extension_upload, $extensions_autorisees))
-			{
-				$errors['file'] = "L'extension du fichier est incorrecte";
-			}
-			else
-			{
-				$repertoireDestination = "/var/www/html/viaautomobile.pepperbay.fr/style";
-				$nomDestination = "$name.$extension_upload";
-				$file = "$repertoireDestination/$nomDestination";
-				if(is_uploaded_file($_FILES["file"]["tmp_name"])) 
-	    		{
-		        	$resultat = move_uploaded_file($_FILES['file']['tmp_name'], $file);
-		        }
-		    }	
-		}
-
-
-		if(empty($errors) && $resultat)
-		{
-
-			insertChallenge($_POST['titre'],$_POST['periode'],$_POST['description'],$nomDestination);
-			$_SESSION['flash']['success'] = 'Le challenge a été ajouté avec succès';
-			header('Location: op_challenge.php');
-		}
-	}
-
+	adminOnly($droit, $email);
 
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-body
+
+html, body
 {
 	font-family: 'Montserrat';
 	text-decoration: none;
 	list-style-type: none;
-	color: #531B51;
+	background: white;
 }
-.menu
-{
-	width: 300px;
-	height: 400px;
-	float: left;
-	z-index:10;
-	position: fixed;
 
+.form-control
+{
+	font-size: 15px;
+}
+
+.container
+{
+	width: 60%;
 }
 
 .separation
 {
-	
-	position: fixed;
-	margin-left: 270px;
-	height: 100%;
-	width: 1px;
-	background: grey;
-	top: 0;
-	bottom: 0;
-	opacity: 0.2;
+	margin-left: 280px;
 }
 
-li
-{
-	list-style-type: none;
-	z-index:10;
-}
-
-span
-{
-	color: white;
-	z-index: 10;
-}
-
-#change
-{
-	color: #531B51;
-	text-decoration: none;
-	list-style-type: none;
-}
-
-#change:hover
-{
-	color: white;
-	transition:all 0.10s;
-	border:none;
-	padding: 10px 10px 10px 10px;
-	border-radius: 20px;
-	background: #754974;
-}
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
 
 	.separation
 	{
 		
-		position: absolute;
+		position: fixed;
 		margin-left: 300px;
 		height: 100%;
 		width: 1px;
@@ -152,6 +73,11 @@ span
 		zoom: 125%;
 	}
 
+	.container
+	{
+		width: 100%;
+	}
+
 }
 
 @media screen and (min-height: 770px) and (max-height: 1920px) {
@@ -159,7 +85,7 @@ span
 	.separation
 	{
 		
-		position: absolute;
+		position: fixed;
 		margin-left: 300px;
 		height: 100%;
 		width: 1px;
@@ -179,6 +105,163 @@ span
 		padding-top: 10px;
 		zoom: 125%;
 	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+/* 
+##Device = Tablets, Ipads (portrait)
+##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) 
+{
+	
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 10px;
+		padding-left: 150px;
+	}
+
+	form
+	{
+		margin-left: 200px;
+	}
+
+	table
+	{
+		width: 90%;
+		margin-left: 200px;
+	}
+
+	h4
+	{
+		padding-left: 200px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+/* 
+##Device = Tablets, Ipads (landscape)
+##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 10px;
+		padding-left: 250px;
+	}
+
+	form
+	{
+		margin-left: 250px;
+	}
+
+	table
+	{
+		width: 90%;
+		margin-left: 250px;
+	}
+
+	h4
+	{
+		padding-left: 250px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+/* Ipad Pro */
+@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 10px;
+		padding-left: 250px;
+	}
+
+	form
+	{
+		margin-left: 300px;
+	}
+
+	table
+	{
+		width: 90%;
+		margin-left: 250px;
+	}
+
+	h4
+	{
+		padding-left: 300px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 10px;
+		padding-left: 200px;
+	}
+
+	form
+	{
+		margin-left: 250px;
+	}
+
+	table
+	{
+		width: 90%;
+		margin-left: 250px;
+	}
+
+	h4
+	{
+		padding-left: 250px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
 }
 </style>
 <div class="separation"></div>
@@ -186,7 +269,7 @@ span
 	</br>
 	</br>
 	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
-	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
+	<p style="padding-left: 45px; color: #531B51;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="op_challenge.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Mettre à jour les challenges</a></li></br>
@@ -225,9 +308,9 @@ span
 	  <?php unset($_SESSION['flash']); ?>
 	<?php endif; ?>
 
-	<h3><b>METTRE A JOUR LES CHALLENGE</b></h3></br>
-	<h4><b>Ajouter un challenge</b></h4>	
-	<form style="width: 30%;" action="" method="POST" enctype="multipart/form-data">
+	<h3 style="color: #531B51;"><b>METTRE A JOUR LES CHALLENGES</b></h3></br>
+	<h4 style="color: #531B51;"><b>Ajouter un challenge</b></h4>	
+	<form style="width: 30%;" action="ajout_challenge.php" method="POST" enctype="multipart/form-data">
 		<div class="form-group mt-4">
 			<label>Titre du challenge</label>
 			<input type="text" name="titre" class="form-control" placeholder="Titre du challenge" required>
@@ -244,9 +327,13 @@ span
             <label>Logo (JPG, PNG ou GIF | max. 15 Ko)</label>
             <input class="form-control" id="logoFile" type="file" name="file" size="30">
         </div>
+        <div class="form-group">
+            <label>Image en page d'accueil</label>
+            <input class="form-control" id="logoFile" type="file" name="file_accueil" size="30">
+        </div>
 		<button style="background-color: #9D1458;" type="submit" class="btn btn-outline-light mt-3"><span style="color: white;">Valider</span></button>
 	</form></br></br>
-	<h4><b>La liste des challenges</b></h4>	
+	<h4 style="color: #531B51;"><b>La liste des challenges</b></h4>	
 
 	<table style="padding-left: 100px;" class="table table-striped mt-5">
 		<thead>
@@ -267,7 +354,29 @@ span
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-	</table>
+	</table></br>
+	<div class="row">
+		<div class="col">
+			<h4 style="color: #531B51;"><b>Ajouter un site de rattachement</b></h4>
+			<form action="ajout_site.php" method="POST">
+				<div class="form-group mt-4">
+					<label>Site de rattachement :</label>
+					<input type="text" name="site" class="form-control" placeholder="Site de rattachement" required>
+			    </div>
+				<button style="background-color: #9D1458;" type="submit" class="btn btn-outline-light mt-3"><span style="color: white;">Valider</span></button>
+			</form></br></br>
+		</div>
+		<div style="padding-left: 200px;" class="col">
+			<h4 style="color: #531B51;"><b>Ajouter un administrateur</b></h4>
+			<form action="ajout_admin.php" method="POST">
+				<div class="form-group mt-4">
+					<label>Adresse email :</label>
+					<input type="text" name="email" class="form-control" placeholder="Adresse email" required>
+			    </div>
+				<button style="background-color: #9D1458;" type="submit" class="btn btn-outline-light mt-3"><span style="color: white;">Valider</span></button>
+			</form></br></br>
+		</div>
+	</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">

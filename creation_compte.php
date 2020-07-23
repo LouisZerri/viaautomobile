@@ -5,12 +5,13 @@
 
 	require 'include/header.php';
 	require 'include/functions.php';
+	require 'bdd/database.php';
+
+	$donnees = recupereSiteRattachement();
 
 	if(!empty($_POST))
 	{
 		$errors = array();
-
-		require_once 'bdd/database.php';
 
 		if(is_numeric($_POST['nom']))
 		{
@@ -72,63 +73,13 @@
 	}
 
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-
-	html, body { 
-	  margin:0;
-	  padding:0;
-	  font-family: 'Montserrat';
-	  background: url(style/fond.png) no-repeat center fixed; 
-	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	  background-size: cover; /* version standardisée */
-	}
-
-	#p1
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#p2
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	.form-control
-	{
-		font-size: 10px;
-	}
-
-	.card
-	{
-		border-radius: 15px;
-		position: absolute; 
-		width: 30%; 
-		height: 90%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
-		margin: auto;
-	}
-	
-	#fin 
-	{
-		position: fixed;
-  		right: 0;
-  		bottom: 0;
-		font-size: 12px;
-		padding-right: 20px;
-		color: white;
-	}
 
 	@media screen and (min-width: 1080px) and (max-width: 1360px) {
   		.card {
     		position: absolute; 
 			width: 20%; 
-			height: 67%; 
+			height: 80%; 
 			top:0; 
 			bottom:0; 
 			left:0; 
@@ -142,7 +93,7 @@
   		.card {
     		position: absolute; 
 			width: 20%; 
-			height: 67%; 
+			height: 80%; 
 			top:0; 
 			bottom:0; 
 			left:0; 
@@ -151,7 +102,53 @@
 			border-radius: 15px;
   		}
 	}
-}
+
+	/*Pour les tablettes et ipad */
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+		.card {
+    		position: absolute; 
+			width: 40%; 
+			height: 60%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		.card {
+    		position: absolute; 
+			width: 40%; 
+			height: 95%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+	@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+	{
+		.card {
+    		position: absolute; 
+			width: 30%; 
+			height: 75%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
 </style>
 <img style="right: 0; padding-bottom: 170px; opacity: 50%; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <div class="container">
@@ -166,7 +163,7 @@
 		</div>
 	<?php endif; ?>
 	
-	<div class="card">
+	<div id="creation_compte" class="card">
 		<center>
 			</br>
 			<img src="style/logo_couleur.svg" alt="logo" width="300" height="75">
@@ -180,6 +177,7 @@
 					<div class="form-group">
 						<input type="text" name="nom" class="form-control is-invalid" placeholder="Nom" value="<?php echo $_POST['nom']; ?>" required>
 					</div>
+					
 					<div class="form-group">
 						<input type="text" name="prenom" class="form-control" placeholder="Prénom" value="<?php echo $_POST['prenom']; ?>" required>
 					</div>
@@ -195,13 +193,9 @@
 					<div class="form-group">
 	 					<select class="form-control" name="site" placeholder="Site de ratachement">
 	 						<option selected="selected"><?php echo $_POST['site']; ?></option>
-				        	<option>Paris</option>
-				        	<option>Lyon</option>
-				        	<option>Marseille</option>
-				       		<option>Lille</option>
-				      		<option>Bordeaux</option>
-				      		<option>Toulouse</option>
-				      		<option>Strasbourg</option>
+	 						<?php foreach($donnees as $site): ?>
+								<option><?= $site->site_rattachement ?></option>
+	 						<?php endforeach; ?>
 	    				</select>
 	  				</div>
 					<div class="form-group">
@@ -234,18 +228,14 @@
 					<input type="text" name="telephone" class="form-control" placeholder="Téléphone portable (+33)" required>
 				</div>
 				<div class="form-group">
-					<input type="text" name="enseigne" class="form-control" placeholder="Enseigne" value="<?php echo $_POST['enseigne']; ?>" required>
+					<input type="text" name="enseigne" class="form-control" placeholder="Enseigne" required>
 				</div>
 				<div class="form-group">
  					<select class="form-control" name="site" placeholder="Site de ratachement">
  						<option selected="selected" disabled selected hidden>Site de ratachement</option>
-			        	<option>Paris</option>
-			        	<option>Lyon</option>
-			        	<option>Marseille</option>
-			       		<option>Lille</option>
-			      		<option>Bordeaux</option>
-			      		<option>Toulouse</option>
-			      		<option>Strasbourg</option>
+			        	<?php foreach($donnees as $site): ?>
+							<option><?= $site->site_rattachement ?></option>
+ 						<?php endforeach; ?>
     				</select>
   				</div>
 				<div class="form-group">
@@ -259,8 +249,8 @@
 				<div class="form-group">
 					<input type="password" name="password_confirm" class="form-control" placeholder="Confirmez votre mot de passe" required>
 				</div>
-				<center>
-					<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Inscription</span></button>
+				<center></br>
+					<button id="boutons" style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">Inscription</span></button>
 				</center>
 			</form>
 		<?php endif; ?>

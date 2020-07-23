@@ -7,8 +7,8 @@
 	
 	function connexionBaseDeDonnee()
 	{
-		$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', '');
-		//$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', 'iE7ZOy5dsql');
+		//$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', '');
+		$pdo = new PDO('mysql:host=localhost;dbname=viaautomobile;charset=utf8', 'root', 'iE7ZOy5dsql');
 		
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -191,6 +191,12 @@
 		$query = $pdo->prepare("INSERT INTO vente SET id_vendeur = ?, date_vente = ?, immatriculation = ?, livree = ?, frais_mer = ?, garentie = ?, financement = ?, date_time = ?");
 
 		$query->execute([$res->id_vendeur, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement, $datetime]);
+
+
+
+		$query2 = $pdo->prepare("INSERT INTO historique_vente SET id_vendeur = ?, date_vente = ?, immatriculation = ?, livree = ?, frais_mer = ?, garentie = ?, financement = ?, date_time = ?");
+
+		$query2->execute([$res->id_vendeur, $date_vente, $immatriculation, $livree, $frais_mer, $garentie, $financement, $datetime]);
 	}
 
 	function countVente($nom)
@@ -463,17 +469,92 @@
 		return $mandat;
 	}
 
+	function recupereMoisFromVente($mois, $nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT id_vente, date_vente, immatriculation, livree, frais_mer, garentie, financement FROM historique_vente WHERE id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND SUBSTRING(date_vente, 4, 2) = ?');
+
+		$req->execute([$nom, $mois]);
+
+		$mois = $req->fetchAll();
+
+		if(!empty($mois))
+		{
+			return $mois;
+		}
+
+		return null;
+	}
+
+	function recupereMoisFromMandat($mois, $nom)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('SELECT date_mandat, id_historique, id_vendeur, nombre FROM historique WHERE id_vendeur = (SELECT id_vendeur FROM vendeur WHERE nom = ?) AND SUBSTRING(date_mandat, 4, 2) = ? ORDER BY nombre DESC');
+
+		$req->execute([$nom, $mois]);
+
+		$mois = $req->fetchAll();
+
+		if(!empty($mois))
+		{
+			return $mois;
+		}
+
+		return null;
+	}
+
+	function recupereSiteRattachement()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->query('SELECT site_rattachement FROM site');
+
+		$req->execute();
+
+		$site = $req->fetchAll();
+
+		return $site;
+	}
+
+	function insertSiteDeRattachement($site)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->prepare('INSERT INTO site SET site_rattachement = ?');
+
+		$req->execute([$site]);
+	}
 
 	//Fonctions qui correspond au back-office
 
 
-	function updateCompteur($compteur)
+	function mettreMandatAZero($compteur)
 	{
 		$pdo = connexionBaseDeDonnee();
 
 		$query = $pdo->prepare('UPDATE mandat SET nombre = ?');
 
 		$query->execute([$compteur]);
+	}
+
+	function mettreVenteAZero()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('DELETE FROM vente');
+
+		$query->execute();
+	}
+
+	function supprimeHistorique()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->query('DELETE FROM historique');
+
+		$query->execute();
 	}
 
 	function recupererTout()
@@ -493,7 +574,92 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$collaborateur = $pdo->query('SELECT nom, prenom, site_ratachement, nombre, count(vente.id_vendeur) as vente FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN vente ON mandat.id_vendeur = vente.id_vendeur GROUP BY vente.id_vendeur');
+		$collaborateur = $pdo->query('SELECT nom, prenom, site_ratachement, nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur GROUP BY historique_vente.id_vendeur ORDER BY nombre DESC');
+
+		$collaborateur->execute();
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+	}
+
+	function RecupParCollaborateurByMonth($mois)
+	{
+		
+		$pdo = connexionBaseDeDonnee();
+
+		$collaborateur = $pdo->prepare('SELECT nom, prenom, site_ratachement, mandat.nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur WHERE SUBSTRING(date_vente, 4, 2) = ? GROUP BY historique_vente.id_vendeur ORDER BY vente DESC');
+
+		$collaborateur->execute([$mois]);
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+	}
+
+	function RecupParCollaborateurByTrim($trimestre)
+	{
+		
+		$pdo = connexionBaseDeDonnee();
+
+		if($trimestre == '1')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, mandat.nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur WHERE SUBSTRING(date_vente, 4, 2) BETWEEN '01' AND '03' GROUP BY historique_vente.id_vendeur ORDER BY vente DESC");
+		}
+		elseif($trimestre == '2')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, mandat.nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur WHERE SUBSTRING(date_vente, 4, 2) BETWEEN '04' AND '06' GROUP BY historique_vente.id_vendeur ORDER BY vente DESC");
+		}
+		elseif($trimestre == '3')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, mandat.nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur WHERE SUBSTRING(date_vente, 4, 2) BETWEEN '07' AND '09' GROUP BY historique_vente.id_vendeur ORDER BY vente DESC");
+		}
+		elseif($trimestre == '4')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, mandat.nombre, count(historique_vente.id_vendeur) as vente, sum(historique_vente.livree) as livree, sum(historique_vente.financement) as financement, sum(historique_vente.garentie) as garantie, sum(historique_vente.frais_mer) as fme FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur LEFT JOIN historique_vente ON mandat.id_vendeur = historique_vente.id_vendeur WHERE SUBSTRING(date_vente, 4, 2) BETWEEN '10' AND '12' GROUP BY historique_vente.id_vendeur ORDER BY vente DESC");
+		}
+
+		$collaborateur->execute();
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+	}
+
+	function recuperationMoisMandat($mois)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$collaborateur = $pdo->prepare('SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur WHERE SUBSTRING(date_mandat, 4, 2) = ? GROUP BY historique.id_vendeur ORDER BY nombre DESC');
+
+		$collaborateur->execute([$mois]);
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+		
+	}
+
+	function recuperationTrimestreMandat($trimestre)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		if($trimestre == '1')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur WHERE SUBSTRING(date_mandat, 4, 2) BETWEEN '01' AND '03' GROUP BY historique.id_vendeur ORDER BY nombre DESC");
+		}
+		elseif($trimestre == '2')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur WHERE SUBSTRING(date_mandat, 4, 2) BETWEEN '04' AND '06' GROUP BY historique.id_vendeur ORDER BY nombre DESC");
+		}
+		elseif($trimestre == '3')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur WHERE SUBSTRING(date_mandat, 4, 2) BETWEEN '07' AND '09' GROUP BY historique.id_vendeur ORDER BY nombre DESC");
+		}
+		elseif($trimestre == '4')
+		{
+			$collaborateur = $pdo->query("SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur WHERE SUBSTRING(date_mandat, 4, 2) BETWEEN '10' AND '12' GROUP BY historique.id_vendeur ORDER BY nombre DESC");
+		}
 
 		$collaborateur->execute();
 
@@ -519,7 +685,7 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$vente = $pdo->query("SELECT site_ratachement, count(vente.id_vendeur) as vente FROM mandat INNER JOIN vendeur ON mandat.id_vendeur = vendeur.id_vendeur INNER JOIN vente ON vente.id_vendeur = mandat.id_vendeur GROUP BY vendeur.site_ratachement");
+		$vente = $pdo->query("SELECT site_ratachement, count(historique_vente.id_vendeur) as vente FROM mandat INNER JOIN vendeur ON mandat.id_vendeur = vendeur.id_vendeur INNER JOIN historique_vente ON historique_vente.id_vendeur = mandat.id_vendeur GROUP BY vendeur.site_ratachement");
 
 		$vente->execute();
 
@@ -532,7 +698,7 @@
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare("SELECT nom, prenom, email, nombre as mandat, count(vente.id_vendeur) as vente FROM vendeur LEFT JOIN mandat ON vendeur.id_vendeur = mandat.id_vendeur INNER JOIN vente ON vendeur.id_vendeur = vente.id_vendeur WHERE (SUBSTRING_INDEX(SUBSTR(email, INSTR(email, '@') + 1),'.',1)) = 'viaautomobile' GROUP BY vente.id_vendeur");
+		$query = $pdo->prepare("SELECT nom, prenom, email, nombre as mandat, count(historique_vente.id_vendeur) as vente FROM vendeur LEFT JOIN mandat ON vendeur.id_vendeur = mandat.id_vendeur INNER JOIN historique_vente ON vendeur.id_vendeur = historique_vente.id_vendeur WHERE (SUBSTRING_INDEX(SUBSTR(email, INSTR(email, '@') + 1),'.',1)) = 'viaautomobile' GROUP BY historique_vente.id_vendeur");
 
 		$query->execute();
 
@@ -554,22 +720,22 @@
 		return $challenge;
 	}
 
-	function insertChallenge($titre, $periode, $description, $image)
+	function insertChallenge($titre, $periode, $description, $image, $image_accueil)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare('INSERT INTO challenge SET titre = ?, periode = ?, description = ?, image = ?');
+		$query = $pdo->prepare('INSERT INTO challenge SET titre = ?, periode = ?, description = ?, image = ?, image_accueil = ?');
 
-		$query->execute([$titre, $periode, $description, $image]);
+		$query->execute([$titre, $periode, $description, $image, $image_accueil]);
 	}
 
-	function updateChallenge($id, $titre, $periode, $description, $image, $encours, $vainqueur)
+	function updateChallenge($id, $titre, $periode, $description, $image, $encours, $vainqueur, $image_accueil)
 	{
 		$pdo = connexionBaseDeDonnee();
 
-		$query = $pdo->prepare('UPDATE challenge SET titre = ?, periode = ?, description = ?, image = ?, en_cours = ?, vainqueur = ? WHERE id_challenge = ?');
+		$query = $pdo->prepare('UPDATE challenge SET titre = ?, periode = ?, description = ?, image = ?, en_cours = ?, vainqueur = ?, image_accueil = ? WHERE id_challenge = ?');
 
-		$query->execute([$titre, $periode, $description, $image, $encours, $vainqueur, $id]);
+		$query->execute([$titre, $periode, $description, $image, $encours, $vainqueur, $image_accueil, $id]);
 	}
 
 	function deleteChallenge($id)
@@ -594,6 +760,98 @@
 		return $vainqueur;
 	}
 
+	function recupereImageAccueil()
+	{
+		$pdo = connexionBaseDeDonnee();
 
+		$req = $pdo->query('SELECT image_accueil FROM challenge WHERE en_cours = 1');
+
+		$req->execute();
+
+		$image = $req->fetch();
+
+		return $image;
+	}
+
+	function enTeteChallengeVente()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->query('SELECT nom, prenom, count(vente.id_vendeur) as vente FROM vendeur INNER JOIN vente ON vente.id_vendeur = vendeur.id_vendeur GROUP BY vente.id_vendeur ORDER BY vente DESC LIMIT 1');
+
+		$req->execute();
+
+		$entete = $req->fetch();
+
+		return $entete;
+	}
+
+	function enTeteChallengeMandat()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$req = $pdo->query('SELECT nom, prenom, nombre FROM vendeur INNER JOIN mandat ON mandat.id_vendeur = vendeur.id_vendeur ORDER BY mandat.nombre DESC LIMIT 1');
+
+		$req->execute();
+
+		$entete = $req->fetch();
+
+		return $entete;
+	}
+
+	function recuperationToutMandat()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$collaborateur = $pdo->prepare('SELECT nom, prenom, site_ratachement, sum(historique.nombre) as nombre FROM vendeur INNER JOIN historique ON historique.id_vendeur = vendeur.id_vendeur GROUP BY historique.id_vendeur ORDER BY nombre DESC');
+
+		$collaborateur->execute([$mois]);
+
+		$res = $collaborateur->fetchAll();
+
+		return $res;
+	}
+
+	function insertAdmin($email)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('INSERT INTO administrateur SET email = ?');
+
+		$query->execute([$email]);
+	}
+
+	function recuperationAdmin()
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->query('SELECT email FROM administrateur');
+
+		$query->execute();
+
+		$admin = $query->fetchAll(PDO::FETCH_COLUMN);
+
+		return $admin;
+	}
+
+	function checkEmailAdmin($email)
+	{
+		$pdo = connexionBaseDeDonnee();
+
+		$query = $pdo->prepare('SELECT id_admin FROM administrateur WHERE email = ?');
+		
+		$query->execute([$email]);
+		
+		$mail = $query->fetch();
+
+		if($mail != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	$droit = recuperationAdmin();
 
 ?>

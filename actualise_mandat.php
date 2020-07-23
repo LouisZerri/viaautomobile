@@ -23,7 +23,7 @@
 
 		$donnee = recupereDernierMandat($nom);
 		?>
-		<p><?= $donnee->nombre ?></p>
+		<p style="color: #531B51;"><?= $donnee->nombre ?></p>
 		<?php
 	}
 	else

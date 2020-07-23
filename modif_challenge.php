@@ -9,6 +9,10 @@
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+	$email = $_SESSION['auth']->email;
+
+	adminOnly($droit, $email);
+	
 
 	if(isset($_GET['id']) && is_numeric($_GET['id']))
 	{
@@ -23,95 +27,44 @@
 
 		if(!is_numeric($_POST['en_cours']) && ($_POST['en_cours'] != 0 || $_POST['en_cours'] != 1))
 		{
-			$errors = "La valeur doit être 1 ou 0";
+			$errors['erreur'] = "La valeur doit être 1 ou 0";
 		}
 
 		if(empty($errors))
 		{
-			updateChallenge($_GET['id'], $_POST['titre'],$_POST['periode'],$_POST['description'],$challenge->image, $_POST['en_cours'], $_POST['vainqueur']);
+			updateChallenge($_GET['id'], $_POST['titre'],$_POST['periode'],$_POST['description'],$challenge->image, $_POST['en_cours'], $_POST['vainqueur'], $challenge->image_accueil);
 			$_SESSION['flash']['success'] = 'Le challenge a bien été modifié';
 			header('Location: op_challenge.php');
 		}
 	}
 
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
 <style>
 
-body
+html, body
 {
 	font-family: 'Montserrat';
 	text-decoration: none;
 	list-style-type: none;
-	color: #531B51;
+	background: white;
 }
-.menu
-{
-	width: 300px;
-	height: 400px;
-	float: left;
 
+.form-control
+{
+	font-size: 15px;
+}
+
+.container
+{
+	width: 60%;
 }
 
 .separation
 {
-	
-	position: absolute;
-	margin-left: 270px;
-	height: 100%;
-	width: 1px;
-	background: grey;
-	top: 0;
-	bottom: 0;
-	opacity: 0.2;
+	margin-left: 280px;
 }
 
-.separation2
-{
-	clear: both;
-	position: absolute;
-	margin-left: 5px;
-	height: 450px;
-	width: 3px;
-	margin-top: 50px;
-	background:  #531B51;
-}
-
-li
-{
-	list-style-type: none;
-	position:relative;
-	z-index:10;
-}
-
-span
-{
-	color: white;
-}
-
-label
-{
-	color: #808080;
-}
-
-#change
-{
-	color: #531B51;
-	text-decoration: none;
-	list-style-type: none;
-}
-
-#change:hover
-{
-	color: white;
-	transition:all 0.10s;
-	border:none;
-	padding: 10px 10px 10px 10px;
-	border-radius: 20px;
-	background: #754974;
-	position:relative;
-	z-index:10;
-}
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
 
@@ -137,6 +90,11 @@ label
 		margin: auto;
 		padding-top: 50px;
 		zoom: 125%;
+	}
+
+	.container
+	{
+		width: 100%;
 	}
 }
 
@@ -165,6 +123,152 @@ label
 		padding-top: 50px;
 		zoom: 125%;
 	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+/* 
+##Device = Tablets, Ipads (portrait)
+##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) 
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 50px;
+		padding-left: 150px;
+	}
+
+	form
+	{
+		margin-left: 200px;
+	}
+
+	table
+	{
+		width: 50%;
+		margin-left: 150px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
+}
+
+/* 
+##Device = Tablets, Ipads (landscape)
+##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 50px;
+		padding-left: 300px;
+	}
+
+	form
+	{
+		margin-left: 150px;
+		
+	}
+
+	form > button
+	{
+		margin-bottom: 20px;
+	}
+
+	table
+	{
+		width: 40%;
+		margin-left: 250px;
+		margin-right: 20px;
+	}
+
+	.container
+	{
+		margin-left: 150px;
+	}
+}
+
+/* Ipad Pro */
+@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 50px;
+		padding-left: 150px;
+	}
+
+	form
+	{
+		margin-left: 150px;
+	}
+
+	table
+	{
+		width: 40%;
+		margin-left: 250px;
+		margin-right: 20px;
+	}
+
+	.container
+	{
+		margin-left: 150px;
+	}
+}
+
+@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+{
+	h3
+	{
+		bottom:0; 
+		left:0;
+		top: 0;
+		right:0;  
+		margin: auto;
+		padding-top: 50px;
+		padding-left: 200px;
+	}
+
+	form
+	{
+		padding-left: 225px;
+		width: 80%;
+	}
+
+	table
+	{
+		width: 40%;
+		margin-left: 250px;
+		margin-right: 20px;
+	}
+
+	.container
+	{
+		width: 100%;
+	}
 }
 </style>
 <div class="separation"></div>
@@ -172,7 +276,7 @@ label
 	</br>
 	</br>
 	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
-	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
+	<p style="padding-left: 45px;color: #531B51;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="op_challenge.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Mettre à jour les challenges</a></li></br>
@@ -194,7 +298,7 @@ label
 			</ul>
 		</div>
 	<?php endif; ?>
-	<h3><b>MODIFIER UN CHALLENGE</b></h3>
+	<h3 style="color: #531B51;"><b>MODIFIER UN CHALLENGE</b></h3>
 	<?php if(isset($_GET['id']) && is_numeric($_GET['id']) && $challenge): ?>
 		<form style="width: 50%;" action="" method="POST" enctype="multipart/form-data">
 			<div class="form-group mt-4">
@@ -212,6 +316,10 @@ label
 			<div class="form-group">
 		        <label>Logo (JPG, PNG ou GIF | max. 15 Ko)</label>
 		        <input class="form-control" id="logoFile" type="file" name="file" value="<?= $challenge->image ?>" size="30">
+		    </div>
+		    <div class="form-group">
+		        <label>Image en page d'accueil</label>
+		        <input class="form-control" id="logoFile" type="file" name="file_accueil" value="<?= $challenge->image_accueil ?>" size="30">
 		    </div>
 		    <div class="form-group">
 				<label>Le challenge est-il passé ? Si oui, taper 0 (valeur par défaut : 1)</label>

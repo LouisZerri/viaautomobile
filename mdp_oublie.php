@@ -26,61 +26,13 @@
 	}
 ?>
 
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-	html, body { 
-	  margin:0;
-	  padding:0;
-	  font-family: 'Montserrat';
-	  background: url(style/fond.svg) no-repeat center fixed; 
-	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	  background-size: cover; /* version standardisée */
-	}
-
-	#p1
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#p2
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#fin 
-	{
-		position: fixed;
-  		right: 0;
-  		bottom: 0;
-		font-size: 12px;
-		padding-right: 20px;
-		color: white;
-	}
-
-	.card
-	{
-		position: absolute; 
-		width: 35%; 
-		height: 50%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
-		margin: auto;
-		border-radius: 15px;
-	}
-
-	.form-control
-	{
-		font-size: 12px;
-	}
 
 	@media screen and (min-width: 1080px) and (max-width: 1360px) {
-  		.card {
+  		.card 
+  		{
     		position: absolute; 
-			width: 27%; 
+			width: 25%; 
 			height: 35%; 
 			top:0; 
 			bottom:0; 
@@ -94,7 +46,7 @@
 	@media screen and (min-height: 770px) and (max-height: 1920px) {
   		.card {
     		position: absolute; 
-			width: 27%; 
+			width: 25%; 
 			height: 35%; 
 			top:0; 
 			bottom:0; 
@@ -104,6 +56,74 @@
 			border-radius: 15px;
   		}
 	}
+
+	/* 
+	##Device = Tablets, Ipads (portrait)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+		.card {
+    		position: absolute; 
+			width: 40%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		.card
+		{
+			position: absolute; 
+			width: 40%; 
+			height: 45%; 
+			top: 0; 
+			bottom: 0; 
+			left: 0; 
+			right: 0;
+			margin: auto;
+			border-radius: 15px;
+		}
+	}
+
+	/* Ipad Pro */
+	@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+	{
+		.card {
+    		position: absolute; 
+			width: 40%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+	@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+	{
+		.card {
+    		position: absolute; 
+			width: 35%; 
+			height: 30%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+
 
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
@@ -134,7 +154,7 @@
 				<div class="form-group">
 					<input type="text" name="email" class="form-control" placeholder="Saissisez votre adresse email" required>
 				</div></br>
-				<button style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">M'envoyer un nouveau mot de passe</span></button>
+				<button id="boutons" style="background-color: #9D1458;" type="submit" class="btn btn-light"><span style="color: white;">M'envoyer un nouveau mot de passe</span></button>
 			</form>
     	</center>
   	</div>

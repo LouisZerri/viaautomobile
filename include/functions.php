@@ -6,6 +6,11 @@
 		ini_set('display_errors', 'On');
 		ini_set('log_errors', 'On');
 	}
+
+	/*function debug($var)
+	{
+		echo '<pre>'.print_r($var,true).'</pre>';
+	}*/
 	
 	function formatDate($date)
 	{
@@ -157,6 +162,16 @@
 		}
 	}
 
+	function adminOnly($array, $email)
+	{
+		if(!in_array($email, $array))
+		{
+			$_SESSION['flash']['danger'] = "Vous n'avez pas le droit d'accéder à cette page";
+			header('Location: tableau_de_bord.php');
+			exit();
+		}
+	}
+
 	function week2str($annee, $no_semaine)
 	{
     	// Récup jour début et fin de la semaine
@@ -182,6 +197,18 @@
 	    }
 
 	    return $retour;
+	}
+
+	function isCaractere($chaine)
+	{
+		if(!eregi('^[[:alnum:]]*$', $chaine))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 ?>

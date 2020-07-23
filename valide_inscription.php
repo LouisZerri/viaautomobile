@@ -1,49 +1,5 @@
 <?php require "include/header.php"; ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-	html, body { 
-	  margin:0;
-	  padding:0;
-	  font-family: 'Montserrat';
-	  background: url(style/fond.svg) no-repeat center fixed; 
-	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	  background-size: cover; /* version standardisée */
-	}
-
-	#p1
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#p2
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#fin 
-	{
-		position: fixed;
-  		right: 0;
-  		bottom: 0;
-		font-size: 12px;
-		padding-right: 20px;
-		color: white;
-	}
-
-	.card
-	{
-		position: absolute; 
-		width: 35%; 
-		height: 45%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
-		margin: auto;
-		border-radius: 15px;
-	}
 
 	@media screen and (min-width: 1080px) and (max-width: 1360px) {
   		
@@ -75,6 +31,46 @@
   		}
   	}
 
+  	/* 
+	##Device = Tablets, Ipads (portrait)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+		.card {
+    		position: absolute; 
+			width: 40%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			border-radius: 15px;
+  		}
+	}
+
+	/* 
+	##Device = Tablets, Ipads (landscape)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		.card
+		{
+			position: absolute; 
+			width: 35%; 
+			height: 45%; 
+			top: 0; 
+			bottom: 0; 
+			left: 0; 
+			right: 0;
+			margin: auto;
+			border-radius: 15px;
+		}
+	}
 
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
@@ -88,7 +84,7 @@
 		</br>
 		<center>
     		<b>Merci pour votre inscription</b></br></br>
-    		<p>Un email de confirmation a été envoyé</br>à votre adresse email</p>
+    		<p style="color: black;">Un email de confirmation a été envoyé</br>à votre adresse email</p>
     	</center>
   	</div>
 </div>

@@ -9,6 +9,7 @@
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+	$email = $_SESSION['auth']->email;
 
 	$donnees = getAllVente($nom);
 
@@ -18,66 +19,44 @@
 	$delete_vente = "delete_vente.php?id=";
 
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
 
-body
+html, body
 {
 	font-family: 'Montserrat';
 	text-decoration: none;
 	list-style-type: none;
-	color: #531B51;
-}
-.menu
-{
-	width: 300px;
-	height: 400px;
-	float: left;
-	z-index:10;
-	position: fixed;
-
+	background: white;
 }
 
-.separation
+#select
 {
-	
-	position: fixed;
-	margin-left: 270px;
-	height: 100%;
-	width: 1px;
-	background: grey;
+	position: absolute; 
+	bottom:0; 
+	left:0;
 	top: 0;
-	bottom: 0;
-	opacity: 0.2;
-}
-
-li
-{
-	list-style-type: none;
-	z-index:10;
-}
-
-span
-{
-	color: white;
+	right:0;  
+	margin: auto;
 	z-index: 10;
+	margin-left: 350px;
+	margin-top: 75px;
 }
 
-#change
+h3
 {
-	color: #531B51;
-	text-decoration: none;
-	list-style-type: none;
+	position: absolute; 
+	bottom:0; 
+	left:0;
+	top: 0;
+	right:0;  
+	margin: auto;
+	margin-left: 300px;
+	padding-top: 50px;
 }
 
-#change:hover
+.form-control
 {
-	color: white;
-	transition:all 0.10s;
-	border:none;
-	padding: 10px 10px 10px 10px;
-	border-radius: 20px;
-	background: #754974;
+	font-size: 15px;
 }
 
 table
@@ -88,7 +67,7 @@ table
 	right: 0; 
 	margin: auto;
 	zoom: 125%;
-	padding-top: 50px;
+	padding-top: 100px;
 	margin-right: 50px;
 	display: none;
 }
@@ -102,7 +81,6 @@ table
 {
 	width: 55%;
 }
-
 
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
@@ -143,6 +121,7 @@ table
 		margin: auto;
 		margin-left: 170px;
 		margin-top: 50px;
+		z-index: 100;
 	}
 
 	table
@@ -157,6 +136,17 @@ table
 		margin-right: 50px;
 		display: none;
 	}
+
+	#ma_table_Ventes
+	{
+		width: 70%;
+	}
+
+	#ma_table_Mandats
+	{
+		width: 55%;
+	}
+
 }
 
 @media screen and (min-height: 770px) and (max-height: 1920px) {
@@ -197,6 +187,7 @@ table
 		margin: auto;
 		margin-left: 170px;
 		margin-top: 50px;
+		z-index: 100;
 	}
 
 	table
@@ -212,7 +203,185 @@ table
 		display: none;
 	}
 
+	#ma_table_Ventes
+	{
+		width: 70%;
+	}
+
+	#ma_table_Mandats
+	{
+		width: 55%;
+	}
+
+
+
 }
+
+/* 
+	##Device = Tablets, Ipads (portrait)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+
+		.separation
+		{
+		
+			position: absolute;
+			margin-left: 300px;
+			height: 100%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+
+		h3
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 300px;
+			padding-top: 50px;
+			zoom: 125%;
+		}
+
+		select
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 200px;
+			margin-top: 100px;
+		}
+
+		table
+		{
+			position: absolute; 
+			width: 50%; 
+			height: 50%;   
+			margin: auto;
+			padding-top: 150px;
+			margin-right: 200px;
+			display: none;
+		}
+
+		#ma_table_Ventes
+		{
+			width: 50%;
+		}
+
+		#ma_table_Mandats
+		{
+			width: 55%;
+		}
+	}
+
+	/* 
+	##Device = Tablets, Ipads (landscape)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+
+		.separation
+		{
+			
+			position: fixed;
+			margin-left: 300px;
+			height: 200%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+
+		h3
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 300px;
+			padding-top: 50px;
+			zoom: 125%;
+		}
+
+		select
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin-left: 270px;
+			margin-top: 50px;
+		}
+
+		table
+		{
+			position: absolute; 
+			width: 50%; 
+			height: 25%;   
+			margin: auto;
+			padding-top: 150px;
+			padding-right: 20px;
+			display: none;
+		}
+
+		#ma_table_Ventes
+		{
+			width: 65%;
+		}
+
+		#ma_table_Mandats
+		{
+			width: 55%;
+		}
+	}
+
+	/* Ipad Pro */
+	@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+	{
+		select
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin-left: 280px;
+			margin-top: 50px;
+		}
+	}
+
+	@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+	{
+		
+		select
+		{
+			position: absolute; 
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin-left: 300px;
+			margin-top: 50px;
+		}
+
+	}
 
 </style>
 <div class="separation"></div>
@@ -220,20 +389,23 @@ table
 	</br>
 	</br>
 	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
-	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
+	<p style="padding-left: 45px; color: #531B51;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
 		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
+		<?php if(in_array($email, $droit)) :?>
+			<li><a id="change" href="backoffice.php"><i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Administration</a></li></br>
+		<?php endif; ?>
 		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
 	<img style="position: fixed; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 <div class="container">
-	<h3><b>AFFICHER L'HISTORIQUE</b></h3>
-	<div class="row">
+	<h3 style="color: #531B51;"><b>AFFICHER L'HISTORIQUE</b></h3>
+	<div id="select" class="row">
 		<div class="col mt-5">
 			<form action="" method="POST">
 				<div class="form-group">
@@ -246,22 +418,22 @@ table
 			</form>
 		</div>
 		<div class="col mt-5">
-			<form action="" method="POST">
+			<form action="test.php" method="POST">
 				<div class="form-group">
 					<select name="mois" style="width: 50%; background-color: #531B51; color: white;" class="form-control">
-						<option selected="selected"><span>Période</span></option>
-						<option>Janvier</option>
-						<option>Février</option>
-						<option>Mars</option>
-						<option>Avril</option>
-						<option>Mai</option>
-						<option>Juin</option>
-						<option>Juillet</option>
-						<option>Août</option>
-						<option>Septembre</option>
-						<option>Octobre</option>
-						<option>Novembre</option>
-						<option>Décembre</option>
+						<option id="periode" selected="selected"><span>Période</span></option>
+						<option id="01">Janvier</option>
+						<option id="02">Février</option>
+						<option id="03">Mars</option>
+						<option id="04">Avril</option>
+						<option id="05">Mai</option>
+						<option id="06">Juin</option>
+						<option id="07">Juillet</option>
+						<option id="08">Août</option>
+						<option id="09">Septembre</option>
+						<option id="10">Octobre</option>
+						<option id="11">Novembre</option>
+						<option id="12">Décembre</option>
 					</select>
   				</div>
 			</form>
@@ -284,7 +456,7 @@ table
 		<tbody>
 			<?php $i = 1 ?>
 			<?php foreach($donnees as $res): ?>
-				<tr id="<?= $i; ?>">
+				<tr id="tableau">
 					<td align="center" id="date_vente"><?= $res->date_vente; ?></td>
 					<td align="center"><?= $res->immatriculation; ?></td>
 					<?php if($res->livree == 1): ?>
@@ -307,7 +479,11 @@ table
 					<?php else: ?>
 						<td align="center">Non</td>
 					<?php endif; ?>
-					<td align="center"><a id="vente" style="color: black;" href="<?= $delete_vente."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
+					<?php if(date("m") != substr($res->date_vente,3,2)): ?>
+						<td align="center"><a style="color: black;" ><i class="fa fa-times"></i></a></td>
+					<?php else: ?>
+						<td align="center"><a id="vente" style="color: black;" href="<?= $delete_vente."".$res->id_vente ?>"><i class="fa fa-trash"></i></a></td>
+					<?php endif; ?>
 				</tr>
 				<?php $i++; ?>
 			<?php endforeach; ?>
@@ -328,7 +504,11 @@ table
 				<tr align="center" id="<?= $i; ?>">
 					<td align="center" id="date_mandat"><?= $res->date_mandat; ?></td>
 					<td align="center"><?= $res->nombre; ?></td>
-					<td align="center"><a id="mandat" style="color: black;" href="<?= $delete_mandat."".$res->id_historique ?>"><i class="fa fa-trash"></i></a></td>
+					<?php if(date("m") != substr($res->date_mandat,3,2)): ?>
+						<td align="center"><a style="color: black;"><i class="fa fa-times"></i></a></td>
+					<?php else: ?>
+						<td align="center"><a id="mandat" style="color: black;" href="<?= $delete_mandat."".$res->id_historique ?>"><i class="fa fa-trash"></i></a></td>
+					<?php endif; ?>
 				</tr>
 			<?php $i++; ?>
 			<?php endforeach; ?>
@@ -393,73 +573,55 @@ table
 		    $('#'+id).show();
 		});
 
-		$('select[name="mois"]').change(function(){
+		$('select[name="mois"]').change(function(e){
 
-			
-			var mois = $('select[name="mois"]').val();
-			var td = document.getElementsByTagName('tr')
-			if(mois == 'Période')
-			{
-				window.location.reload()
-			}
-			switch(mois)
-			{
-				case 'Janvier': mois = '01'; break;
-				case 'Février': mois = '02'; break;
-				case 'Mars': mois = '03'; break;
-				case 'Avril': mois = '04'; break;
-				case 'Mai': mois = '05'; break;
-				case 'Juin': mois = '06'; break;
-				case 'Juillet': mois = '07'; break;
-				case 'Août': mois = '08'; break;
-				case 'Septembre': mois = '09'; break;
-				case 'Octobre': mois = '10'; break;
-				case 'Novembre': mois = '11'; break;
-				case 'Décembre': mois = '12'; break;
-			}
-			for(var i = 1; i < td.length + 2; i++)
-			{
-				date_vente = $('#'+i).find("td").html();
-				date_mandat = $('#'+i).find("td").html();
+			e.preventDefault();
 
-				console.log(date_vente)
-				console.log(date_mandat)
+			var mois = $("select[name='mois'] option:selected").attr("id");
 
-				if(date_vente === undefined)
-				{
-				}
-				else
-				{
-					date = date_vente.substring(3,5);
-					if(mois != date)
+			var select = $("select[name='monselect']").val();
+
+			if(select == "Ventes")
+			{
+				jQuery.ajax({
+					url : 'filtre_tableau_vente.php',
+					type : 'POST',
+					data : {
+						mois : mois
+					},
+					success: function(data)
 					{
-						$('#'+i).fadeOut()
-					}
-				}
-
-				if(date_mandat === undefined)
-				{
-				}
-				else
-				{
-					date = date_mandat.substring(3,5);
-					if(mois != date)
+		 				$('#ma_table_Ventes').html(data).fadeIn(500);
+					},
+					error: function(jqxhr)
 					{
-						$('#'+i).fadeOut()
+						alert(jqxhr.responseText);
 					}
-				}
+				});
 			}
-		});	
+			else if(select == "Mandats")
+			{
+				jQuery.ajax({
+					url : 'filtre_tableau_mandat.php',
+					type : 'POST',
+					data : {
+						mois : mois
+					},
+					success: function(data)
+					{
+		 				$('#ma_table_Mandats').html(data).fadeIn(500);
+					},
+					error: function(jqxhr)
+					{
+						alert(jqxhr.responseText);
+					}
+				});
+			}
+	
+		})
+
 	});
 
-
-
-
-
-
-
 </script>
-
-
 
 <?php require "include/footer.php"; ?>

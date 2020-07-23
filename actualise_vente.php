@@ -37,6 +37,13 @@
 			$errors['immatriculation_exist'] = "Vous ne pouvez pas saisir l'immatriculation d'un véhicule déjà existant";
 		}
 
+		$caractere = isCaractere($_POST['immatriculation']);
+
+		if($caractere == false)
+		{
+			$errors['caractere'] = "L'immatriculation du vehicule ne doit contenir ni espace, ni caractere spéciaux";
+		}
+
 		if(!empty($_POST['livree']))
 		{
 			foreach($_POST['livree'] as $livree)
@@ -95,6 +102,13 @@
 			foreach ($errors as $key => $value) 
 			{
 				if($key == "immatriculation_exist")
+				{
+					$_SESSION['flash']['danger'] = $value;
+					header('Location: tableau_de_bord.php');
+					exit();
+				}
+
+				if($key == "caractere")
 				{
 					$_SESSION['flash']['danger'] = $value;
 					header('Location: tableau_de_bord.php');

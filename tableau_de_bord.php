@@ -9,6 +9,7 @@
 
 	$nom = $_SESSION['auth']->nom;
 	$prenom = $_SESSION['auth']->prenom;
+	$email = $_SESSION['auth']->email;
 
 	$donnee = recupereMandat($nom);
 
@@ -20,134 +21,36 @@
 	$financement = countFinancement($nom);
 
 	$str = week2str( date('Y'), (date('W') - 1) )."\n";
+
+	//Remet les mandats et les ventes à 0 tous les premiers du mois
+	if(date("j") == 1 && date("H:i") == '00:00')
+	{
+		mettreVenteAZero();
+		mettreMandatAZero(0);
+	}
+
 ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
 <style>
 
-body
+html, body
 {
 	font-family: 'Montserrat';
 	text-decoration: none;
 	list-style-type: none;
-	color: #531B51;
+	background: white;
 }
-.menu
+
+.form-control
 {
-	width: 300px;
-	height: 400px;
-	float: left;
-
+	font-size: 15px;
 }
 
-.separation
-{
-	
-	position: absolute;
-	margin-left: 270px;
-	height: 100%;
-	width: 1px;
-	background: grey;
-	top: 0;
-	bottom: 0;
-	opacity: 0.2;
-}
-
-.separation2
-{
-	clear: both;
-	position: absolute;
-	margin-left: 5px;
-	height: 450px;
-	width: 3px;
-	margin-top: 50px;
-	background:  #531B51;
-}
-
-li
-{
-	list-style-type: none;
-	position:relative;
-	z-index:10;
-}
-
-span
-{
-	color: white;
-}
-
-
-	/*-----------------------------------------------*/
-
-#fade { /*--Masque opaque noir de fond--*/
-	display: none; /*--masqué par défaut--*/
-	background: #000;
-	position: fixed; left: 0; top: 0;
-	width: 100%; height: 100%;
-	opacity: .80;
-	z-index: 9999;
-}
-.popup_block{
-	display: none; /*--masqué par défaut--*/
-	background: #fff;
-	padding: 20px;
-	float: left;
-	font-size: 12px;
-	position: fixed;
-	top: 50%; left: 50%;
-	z-index: 99999;
-	/*--Les différentes définitions de Box Shadow en CSS3--*/
-	-webkit-box-shadow: 0px 0px 20px #000;
-	-moz-box-shadow: 0px 0px 20px #000;
-	box-shadow: 0px 0px 20px #000;
-	/*--Coins arrondis en CSS3--*/
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-}
-
-/*--Gérer la position fixed pour IE6--*/
-*html #fade {
-position: absolute;
-}
-*html .popup_block {
-position: absolute;
-}
-
-.bouton1
-{
-	width: 65px;
-	height: 65px;
-	background:#A73C97;
-	font:bold 50px Montserrat;
-	border-radius:50%;
-	border:none;
-	color:#fff;
-}
-
-#change
+h2
 {
 	color: #531B51;
-	text-decoration: none;
-	list-style-type: none;
 }
 
-#change:hover
-{
-	color: white;
-	transition:all 0.10s;
-	border:none;
-	padding: 10px 10px 10px 10px;
-	border-radius: 20px;
-	background: #754974;
-	position:relative;
-	z-index:10;
-}
-
-#dont
-{
-	color: #A73C97; 
-	font-size: 20px;
-}
 
 @media screen and (min-width: 1080px) and (max-width: 1360px) {
 
@@ -303,26 +206,287 @@ position: absolute;
 		bottom: 0;
 		opacity: 0.2;
 	}
+
 }
 
 
 
+/* 
+	##Device = Tablets, Ipads (portrait)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+		#semaine
+	  	{
+	  		font-size: 20px;
+	  		padding-left: 150px;
+	  	}
+
+		#colonne1 
+		{
+			position: absolute; 
+			width: 60%; 
+			height: 60%;
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 350px;
+			margin-bottom: 350px;
+			zoom:100%;
+		}
+
+		#colonne2
+		{
+			position: absolute; 
+			width: 50%; 
+			height: 5%;
+			top: 0;  
+			margin: auto;
+			margin-left: 240px;
+			margin-top: 650px;
+			zoom:100%;
+		}
+
+		.separation2
+		{
+			transform: rotate(90deg);
+			clear: both;
+			position: absolute;
+			height: 300px;
+			width: 3px;
+			margin-left: 470px;
+			margin-top: 350px;
+			background:  #531B51;
+		}
+
+		.bouton1
+		{
+			width: 75px;
+			height: 75px;
+			background:#A73C97;
+			font:bold 55px Montserrat;
+			border-radius:50%;
+			border:none;
+			color:#fff;
+		}
+
+		#dont
+		{
+			color: #A73C97; 
+			font-size: 30px;
+		}
+
+		.separation
+		{
+			position: absolute;
+			margin-left: 300px;
+			height: 100%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+	}
+
+	/* 
+	##Device = Tablets, Ipads (landscape)
+	##Screen = B/w 768px to 1024px
+	*/
+
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		#semaine
+		{
+			font-size: 25px;
+			margin-left: 200px;
+		}
+
+		#colonne1 
+		{
+			position: absolute; 
+			width: 60%; 
+			height: 60%;
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 180px;
+			margin-bottom: 175px;
+		}
+
+		#colonne2
+		{
+			position: absolute; 
+			width: 40%; 
+			height: 60%;
+			bottom:0;
+			top: 0;  
+			margin: auto;
+			margin-left: 600px;
+			margin-bottom: 175px;
+			zoom: 0;
+		}
+
+		.separation2
+		{
+			transform: rotate(180deg);
+			clear: both;
+			position: absolute;
+			height: 600px;
+			width: 3px;
+			margin-left: 610px;
+			margin-top: 50px;
+			background:  #531B51;
+		}
+
+		.bouton1
+		{
+			width: 75px;
+			height: 75px;
+			background:#A73C97;
+			font:bold 55px Montserrat;
+			border-radius:50%;
+			border:none;
+			color:#fff;
+		}
+
+		#dont
+		{
+			color: #A73C97; 
+			font-size: 30px;
+		}
+
+		.separation
+		{
+			position: fixed;
+			margin-left: 300px;
+			height: 150%;
+			width: 1px;
+			background: grey;
+			top: 0;
+			bottom: 0;
+			opacity: 0.2;
+		}
+	}
+
+	/* Ipad Pro */
+	@media only screen and (min-device-width: 1024px) and (max-device-height: 1366px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: portrait)
+	{
+		#colonne1 
+		{
+			position: absolute; 
+			width: 60%; 
+			height: 60%;
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 350px;
+			margin-bottom: 450px;
+		}
+
+		#colonne2
+		{
+			position: absolute; 
+			width: 50%; 
+			height: 59.9%;
+			bottom:0;
+			top: 0;  
+			margin: auto;
+			margin-left: 340px;
+			padding-top: 400px;
+		}
+
+		.separation2
+		{
+			transform: rotate(90deg);
+			clear: both;
+			position: absolute;
+			height: 300px;
+			width: 3px;
+			margin-left: 575px;
+			margin-top: 350px;
+			background:  #531B51;
+		}
+
+		#semaine
+		{
+			margin-left: 150px;
+		}
+
+	}
+
+	@media only screen and (min-device-width: 1366px) and (max-device-height: 1024px) and (-webkit-min-device-pixel-ratio: 2)  and (orientation: landscape)
+	{
+		#colonne1 
+		{
+			position: absolute; 
+			width: 60%; 
+			height: 60%;
+			bottom:0; 
+			left:0;
+			top: 0;
+			right:0;  
+			margin: auto;
+			margin-left: 85px;
+			margin-bottom: 175px;
+		}
+
+		#semaine
+		{
+			margin-left: 50px;
+		}
+
+		#colonne2
+		{
+			position: absolute; 
+			width: 60%; 
+			height: 60%;
+			bottom:0;
+			top: 0;  
+			margin: auto;
+			margin-left: 410px;
+			margin-bottom: 175px;
+		}
+
+		.separation2
+		{
+			transform: rotate(180deg);
+			clear: both;
+			position: absolute;
+			height: 400px;
+			width: 3px;
+			margin-left: 650px;
+			margin-top: 100px;
+			background:  #531B51;
+		}
+	}
 </style>
 <div class="separation"></div>
 <div class="menu">
 	</br>
 	</br>
 	<a href="accueil.php"><img style="padding-left: 35px;" src="style/logo_final.png" alt="logo" width="250"></a></br></br></br>
-	<p style="padding-left: 45px;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
+	<p style="padding-left: 45px; color: #531B51;">Bonjour <b><?= $prenom; ?> <?= $nom; ?></b></p>
 	</br>
 	<ul>
 		<li><a id="change" href="challenges.php"><i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;Les challenges</a></li></br>
 		<li><a id="change" href="tableau_de_bord.php"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Mon tableau de bord</a></li></br>
 		<li><a id="change" href="historique.php"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp;Historique</a></li></br>
+		<?php if(in_array($email, $droit)) :?>
+			<li><a id="change" href="backoffice.php"><i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;Administration</a></li></br>
+		<?php endif; ?>
 		<li><a id="change" href="parametre_compte.php"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;Paramètres du compte</a></li></br>
 		<li><a id="change" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Deconnexion</a></li></br>
 	</ul>
-	<img style="position: absolute; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
+	<img style="position: fixed; left: 0; bottom: 0; padding-left: 15px;" src="style/logo_gris.svg" alt="logo" width="230">
 </div>
 
 <center>
@@ -338,12 +502,12 @@ position: absolute;
 		<?php endforeach; ?>
 		<?php unset($_SESSION['flash']); ?>
 	<?php endif; ?>
-		<p id="semaine"><?= $str ?></p>
+		<p style="color: #531B51;" id="semaine"><?= $str ?></p>
 		<div class="row ml-4">
 			<div id="colonne1" class="col">
-				<h3><b>NOMBRE DE MANDATS</b></h3>
-				<p class="nombre_mandat" style="font-size: 7em;"><?= $donnee->nombre ?></p>
-				<p style="font-size: 2em;">Mandats</p></br>
+				<h3 style="color: #531B51;"><b>NOMBRE DE MANDATS</b></h3>
+				<p class="nombre_mandat" style="font-size: 7em; color: #531B51;"><?= $donnee->nombre ?></p>
+				<p style="font-size: 2em; color: #531B51;">Mandats</p></br>
 				<a href="#?w=500" rel="popupun" id="poplight" style="background-color: #531B51; text-decoration: none; border: 2px solid #531B51; border-radius: 12px;" class="btn btn-light" role="button"><span>Ajouter Mandats</span></a>
 			</div>
 			<div>
@@ -351,9 +515,9 @@ position: absolute;
 			</div>
 			<div id="colonne2" class="col">
 				<center>
-					<h3><b>NOMBRE DE VENTES</b></h3>
-					<p style="font-size: 7em;"><?= $nb_vente; ?></p>
-					<p style="font-size: 2em;">Ventes</p>
+					<h3 style="color: #531B51;"><b>NOMBRE DE VENTES</b></h3>
+					<p style="font-size: 7em; color: #531B51;"><?= $nb_vente; ?></p>
+					<p style="font-size: 2em; color: #531B51;">Ventes</p>
 					<p id="dont">dont</p></br>
 					<div class="row pl-4">
 						<div class="col pl-2">
@@ -384,7 +548,7 @@ position: absolute;
 	<center>
 		<div class="container">
 			<h2>AJOUT DE MANDATS</h2></br> 
-			<p style="font-size: 15px;">Combien de mandats</br>souhaitez-vous comptabiliser ?</p></br>
+			<p style="font-size: 15px; color: #531B51;">Combien de mandats</br>souhaitez-vous comptabiliser ?</p></br>
 			<form action="actualise_mandat.php" method="POST">
 				<div class="form-group">
 					<input class="form-control" type="text" id="nombre" name="nombre" placeholder="Nombre">	
@@ -418,7 +582,7 @@ position: absolute;
 			</div>
 			<div class="form-group">
 				<label for="">Immatriculation du véhicule</label>
-				<input class="form-control" type="text" name="immatriculation" placeholder="AA-123-BB">	
+				<input class="form-control" type="text" name="immatriculation" placeholder="AA123BB">	
 			</div>
 			<div class="row">
 				<div class="col-sm">

@@ -1,70 +1,23 @@
 <?php require "include/header.php"; ?>
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <style>
-	html, body { 
-	  margin:0;
-	  padding:0;
-	  font-family: 'Montserrat';
-	  background: url(style/fond.svg) no-repeat center fixed; 
-	  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-	  background-size: cover; /* version standardisée */
-	}
 
-	#p1
+	/*Pour les grands écrans */
+
+	@media screen and (min-width: 1080px) and (max-width: 1360px) 
 	{
-		color: white;
-		font-size: 5em;
-	}
-
-	#p2
-	{
-		color: white;
-		font-size: 5em;
-	}
-
-	p
-	{
-		color: white;
-	}
-
-	#fin 
-	{
-		position: fixed;
-  		right: 0;
-  		bottom: 0;
-		font-size: 12px;
-		padding-right: 20px;
-		color: white;
-	}
-
-	.index
-	{
-		position: absolute; 
-		width: 100%; 
-		height: 25%; 
-		top:0; 
-		bottom:0; 
-		left:0; 
-		right: 0; 
-		margin: auto;
-	}
-
-	@media screen and (min-width: 1080px) and (max-width: 1360px) {
-
 		.index
 		{
 			position: absolute; 
 			width: 100%; 
 			height: 25%; 
-			top:0; 
-			bottom:0; 
-			left:0; 
+			top: 0; 
+			bottom: 0; 
+			left: 0; 
 			right: 0; 
 			margin: auto;
-			zoom:125%;
+			zoom: 125%;
 		}
 	}
-
 	@media screen and (min-height: 770px) and (max-height: 1920px)
 	{
 		.index
@@ -80,7 +33,39 @@
 			zoom:125%;
 		}
 	}
-	
+
+
+	/*Pour les tablettes et ipad */
+
+	@media (min-width: 768px) and (max-width: 1024px) 
+	{
+		.index
+		{
+			position: absolute; 
+			width: 100%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+			zoom:100%;
+		}
+	}
+	@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) 
+	{
+		.index
+		{
+			position: absolute; 
+			width: 100%; 
+			height: 25%; 
+			top:0; 
+			bottom:0; 
+			left:0; 
+			right: 0; 
+			margin: auto;
+		}
+	}	
 </style>
 <img style="right: 0; padding-bottom: 170px; position: fixed;" src="style/logo_blanc.svg" alt="logo" width="250" height="250">
 <?php if(isset($_SESSION['flash'])): ?>
@@ -98,11 +83,11 @@
 <div class="index">
 	<div style="padding-left: 20px;">
 		<span id="p1">CHALLENGEZ</span></br>
-		<b id="p2">VOS COLLABORATEURS</b>
+		<span id="p2">VOS COLLABORATEURS</span>
 	</div>
-
-	<a style="margin-left: 20px;" class="btn btn-outline-light" href="login.php" role="button">connexion</a>
-	<a style="margin-left: 20px;" class="btn btn-outline-light" href="creation_compte.php" role="button">inscription</a>
+	</br>
+	<a id="connexion" class="btn btn-light" href="login.php" role="button">connexion</a>
+	<a id="inscription" class="btn btn-light" href="creation_compte.php" role="button">inscription</a>
 </div>
 
 
